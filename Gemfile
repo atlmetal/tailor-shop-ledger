@@ -23,6 +23,9 @@ gem "tailwindcss-rails"
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
+# Locale data for Spanish dates, numbers and messages [https://github.com/svenfuchs/rails-i18n]
+gem "rails-i18n"
+
 # Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
 gem "solid_cache"
 gem "solid_queue"

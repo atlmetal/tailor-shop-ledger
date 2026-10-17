@@ -33,8 +33,15 @@ module TailorShopLedger
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
-    # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    config.time_zone = "America/Bogota"
+
+    # One locale per installation: en, the project's language, or es-CO, which production defaults to
+    # since the shops are Colombian.
+    config.i18n.available_locales = %i[ en es-CO ]
+    config.i18n.default_locale = ENV.fetch("APP_LOCALE", "en")
+    config.after_initialize { I18n.enforce_available_locales!(I18n.default_locale) }
 
     # Don't generate system test files.
     config.generators.system_tests = nil

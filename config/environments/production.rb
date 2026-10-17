@@ -70,6 +70,9 @@ Rails.application.configure do
   # the I18n.default_locale when a translation cannot be found).
   config.i18n.fallbacks = true
 
+  # The shops are Colombian, so production speaks Colombian Spanish unless APP_LOCALE says otherwise.
+  config.i18n.default_locale = ENV.fetch("APP_LOCALE", "es-CO")
+
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
