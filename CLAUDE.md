@@ -98,6 +98,7 @@ Most users run the app from an Android phone and some from a computer, so every 
 
 - Set up: `bin/setup` installs gems, prepares the development and test databases on the local PostgreSQL and starts `bin/dev` (`--skip-server` to skip that).
 - Run: `bin/dev` (Puma and the Tailwind watcher) on http://localhost:3000. `APP_LOCALE` picks the locale, `en` or `es-CO`; it defaults to `en`, and to `es-CO` in production. Any other value stops the app from booting. Without a TTY, keep stdin open (`tail -f /dev/null | bin/dev`): the Tailwind watcher exits on EOF and foreman then stops Puma.
+- Create a shop and its user: `bin/rails shops:create NAME="Modistería La Puntada" USER_NAME="Ana Gómez" USER_EMAIL=ana@example.com`, plus `STARTED_ON=2026-10-01` when its accounts start before today. It prints the user's password once. `bin/rails users:new_password EMAIL=ana@example.com` prints a new one and signs the user out everywhere.
 - Test: `bin/rails spec` builds the Tailwind CSS and then runs RSpec; system specs (headless Chrome) need a fresh build to see the layout. `bundle exec rspec` is enough while `bin/dev` keeps the CSS built, and `bundle exec rspec spec/types/pesos_type_spec.rb:9` runs one example.
 - Lint and security: `bin/rubocop`, `bin/brakeman`, `bin/bundler-audit`, `bin/importmap audit`.
 - Everything CI runs, locally: `bin/ci`.
