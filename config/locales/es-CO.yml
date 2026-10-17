@@ -1,5 +1,14 @@
 es-CO:
   app_name: Tailor Shop Ledger
+  accounts:
+    show:
+      change_password: Cambiar contraseña
+      new_password: Nueva contraseña
+      sign_out: Cerrar sesión
+      submit: Guardar contraseña
+      title: Cuenta
+    update:
+      success: Tu contraseña cambió. Cerramos tus otras sesiones.
   activerecord:
     attributes:
       shop:
@@ -9,6 +18,8 @@ es-CO:
         email_address: Correo electrónico
         name: Nombre
         password: Contraseña
+        password_challenge: Contraseña actual
+        password_confirmation: Confirmación de contraseña
   sessions:
     create:
       invalid: Correo o contraseña incorrectos.
@@ -18,3 +29,6 @@ es-CO:
       password: Contraseña
       submit: Iniciar sesión
       title: Iniciar sesión
+  today:
+    show:
+      account: Cuenta

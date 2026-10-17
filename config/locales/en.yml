@@ -1,5 +1,14 @@
 en:
   app_name: Tailor Shop Ledger
+  accounts:
+    show:
+      change_password: Change password
+      new_password: New password
+      sign_out: Sign out
+      submit: Save password
+      title: Account
+    update:
+      success: Your password has been changed. Your other sessions were signed out.
   activerecord:
     attributes:
       shop:
@@ -9,6 +18,8 @@ en:
         email_address: Email address
         name: Name
         password: Password
+        password_challenge: Current password
+        password_confirmation: Password confirmation
   sessions:
     create:
       invalid: Try another email address or password.
@@ -18,3 +29,6 @@ en:
       password: Password
       submit: Sign in
       title: Sign in
+  today:
+    show:
+      account: Account

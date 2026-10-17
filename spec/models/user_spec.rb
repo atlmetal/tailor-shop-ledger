@@ -40,6 +40,14 @@ RSpec.describe User, type: :model do
     it { expect(user.errors).to be_added(:password, :too_short, count: 8) }
   end
 
+  context "when a saved user changes to a blank password" do
+    subject(:user) { described_class.find(create(:user).id) }
+
+    before { user.validate(:password_change) }
+
+    it { expect(user.errors).to be_added(:password, :blank) }
+  end
+
   context "with a shop that already has its user" do
     let(:attributes) { { shop: create(:user).shop } }
 

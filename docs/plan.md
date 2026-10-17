@@ -196,7 +196,7 @@ Done when a fresh clone runs `bin/setup`, `bin/dev` and `bundle exec rspec`, and
 
 #### M1. Shops and sign-in (4 h)
 
-- [ ] Authentication from the Rails generator, without the email password reset. The account page lets users change their own password and sign out. A session lasts until the user signs out, so the phone stays signed in.
+- [x] Authentication from the Rails generator, without the email password reset. The account page lets users change their own password and sign out. A session lasts until the user signs out, so the phone stays signed in.
 - [x] `shops`, and `users` belonging to a shop. acts_as_tenant with `require_tenant`, the tenant set from the signed-in user's shop.
 - [ ] Rake tasks: `shops:create` (shop name, `started_on`, today by default, and the user's name and email), which prints a generated password once; and `users:new_password` (email), which prints a new one once and signs the user out everywhere.
 
