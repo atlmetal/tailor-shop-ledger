@@ -199,7 +199,6 @@ Done when a fresh clone runs `bin/setup`, `bin/dev` and `bundle exec rspec`, and
 - [ ] Authentication from the Rails generator, without the email password reset. The account page lets users change their own password and sign out. A session lasts until the user signs out, so the phone stays signed in.
 - [ ] `shops`, and `users` belonging to a shop. acts_as_tenant with `require_tenant`, the tenant set from the signed-in user's shop.
 - [ ] Rake tasks: `shops:create` (shop name, `started_on`, today by default, and the user's name and email), which prints a generated password once; and `users:new_password` (email), which prints a new one once and signs the user out everywhere.
-- [ ] A shared example for request specs: a user of another shop gets a 404. Every later controller uses it.
 
 Done when request specs show that a user only reaches their own shop, and that a visitor without a session goes to sign in.
 
@@ -214,6 +213,7 @@ Done when the empty shell matches the approved screens at 390px and holds up at 
 #### M3. The shop: services, fixed costs and work days (6 h)
 
 - [ ] Money fields: one Stimulus controller that lets the user type digits only and formats the amount as they type. It filters on `input`, since Android keyboards don't report keys reliably in `keydown`.
+- [ ] A shared example for request specs: a user of another shop gets a 404. Services is the first controller with a shop's records, so it starts there, and every later controller uses it.
 - [ ] Services: the list with what each one leaves, create, edit, deactivate and activate, and the folded list of deactivated ones.
 - [ ] Fixed costs: the list with this month's amounts and total, add, change from a month (`FixedCosts::ChangeService`), remove from a month, the averaged mark, and the help about the home's bills.
 - [ ] Work days on the fixed costs page, with the month's work days and fixed costs per work day.
