@@ -51,6 +51,9 @@ group :development, :test do
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
 
+  # RSpec cops for the spec rules in CLAUDE.md [https://github.com/rubocop/rubocop-rspec]
+  gem "rubocop-rspec", require: false
+
   # Testing framework [https://github.com/rspec/rspec-rails]
   gem "rspec-rails"
 
