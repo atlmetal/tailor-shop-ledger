@@ -188,7 +188,7 @@ The first shop starts using the app as soon as it can record its work and see To
 - [x] RSpec and FactoryBot; system specs with Capybara and headless Chrome at 390×844, with one smoke spec. Copy the RuboCop config and `spec/i18n_spec.rb` from the gym app.
 - [x] GitHub Actions and `bin/ci` as in the gym app: RuboCop, Brakeman, bundler-audit, importmap audit and RSpec against PostgreSQL 17.
 - [x] I18n for `en` and `es-CO` with rails-i18n, `APP_LOCALE` as in the gym app, and time zone America/Bogota.
-- [ ] The `pesos` attribute type, with its spec.
+- [x] The `pesos` attribute type, with its spec.
 - [ ] Replace the generated README with a short one: what the app is, that it's being built, and its license.
 - [ ] Add a Commands section to CLAUDE.md.
 
