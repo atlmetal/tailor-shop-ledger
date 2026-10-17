@@ -1,24 +1,9 @@
-# README
+# Tailor Shop Ledger
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A Ruby on Rails app that shows small tailoring and alteration shops whether their work pays. A shop records the services it offers, with their price and material cost; the jobs it charges for; its fixed costs, occasional expenses and other income. The app turns that into a goal for the day and results by day, week, month, semester and year.
 
-Things you may want to cover:
+It is being built: the first version's plan is in [docs/plan.md](docs/plan.md).
 
-* Ruby version
+## License
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+[GNU Affero General Public License v3.0](LICENSE).

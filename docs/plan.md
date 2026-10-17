@@ -189,7 +189,7 @@ The first shop starts using the app as soon as it can record its work and see To
 - [x] GitHub Actions and `bin/ci` as in the gym app: RuboCop, Brakeman, bundler-audit, importmap audit and RSpec against PostgreSQL 17.
 - [x] I18n for `en` and `es-CO` with rails-i18n, `APP_LOCALE` as in the gym app, and time zone America/Bogota.
 - [x] The `pesos` attribute type, with its spec.
-- [ ] Replace the generated README with a short one: what the app is, that it's being built, and its license.
+- [x] Replace the generated README with a short one: what the app is, that it's being built, and its license.
 - [ ] Add a Commands section to CLAUDE.md.
 
 Done when a fresh clone runs `bin/setup`, `bin/dev` and `bundle exec rspec`, and CI is green.
