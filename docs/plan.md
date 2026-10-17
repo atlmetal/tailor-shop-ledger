@@ -186,7 +186,7 @@ The first shop starts using the app as soon as it can record its work and see To
 - [x] Generate the app in this repository, keeping `LICENSE`, `CLAUDE.md` and `docs/`: `rails new . --name=tailor_shop_ledger --database=postgresql --css=tailwind --skip-test --skip-jbuilder --skip-active-storage --skip-action-text --skip-action-mailbox`. v0.1 stores no files, rich text or incoming email, so those frameworks wait until a shop needs one. The local folder is `~/Desktop/modisteria`, and `--name` keeps the app's module, databases and Kamal service named after the repository. Ruby 4.0.7 and Rails 8.1.4 are already installed for the gym app.
 - [x] Pin Ruby 4.0.7 in `.ruby-version`, and Kamal at the gym app's version (2.12.0 in its `Gemfile.lock`). Both apps share one kamal-proxy, so they move to a new Kamal together.
 - [x] RSpec and FactoryBot; system specs with Capybara and headless Chrome at 390×844, with one smoke spec. Copy the RuboCop config and `spec/i18n_spec.rb` from the gym app.
-- [ ] GitHub Actions and `bin/ci` as in the gym app: RuboCop, Brakeman, bundler-audit, importmap audit and RSpec against PostgreSQL 17.
+- [x] GitHub Actions and `bin/ci` as in the gym app: RuboCop, Brakeman, bundler-audit, importmap audit and RSpec against PostgreSQL 17.
 - [x] I18n for `en` and `es-CO` with rails-i18n, `APP_LOCALE` as in the gym app, and time zone America/Bogota.
 - [ ] The `pesos` attribute type, with its spec.
 - [ ] Replace the generated README with a short one: what the app is, that it's being built, and its license.
