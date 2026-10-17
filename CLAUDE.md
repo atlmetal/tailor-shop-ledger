@@ -10,7 +10,7 @@ It is the owner's public portfolio project, licensed AGPL-3.0, and real shops us
 
 ## Work plan
 
-`docs/plan.md` holds the context, decisions, domain model, business rules, screens and milestones. Read it at the start of every session. A new milestone starts only when the owner says so; once started, work through its unchecked tasks. Check tasks off in the commit that completes them, and record any changed decision there.
+@docs/plan.md holds the context, decisions, domain model, business rules, screens and milestones, and loads with this file. A new milestone starts only when the owner says so; once started, work through its unchecked tasks. Check tasks off in the commit that completes them, and record any changed decision there.
 
 ## Working with the owner
 
@@ -19,22 +19,11 @@ It is the owner's public portfolio project, licensed AGPL-3.0, and real shops us
 - Ask as many questions as it takes before acting on anything unclear, but first check what you can yourself (files, configs, commands). Always ask before large changes or new dependencies.
 - The owner is a senior Rails developer: don't explain Ruby, Rails or git basics.
 - Build what the current milestone needs, and nothing ahead of it.
-- Helper scripts outside the app (one-off data or ops tasks) are Python 3.12, standard library first and `uv` when a dependency is needed. App code is Ruby. The machine has no pip, pipx, poetry or gh.
+- Helper scripts outside the app (one-off data or ops tasks) are Python 3.12, standard library first and `uv` when a dependency is needed. App code is Ruby. The machine has no pip, pipx or poetry.
 
 ## Scope
 
 v0.1 is what one shop needs to know whether its work pays, deployed and backed up. Details and order are in `docs/plan.md`.
-
-In v0.1:
-- Several shops in one installation, each with one user and its own services, records, fixed costs and work days. The operator creates shops with a rake task.
-- Services with a price and a material cost, which can be 0. They are deactivated, never deleted.
-- Jobs: one record per service done, with its date, quantity, price and material cost, copied from the service and editable.
-- Fixed costs with a monthly amount that applies from a month on, never changing earlier months. Occasional expenses and other income, with date, concept and amount.
-- Today: the day's goal, what the shop has made towards it and the month so far.
-- Reports for a day, a week (Monday to Sunday), a month, a semester and a year: charged, materials, other income, other expenses, the fixed costs of the days worked and the result; the services that left the most in the period; and the last six months, month by month.
-- Mobile first and responsive, in `en` and `es-CO`, with an icon on the phone's home screen.
-- Demo seeds and a README with screenshots.
-- Deployed with Kamal next to the owner's gym app, with nightly off-site backups.
 
 Out, until shops ask for it: order tracking (customer, due date, status), customer data, receipts, invoicing, inventory, supplies per recipe, payment methods, Excel export, charts, offline mode, several users per shop.
 
@@ -62,16 +51,16 @@ The owner's gym app, in `~/Desktop/gym-membership-manager` (a private repository
 
 - All user-facing text goes through I18n, in `en`, the project's language and the default, and `es-CO`, the default in production. `APP_LOCALE` picks one per installation. Specs run in `en` and assert its copy; `spec/i18n_spec.rb` checks that both locales have the same keys. The approved screens are in Spanish: the `es-CO` copy follows them word for word, and `en` translates it.
 - Time zone America/Bogota. Dates the app reasons about are `date` columns; use `Date.current`, never `Date.today`.
-- Money in Colombian pesos, stored as integers, never negative. Money attributes use the `pesos` attribute type, which drops anything that isn't a digit before casting: `15.000` and `15,000` both save 15000, where Rails' integer cast would save 15.
-- Tenancy runs with `require_tenant`: code outside a request (rake tasks, seeds, console) runs inside `ActsAsTenant.with_tenant(shop)`, and jobs keep the shop they were enqueued with.
+- Money in Colombian pesos, stored as integers, never negative. Money fields let the user type digits only, no dots or commas, and format the amount as they type: `50000` shows as `$50.000`. Pasting drops a final dot or comma followed by one or two digits before the other non-digits, so `$ 120.450,00` shows as `$120.450`, not `$12.045.000`. The `pesos` attribute type drops the `$` and thousands separators that the formatting adds, so `50.000` and `50,000` both save 50000, where Rails' integer cast would save 50. Anything else makes the value invalid, such as a decimal part or a minus sign.
+- Tenancy runs with `require_tenant`: code outside a request (rake tasks, seeds, console) runs inside `ActsAsTenant.with_tenant(shop)`, and jobs keep the shop they were enqueued with. Factories of shop-owned models build and save inside their own shop, wrapping `initialize_with` and `to_create` in `ActsAsTenant.with_tenant`, as the gym app's `spec/factories/gym_users.rb` does.
 - This repository is public. Never commit a real shop's data, names or figures, anything about the owner's clients or deals, secrets or `config/master.key`. Seeds and screenshots use fake data only.
 - Small, focused commits. The message is a single English subject line with no body. Never mention Claude, Claude Code or any AI tool in commit messages, and never add co-author trailers.
 - Dependabot's pull requests aren't merged, since their commits carry a long body: the bump lands as an ordinary commit on `main`, which closes the pull request. A gem nothing uses is removed instead of bumped.
-- The git remote uses the SSH host alias `github` (the owner's personal account): `git@github:atlmetal/tailor-shop-ledger.git`. Keep it that way; the local git identity is set in `.git/config`.
+- The git remote uses the SSH host alias `github` (the owner's personal account): `git@github:atlmetal/tailor-shop-ledger.git`. Keep it that way; the local git identity is set in `.git/config`. `gh` is signed in to the same account.
 
 ### Layers
 
-Controllers and views hold no business logic. Each piece of code belongs to one of these layers. Apart from `ApplicationService`, a layer's folder and base class arrive with its first real use.
+Controllers and views hold no business logic. Each piece of code belongs to one of these layers. A layer's folder and base class arrive with its first real use.
 
 - Models: associations, validations, enums, scopes and small predicates about the record itself.
 - Services (`app/services`): business rules and workflows, one class per use case, namespaced by domain, e.g. `FixedCosts::ChangeService`. They inherit from `ApplicationService`, receive everything in `initialize` and run with `.call`.

@@ -4,7 +4,7 @@ How Tailor Shop Ledger gets built: context, decisions, domain model, business ru
 
 ## How to use this plan
 
-- Read it at the start of every session. Milestones go in order, and a new one starts only when the owner says so; once started, work through its unchecked tasks.
+- Milestones go in order, and a new one starts only when the owner says so; once started, work through its unchecked tasks.
 - A milestone is done when its tasks are checked, its specs pass and CI is green on `main`.
 - Check a task off in the commit that completes it.
 - From the demo seeds on, each milestone extends them with what it adds, so `bin/rails db:seed` always shows every feature built so far.
@@ -154,7 +154,7 @@ The approved design is five phone screens at 390px, in Spanish, with sample data
 - A three-way switch: Trabajo, Gasto, Otro ingreso. Each opens its own form, so the switch needs no JavaScript.
 - "Fecha", a date input, today by default.
 - A job: "¿Qué servicio hiciste?", the services as radio rows with name and price, the chosen one tinted yellow; "Cantidad", with − and + buttons around the number, 1 at least; "Precio de cada uno", with "Cámbialo si cobraste otro precio."; "Materiales de cada uno", with "Pon 0 si el cliente trajo los materiales."; a summary with "Cobras", "Materiales" and "Te deja", updated while typing; "Guardar"; and "Guardar y registrar otro", which keeps the date and the service, sets the quantity back to 1 and confirms "**Guardado:** 2 × Basta de pantalón, $16.000. Sigue con el próximo."
-- One Stimulus controller fills in the price and materials of the chosen service, runs the − and + buttons and keeps the summary up to date. No other JavaScript.
+- One Stimulus controller fills in the price and materials of the chosen service, runs the − and + buttons and keeps the summary up to date. Apart from the one that formats money fields, no other JavaScript.
 - An expense: "¿En qué gastaste?", with the placeholder "Ej.: repuesto de la máquina"; "Valor"; the note "Las compras de telas, hilos y cremalleras no van aquí: ya están en los materiales de cada servicio."; "Guardar"; and "Últimos gastos", the last ten, with concept, date and amount.
 - Other income: "¿De dónde salió?", with the placeholder "Ej.: venta de retazos"; "Valor"; the note about income that isn't the shop's (decided after the approved screens); "Guardar"; and "Últimos otros ingresos".
 - Editing a job or an entry uses the same form, plus "Borrar".
@@ -213,6 +213,7 @@ Done when the empty shell matches the approved screens at 390px and holds up at 
 
 #### M3. The shop: services, fixed costs and work days (6 h)
 
+- [ ] Money fields: one Stimulus controller that lets the user type digits only and formats the amount as they type. It filters on `input`, since Android keyboards don't report keys reliably in `keydown`.
 - [ ] Services: the list with what each one leaves, create, edit, deactivate and activate, and the folded list of deactivated ones.
 - [ ] Fixed costs: the list with this month's amounts and total, add, change from a month (`FixedCosts::ChangeService`), remove from a month, the averaged mark, and the help about the home's bills.
 - [ ] Work days on the fixed costs page, with the month's work days and fixed costs per work day.
