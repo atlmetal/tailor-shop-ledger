@@ -1,2 +1,20 @@
 es-CO:
   app_name: Tailor Shop Ledger
+  activerecord:
+    attributes:
+      shop:
+        name: Nombre
+        started_on: Fecha de inicio
+      user:
+        email_address: Correo electrónico
+        name: Nombre
+        password: Contraseña
+  sessions:
+    create:
+      invalid: Correo o contraseña incorrectos.
+      rate_limited: Demasiados intentos. Vuelve a intentarlo en unos minutos.
+    new:
+      email_address: Correo electrónico
+      password: Contraseña
+      submit: Iniciar sesión
+      title: Iniciar sesión

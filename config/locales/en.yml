@@ -1,2 +1,20 @@
 en:
   app_name: Tailor Shop Ledger
+  activerecord:
+    attributes:
+      shop:
+        name: Name
+        started_on: Start date
+      user:
+        email_address: Email address
+        name: Name
+        password: Password
+  sessions:
+    create:
+      invalid: Try another email address or password.
+      rate_limited: Too many attempts. Try again in a few minutes.
+    new:
+      email_address: Email address
+      password: Password
+      submit: Sign in
+      title: Sign in
