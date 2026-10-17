@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Tailor Shop Ledger: a Ruby on Rails app that shows small tailoring and alteration shops whether their work pays. A shop records the services it offers, with their price and material cost; the jobs it charges for; its fixed costs, occasional expenses and other income. The app turns that into a goal for the day and results by day, week, month, semester and year. Several shops share one installation, each with one user who usually works alone, from a phone, and has never kept accounts.
 
-It is the owner's public portfolio project, licensed AGPL-3.0, and real shops use it at `modisteria.yunquelabs.com`. Code quality and a clear README matter as much as features. Built by a single developer in limited time: keep it small, finished and well tested rather than broad and half-built.
+It is the owner's public portfolio project, licensed AGPL-3.0, and real shops use it at `taller.yunquelabs.com`. Code quality and a clear README matter as much as features. Built by a single developer in limited time: keep it small, finished and well tested rather than broad and half-built.
 
 ## Work plan
 
@@ -40,7 +40,7 @@ Costs are what these shops struggle with, so the rules under Business rules in `
 - Authentication with the Rails 8 generator, not Devise, without the email password reset.
 - RSpec with FactoryBot, and system specs for the critical flows.
 - RuboCop (rubocop-rails-omakase, plus the rubocop-rspec cops that back the spec rules) and Brakeman, both run in GitHub Actions CI, which also builds the demo seeds.
-- Deploy with Kamal to the VPS that runs the owner's gym app, at `modisteria.yunquelabs.com`, with its own PostgreSQL accessory, nightly backups to a Cloudflare R2 bucket of its own, a Healthchecks.io check on the backup, and its own Sentry project for errors.
+- Deploy with Kamal to the VPS that runs the owner's gym app, at `taller.yunquelabs.com`, with its own PostgreSQL accessory, nightly backups to a Cloudflare R2 bucket of its own, a Healthchecks.io check on the backup, and its own Sentry project for errors.
 - Ruby 4.0.7 through rbenv, pinned in `.ruby-version`. The machine's global Ruby is 3.0.6, too old for Rails 8.
 
 ## Reusing the gym app

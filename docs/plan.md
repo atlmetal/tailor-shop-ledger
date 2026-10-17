@@ -243,8 +243,8 @@ Done when query specs cover a period in progress, a period across two months, th
 
 #### M6. Deploy and backups (6 h)
 
-- [ ] DNS: in Cloudflare, under `yunquelabs.com`, an `A` record named `modisteria` pointing at the gym app's server, with the proxy off ("DNS only"), so kamal-proxy can get its certificate.
-- [ ] Kamal: service `tailor_shop_ledger` at `modisteria.yunquelabs.com`, on the gym app's server, with its local registry (`localhost:5555`), PostgreSQL 17 as an accessory with its own volume and no published port, and the secrets in `.kamal/secrets` read from the encrypted credentials, whose `config/master.key` is never committed. The proxy also serves the gym app: never run `kamal proxy reboot` without warning the owner.
+- [ ] DNS: in Cloudflare, under `yunquelabs.com`, an `A` record named `taller` pointing at the gym app's server, with the proxy off ("DNS only"), so kamal-proxy can get its certificate.
+- [ ] Kamal: service `tailor_shop_ledger` at `taller.yunquelabs.com`, on the gym app's server, with its local registry (`localhost:5555`), PostgreSQL 17 as an accessory with its own volume and no published port, and the secrets in `.kamal/secrets` read from the encrypted credentials, whose `config/master.key` is never committed. The proxy also serves the gym app: never run `kamal proxy reboot` without warning the owner.
 - [ ] `BackupJob` every night at 3:30 a.m. Bogotá time, after the gym app's at 3, copied from the gym app: a `pg_dump` of the primary database, uploaded with curl to the R2 bucket `tailor-shop-ledger-backups` (a lifecycle rule deletes objects after 30 days; its token has Object Read & Write on that bucket only). Then a ping to a Healthchecks.io check on the same schedule, in America/Bogota, or to the check's `/fail` URL when the backup fails. The ping URL lives in the encrypted credentials.
 - [ ] Sentry: a project of its own, errors only, with the gym app's initializer, which keeps personal data and the row PostgreSQL quotes in its errors out of the events.
 - [ ] Restore drill: download a scheduled backup from R2, restore it into a local database and run the app on it.
