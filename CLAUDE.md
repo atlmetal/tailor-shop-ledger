@@ -93,3 +93,12 @@ Most users run the app from an Android phone and some from a computer, so every 
 - `create` only in model, request, query and system specs, which need real rows. Service, facade and helper specs never touch the database.
 - RSpec DSL only: `describe`, `context`, `let`, `subject`, `before`, `shared_examples` and matchers. No `def`, instance variables, loops or conditionals in spec files.
 - Every controller that reads or writes a shop's records has request specs showing that a user of another shop gets a 404.
+
+## Commands
+
+- Set up: `bin/setup` installs gems, prepares the development and test databases on the local PostgreSQL and starts `bin/dev` (`--skip-server` to skip that).
+- Run: `bin/dev` (Puma and the Tailwind watcher) on http://localhost:3000. `APP_LOCALE` picks the locale, `en` or `es-CO`; it defaults to `en`, and to `es-CO` in production. Any other value stops the app from booting. Without a TTY, keep stdin open (`tail -f /dev/null | bin/dev`): the Tailwind watcher exits on EOF and foreman then stops Puma.
+- Test: `bin/rails spec` builds the Tailwind CSS and then runs RSpec; system specs (headless Chrome) need a fresh build to see the layout. `bundle exec rspec` is enough while `bin/dev` keeps the CSS built, and `bundle exec rspec spec/types/pesos_type_spec.rb:9` runs one example.
+- Lint and security: `bin/rubocop`, `bin/brakeman`, `bin/bundler-audit`, `bin/importmap audit`.
+- Everything CI runs, locally: `bin/ci`.
+- Deploy: not set up yet (M6).
