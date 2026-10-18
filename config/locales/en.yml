@@ -26,6 +26,11 @@ en:
         starts_on: From
   activerecord:
     attributes:
+      entry:
+        amount: Amount
+        concept: Concept
+        kind: Kind
+        occurred_on: Date
       job:
         done_on: Date
         material_cost: Materials of each
@@ -53,6 +58,11 @@ en:
           association_invalid: belongs to another shop
           tenant_mismatch: belongs to another shop
       models:
+        entry:
+          attributes:
+            occurred_on:
+              greater_than_or_equal_to: can't be before you started keeping your accounts here
+              less_than_or_equal_to: can't be after today
         job:
           attributes:
             done_on:
@@ -79,8 +89,36 @@ en:
   date:
     formats:
       day: "%A, %B %-d"
+      day_month: "%B %-d"
       month: "%B"
       month_year: "%B %Y"
+  entries:
+    edit:
+      confirm_delete:
+        expense: "Delete this expense? It can't be undone."
+        income: "Delete this income? It can't be undone."
+      delete: Delete
+      title:
+        expense: Edit expense
+        income: Edit other income
+    form:
+      cancel: Cancel
+      concept:
+        expense: What did you spend on?
+        income: Where did it come from?
+      note:
+        expense: "Fabric, thread and zippers you buy don't go here: they're already in each service's materials."
+        income: "Money that isn't the shop's, like the rent of a room of the home, doesn't go here: it would change the shop's result."
+      placeholder:
+        expense: "E.g.: a machine part"
+        income: "E.g.: selling fabric scraps"
+      save: Save
+    latest:
+      title:
+        expense: Latest expenses
+        income: Latest other income
+    new:
+      title: Record
   fixed_costs:
     change_form:
       cancel: Cancel
@@ -182,6 +220,11 @@ en:
       submit: Sign in
       title: Sign in
   shared:
+    record_switch:
+      expense: Expense
+      income: Other income
+      job: Job
+      label: What you're recording
     taller_header:
       fixed_costs: Fixed costs
       label: Shop sections

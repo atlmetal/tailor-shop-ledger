@@ -26,6 +26,11 @@ es-CO:
         starts_on: Desde
   activerecord:
     attributes:
+      entry:
+        amount: Valor
+        concept: Concepto
+        kind: Tipo
+        occurred_on: Fecha
       job:
         done_on: Fecha
         material_cost: Materiales de cada uno
@@ -53,6 +58,11 @@ es-CO:
           association_invalid: es de otro taller
           tenant_mismatch: es de otro taller
       models:
+        entry:
+          attributes:
+            occurred_on:
+              greater_than_or_equal_to: no puede ser antes de que empezaras a llevar las cuentas aquí
+              less_than_or_equal_to: no puede ser después de hoy
         job:
           attributes:
             done_on:
@@ -79,8 +89,36 @@ es-CO:
   date:
     formats:
       day: "%A %-d de %B"
+      day_month: "%-d de %B"
       month: "%B"
       month_year: "%B de %Y"
+  entries:
+    edit:
+      confirm_delete:
+        expense: "¿Borrar este gasto? No se puede deshacer."
+        income: "¿Borrar este ingreso? No se puede deshacer."
+      delete: Borrar
+      title:
+        expense: Editar gasto
+        income: Editar otro ingreso
+    form:
+      cancel: Cancelar
+      concept:
+        expense: "¿En qué gastaste?"
+        income: "¿De dónde salió?"
+      note:
+        expense: "Las compras de telas, hilos y cremalleras no van aquí: ya están en los materiales de cada servicio."
+        income: "El dinero que no es del taller, como el arriendo de una pieza de la casa, no va aquí: cambiaría el resultado del taller."
+      placeholder:
+        expense: "Ej.: repuesto de la máquina"
+        income: "Ej.: venta de retazos"
+      save: Guardar
+    latest:
+      title:
+        expense: Últimos gastos
+        income: Últimos otros ingresos
+    new:
+      title: Registrar
   fixed_costs:
     change_form:
       cancel: Cancelar
@@ -182,6 +220,11 @@ es-CO:
       submit: Iniciar sesión
       title: Iniciar sesión
   shared:
+    record_switch:
+      expense: Gasto
+      income: Otro ingreso
+      job: Trabajo
+      label: Qué vas a registrar
     taller_header:
       fixed_costs: Gastos fijos
       label: Secciones del taller

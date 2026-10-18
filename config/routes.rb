@@ -9,6 +9,9 @@ Rails.application.routes.draw do
   resource :work_days, only: :update
 
   resources :jobs, only: %i[ new create edit update destroy ]
+  # Expenses and other income are both entries: one controller, told apart by the kind each route gives.
+  resources :expenses, controller: "entries", only: %i[ new create edit update destroy ], defaults: { kind: "expense" }
+  resources :incomes, controller: "entries", only: %i[ new create edit update destroy ], defaults: { kind: "income" }
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.

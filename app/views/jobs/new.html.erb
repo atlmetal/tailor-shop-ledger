@@ -1,5 +1,7 @@
 <h1 class="page-title"><%= t(".title") %></h1>
 
+<%= render "shared/record_switch" %>
+
 <%= job_saved_notice %>
 
 <%= render layout: "form", locals: { job: @job, services: @services } do |form| %>

@@ -1,0 +1,10 @@
+<h1 class="page-title"><%= t(".title.#{@entry.kind}") %></h1>
+
+<%= render layout: "form", locals: { entry: @entry } do |form| %>
+  <div class="flex gap-2.5">
+    <%= form.submit t("entries.form.save"), class: "btn-primary flex-1" %>
+    <%= link_to t("entries.form.cancel"), record_return_path(@entry), class: "btn-secondary w-auto" %>
+  </div>
+<% end %>
+
+<%= button_to t(".delete"), entry_path_for(@entry), method: :delete, form: { data: { turbo_confirm: t(".confirm_delete.#{@entry.kind}") } }, class: "btn-link mt-3 text-loss-ink" %>

@@ -10,9 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_18_105253) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_18_110144) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "entries", force: :cascade do |t|
+    t.bigint "shop_id", null: false
+    t.string "kind", null: false
+    t.date "occurred_on", null: false
+    t.string "concept", null: false
+    t.integer "amount", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["shop_id", "occurred_on"], name: "index_entries_on_shop_id_and_occurred_on"
+    t.check_constraint "amount > 0", name: "entries_amount_check"
+    t.check_constraint "kind::text = ANY (ARRAY['expense'::character varying, 'income'::character varying]::text[])", name: "entries_kind_check"
+  end
 
   create_table "fixed_cost_amounts", force: :cascade do |t|
     t.bigint "shop_id", null: false
@@ -92,6 +105,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_105253) do
     t.index ["shop_id"], name: "index_users_on_shop_id", unique: true
   end
 
+  add_foreign_key "entries", "shops"
   add_foreign_key "fixed_cost_amounts", "fixed_costs"
   add_foreign_key "fixed_cost_amounts", "shops"
   add_foreign_key "fixed_costs", "shops"

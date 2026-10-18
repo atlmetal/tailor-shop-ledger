@@ -1,0 +1,9 @@
+<h1 class="page-title"><%= t(".title") %></h1>
+
+<%= render "shared/record_switch" %>
+
+<%= render layout: "form", locals: { entry: @entry } do |form| %>
+  <%= form.submit t("entries.form.save"), class: "btn-primary" %>
+<% end %>
+
+<%= latest_entries @latest_entries, kind: @entry.kind %>
