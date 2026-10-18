@@ -181,7 +181,7 @@ The approved design is five phone screens at 390px, in Spanish, with sample data
 
 ### v0.1: one shop's accounts, deployed and backed up (about 42 hours)
 
-The first shop starts using the app as soon as it can record its work and see Today, so the deploy comes before Reports.
+No shop uses the app, the first one included, until v0.1 is finished. The deploy still comes before Reports, so the server, the backups and their restore are proven early.
 
 #### M0. Setup (4 h)
 
@@ -253,9 +253,8 @@ Done when query specs cover a period in progress, a period across two months, th
 - [ ] `docs/deploy.md`, adapted from the gym app's: the server it shares, DNS, Kamal, shops and passwords, backups, restoring and monitoring. The README points to it.
 - [ ] With both apps running, check the server's memory (`free -m` and `docker stats --no-stream`).
 - [ ] On an Android phone, Chrome puts the app on the home screen. If Chrome asks for a service worker, register the one Rails generated, which caches nothing.
-- [ ] Create the first shop with the rake task, starting on the first day it wrote down on paper.
 
-Done when the app runs over HTTPS next to the gym app; a scheduled backup has been restored following the written steps; Healthchecks.io got the night's ping; and the first shop has its services, fixed costs and work days, and has entered the days it wrote down on paper, with the same totals as the paper.
+Done when the app runs over HTTPS next to the gym app; a scheduled backup has been restored following the written steps; and Healthchecks.io got the night's ping.
 
 #### M7. Reports (6 h)
 
@@ -272,6 +271,12 @@ Done when query specs cover the boundaries of weeks, semesters and years, a peri
 - [ ] Tag `v0.1.0`.
 
 Done when `bin/rails db:seed` on an empty database gives the demo shown in the screenshots.
+
+#### The first shop
+
+- [ ] Create the first shop with the rake task, starting on the first day it wrote down on paper.
+
+Done when the first shop has its services, fixed costs and work days, and has entered the days it wrote down on paper, with the same totals as the paper.
 
 ### Before a second shop
 
