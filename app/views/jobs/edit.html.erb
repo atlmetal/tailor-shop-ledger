@@ -1,0 +1,10 @@
+<h1 class="page-title"><%= t(".title") %></h1>
+
+<%= render layout: "form", locals: { job: @job, services: @services } do |form| %>
+  <div class="flex gap-2.5">
+    <%= form.submit t("jobs.form.save"), class: "btn-primary flex-1" %>
+    <%= link_to t("jobs.form.cancel"), record_return_path(@job), class: "btn-secondary w-auto" %>
+  </div>
+<% end %>
+
+<%= button_to t(".delete"), job_path(@job), method: :delete, form: { data: { turbo_confirm: t(".confirm_delete") } }, class: "btn-link mt-3 text-loss-ink" %>

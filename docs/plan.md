@@ -225,7 +225,7 @@ Done when model and service specs cover a change from a later month leaving the 
 #### M4. Recording (5 h)
 
 - [x] Record a job: date, service, quantity, price, materials, the live summary, "Guardar" and "Guardar y registrar otro", with one Stimulus controller.
-- [ ] Edit and delete jobs.
+- [x] Edit and delete jobs.
 - [ ] Record, edit and delete expenses and other income, with their notes and recent lists.
 
 Done when a system spec records two jobs in a row with "Guardar y registrar otro", changing the price of one; model specs cover the copied price and material cost and the allowed dates; and request specs cover isolation.

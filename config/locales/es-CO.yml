@@ -116,7 +116,12 @@ es-CO:
   jobs:
     create:
       saved: "%{quantity} × %{service}, %{charged}"
+    edit:
+      confirm_delete: "¿Borrar este trabajo? No se puede deshacer."
+      delete: Borrar
+      title: Editar trabajo
     form:
+      cancel: Cancelar
       charged: Cobras
       leaves: Te deja
       material_cost_hint: Pon 0 si el cliente trajo los materiales.

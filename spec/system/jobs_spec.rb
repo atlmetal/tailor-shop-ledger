@@ -34,4 +34,17 @@ RSpec.describe "Jobs", type: :system do
     expect(page).to have_current_path(root_path)
     expect(jobs).to eq([ [ "Basta de pantalón", 2, 8_000, 500 ], [ "Basta de pantalón", 1, 10_000, 500 ] ])
   end
+
+  context "when editing a job" do
+    let(:job) { create(:job, service: ActsAsTenant.with_tenant(user.shop) { Service.find_by!(name: "Basta de pantalón") }) }
+
+    before { visit edit_job_path(job) }
+
+    it "deletes it once confirmed" do
+      accept_confirm("Delete this job? It can't be undone.") { click_on "Delete" }
+
+      expect(page).to have_current_path(root_path)
+      expect(jobs).to be_empty
+    end
+  end
 end

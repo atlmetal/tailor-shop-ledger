@@ -116,7 +116,12 @@ en:
   jobs:
     create:
       saved: "%{quantity} × %{service}, %{charged}"
+    edit:
+      confirm_delete: "Delete this job? It can't be undone."
+      delete: Delete
+      title: Edit job
     form:
+      cancel: Cancel
       charged: You charge
       leaves: Leaves you
       material_cost_hint: Enter 0 if the customer brought the materials.
