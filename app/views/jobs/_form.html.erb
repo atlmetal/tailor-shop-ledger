@@ -1,0 +1,68 @@
+<%= form_with model: job, class: "mt-5 flex flex-col gap-5", data: { controller: "job-form", action: "input->job-form#update", job_form_delimiter_value: t("number.currency.format.delimiter"), job_form_unit_value: t("number.currency.format.unit") } do |form| %>
+  <div>
+    <%= form.label :done_on, class: "form-label" %>
+    <%= record_date_field form, :done_on %>
+    <%= field_error job, :done_on %>
+  </div>
+
+  <fieldset class="min-w-0">
+    <legend class="form-label mb-2"><%= t(".service") %></legend>
+    <div class="flex flex-col gap-2">
+      <% services.each do |service| %>
+        <label class="service-option">
+          <%= form.radio_button :service_id, service.id, required: true, class: "size-5.5 shrink-0 accent-ink",
+                data: { action: "change->job-form#pickService", price: service.price, material_cost: service.material_cost } %>
+          <span class="min-w-0 flex-1 font-semibold"><%= service.name %></span>
+          <span class="font-mono text-note text-graphite"><%= pesos(service.price) %></span>
+        </label>
+      <% end %>
+    </div>
+    <%= field_error job, :service %>
+  </fieldset>
+
+  <div>
+    <%= form.label :quantity, class: "form-label" %>
+    <div class="mt-1.5 flex items-center gap-3">
+      <button type="button" class="stepper" aria-label="<%= t(".one_less") %>" data-action="job-form#decrease">
+        <svg aria-hidden="true" class="size-5.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14" /></svg>
+      </button>
+      <%= form.number_field :quantity, min: 1, step: 1, required: true, class: "quantity-field", data: { job_form_target: "quantity" } %>
+      <button type="button" class="stepper" aria-label="<%= t(".one_more") %>" data-action="job-form#increase">
+        <svg aria-hidden="true" class="size-5.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14" /><path d="M5 12h14" /></svg>
+      </button>
+    </div>
+    <%= field_error job, :quantity %>
+  </div>
+
+  <div>
+    <%= form.label :price, class: "form-label" %>
+    <%= money_field form, :price, required: true, data: { job_form_target: "price" } %>
+    <p class="form-hint"><%= t(".price_hint") %></p>
+    <%= field_error job, :price %>
+  </div>
+
+  <div>
+    <%= form.label :material_cost, class: "form-label" %>
+    <%= money_field form, :material_cost, required: true, data: { job_form_target: "materialCost" } %>
+    <p class="form-hint"><%= t(".material_cost_hint") %></p>
+    <%= field_error job, :material_cost %>
+  </div>
+
+  <div class="panel flex flex-col gap-2 p-4">
+    <div class="flex justify-between gap-3">
+      <span><%= t(".charged") %></span>
+      <span class="font-mono font-medium" data-job-form-target="charged"><%= pesos(job.charged) %></span>
+    </div>
+    <div class="flex justify-between gap-3">
+      <span><%= t(".materials") %></span>
+      <span class="font-mono font-medium" data-job-form-target="materials"><%= pesos(-job.materials) %></span>
+    </div>
+    <div aria-hidden="true" class="my-1 border-t-2 border-dashed border-tick"></div>
+    <div class="flex items-baseline justify-between gap-3">
+      <span class="font-extrabold"><%= t(".leaves") %></span>
+      <span class="font-mono text-2xl font-bold" data-job-form-target="leaves"><%= pesos(job.leaves) %></span>
+    </div>
+  </div>
+
+  <%= yield form %>
+<% end %>

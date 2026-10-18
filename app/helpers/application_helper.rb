@@ -36,14 +36,21 @@ module ApplicationHelper
   end
 
   # A pesos field with the "$" before it, which takes digits only and groups them as the user types.
-  def money_field(form, attribute, **options)
+  def money_field(form, attribute, data: {}, **options)
+    data = data.merge(controller: "money-field", action: [ "money-field#format", data[:action] ].compact.join(" "),
+      money_field_delimiter_value: t("number.currency.format.delimiter"))
+
     tag.div(class: "money-field") do
       safe_join([
         tag.span(t("number.currency.format.unit"), class: "font-normal text-graphite", aria: { hidden: true }),
-        form.text_field(attribute, value: number_with_delimiter(form.object.public_send(attribute)), inputmode: "numeric", autocomplete: "off",
-          data: { controller: "money-field", action: "money-field#format", money_field_delimiter_value: t("number.currency.format.delimiter") }, **options)
+        form.text_field(attribute, value: number_with_delimiter(form.object.public_send(attribute)), inputmode: "numeric", autocomplete: "off", data:, **options)
       ])
     end
+  end
+
+  # A date a shop's record counts on: from the day the shop started keeping its accounts here to today.
+  def record_date_field(form, attribute)
+    form.date_field attribute, min: current_tenant.started_on, max: Date.current, required: true, class: "form-input"
   end
 
   # "Martes 20 de octubre" in es-CO, whose day names are lowercase; "Tuesday, October 20" in en.
@@ -51,8 +58,9 @@ module ApplicationHelper
     l(date, format: :day).upcase_first
   end
 
+  # Notices and alerts at the top of the page. Other flash keys, like the job form's "Guardado:", show in place.
   def flash_messages
-    safe_join(flash.map { |type, message| tag.p(message, class: "flash-#{type}", role: "status") })
+    safe_join(flash.to_hash.slice("notice", "alert").map { |type, message| tag.p(message, class: "flash-#{type}", role: "status") })
   end
 
   def field_error(record, attribute)

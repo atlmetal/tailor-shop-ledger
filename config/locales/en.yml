@@ -26,6 +26,13 @@ en:
         starts_on: From
   activerecord:
     attributes:
+      job:
+        done_on: Date
+        material_cost: Materials of each
+        price: Price of each
+        quantity: Quantity
+        service: Service
+        service_id: Service
       service:
         material_cost: Materials
         name: Name
@@ -41,7 +48,18 @@ en:
         password_challenge: Current password
         password_confirmation: Password confirmation
     errors:
+      messages:
+        acts_as_tenant:
+          association_invalid: belongs to another shop
+          tenant_mismatch: belongs to another shop
       models:
+        job:
+          attributes:
+            done_on:
+              greater_than_or_equal_to: can't be before you started keeping your accounts here
+              less_than_or_equal_to: can't be after today
+            service:
+              required: isn't chosen
         service:
           attributes:
             name:
@@ -95,6 +113,24 @@ en:
       goal: in fixed costs. It's the goal you see in Today.
       title: Days you work
       works_html: In %{month} you work %{days}. Each day must cover
+  jobs:
+    create:
+      saved: "%{quantity} × %{service}, %{charged}"
+    form:
+      charged: You charge
+      leaves: Leaves you
+      material_cost_hint: Enter 0 if the customer brought the materials.
+      materials: Materials
+      one_less: One less
+      one_more: One more
+      price_hint: Change it if you charged another price.
+      save: Save
+      save_and_another: Save and record another
+      service: Which service did you do?
+    new:
+      title: Record
+    saved:
+      text_html: "<strong>Saved:</strong> %{job}. Go on with the next one."
   layouts:
     navigation:
       account: Your account

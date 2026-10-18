@@ -224,7 +224,7 @@ Done when model and service specs cover a change from a later month leaving the 
 
 #### M4. Recording (5 h)
 
-- [ ] Record a job: date, service, quantity, price, materials, the live summary, "Guardar" and "Guardar y registrar otro", with one Stimulus controller.
+- [x] Record a job: date, service, quantity, price, materials, the live summary, "Guardar" and "Guardar y registrar otro", with one Stimulus controller.
 - [ ] Edit and delete jobs.
 - [ ] Record, edit and delete expenses and other income, with their notes and recent lists.
 

@@ -82,6 +82,23 @@ RSpec.describe ApplicationHelper, type: :helper do
     before { flash[:notice] = "Saved" }
 
     it { is_expected.to eq('<p class="flash-notice" role="status">Saved</p>') }
+
+    context "with a message a page shows in place" do
+      before { flash[:saved] = "2 × Basta de pantalón, $16,000" }
+
+      it { is_expected.to eq('<p class="flash-notice" role="status">Saved</p>') }
+    end
+  end
+
+  describe "#record_date_field" do
+    subject(:field) { helper.form_with(scope: :job, url: "/jobs") { |form| helper.record_date_field(form, :done_on) } }
+
+    before do
+      travel_to Date.new(2026, 10, 20)
+      allow(helper).to receive(:current_tenant).and_return(instance_double(Shop, started_on: Date.new(2026, 8, 3)))
+    end
+
+    it { is_expected.to have_css("input[type='date'][name='job[done_on]'][min='2026-08-03'][max='2026-10-20'][required]") }
   end
 
   describe "#field_error" do

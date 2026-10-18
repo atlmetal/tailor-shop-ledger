@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_18_095921) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_18_105253) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -34,6 +34,20 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_095921) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["shop_id"], name: "index_fixed_costs_on_shop_id"
+  end
+
+  create_table "jobs", force: :cascade do |t|
+    t.bigint "shop_id", null: false
+    t.bigint "service_id", null: false
+    t.date "done_on", null: false
+    t.integer "quantity", null: false
+    t.integer "price", null: false
+    t.integer "material_cost", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["service_id"], name: "index_jobs_on_service_id"
+    t.index ["shop_id", "done_on"], name: "index_jobs_on_shop_id_and_done_on"
+    t.check_constraint "quantity >= 1 AND price >= 0 AND material_cost >= 0", name: "jobs_amounts_check"
   end
 
   create_table "services", force: :cascade do |t|
@@ -81,6 +95,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_095921) do
   add_foreign_key "fixed_cost_amounts", "fixed_costs"
   add_foreign_key "fixed_cost_amounts", "shops"
   add_foreign_key "fixed_costs", "shops"
+  add_foreign_key "jobs", "services"
+  add_foreign_key "jobs", "shops"
   add_foreign_key "services", "shops"
   add_foreign_key "sessions", "users"
   add_foreign_key "users", "shops"

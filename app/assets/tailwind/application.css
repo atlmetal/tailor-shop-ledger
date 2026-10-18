@@ -79,6 +79,11 @@
   .change-form:has(option:nth-child(2):checked) .change-help-2,
   .change-form:has(option:nth-child(3):checked) .change-help-3 { @apply block; }
 
+  /* The job form: a service to choose, tinted while chosen, and the quantity between its − and + buttons. */
+  .service-option { @apply flex min-h-14 cursor-pointer items-center gap-3 rounded-small border-2 border-edge bg-white px-3.5 py-2 has-checked:border-ink has-checked:bg-profit; }
+  .stepper { @apply flex size-13 shrink-0 cursor-pointer items-center justify-center rounded-button border-[1.5px] border-control bg-white hover:bg-paper; }
+  .quantity-field { @apply w-16 [appearance:textfield] bg-transparent text-center font-mono text-[1.75rem] font-bold [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none; }
+
   /* A work day's toggle: in ink while the shop works that day. */
   .work-day { @apply flex min-h-12 w-full cursor-pointer items-center justify-center rounded-small border-[1.5px] border-control bg-white text-note font-bold aria-pressed:border-ink aria-pressed:bg-ink aria-pressed:text-white; }
 

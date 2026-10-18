@@ -26,6 +26,13 @@ es-CO:
         starts_on: Desde
   activerecord:
     attributes:
+      job:
+        done_on: Fecha
+        material_cost: Materiales de cada uno
+        price: Precio de cada uno
+        quantity: Cantidad
+        service: Servicio
+        service_id: Servicio
       service:
         material_cost: Materiales
         name: Nombre
@@ -41,7 +48,18 @@ es-CO:
         password_challenge: Contraseña actual
         password_confirmation: Confirmación de contraseña
     errors:
+      messages:
+        acts_as_tenant:
+          association_invalid: es de otro taller
+          tenant_mismatch: es de otro taller
       models:
+        job:
+          attributes:
+            done_on:
+              greater_than_or_equal_to: no puede ser antes de que empezaras a llevar las cuentas aquí
+              less_than_or_equal_to: no puede ser después de hoy
+            service:
+              required: no está elegido
         service:
           attributes:
             name:
@@ -95,6 +113,24 @@ es-CO:
       goal: de gastos fijos. Es la meta que ves en Hoy.
       title: Días que trabajas
       works_html: En %{month} trabajas %{days}. Cada día debe cubrir
+  jobs:
+    create:
+      saved: "%{quantity} × %{service}, %{charged}"
+    form:
+      charged: Cobras
+      leaves: Te deja
+      material_cost_hint: Pon 0 si el cliente trajo los materiales.
+      materials: Materiales
+      one_less: Quitar uno
+      one_more: Agregar uno
+      price_hint: Cámbialo si cobraste otro precio.
+      save: Guardar
+      save_and_another: Guardar y registrar otro
+      service: "¿Qué servicio hiciste?"
+    new:
+      title: Registrar
+    saved:
+      text_html: "<strong>Guardado:</strong> %{job}. Sigue con el próximo."
   layouts:
     navigation:
       account: Tu cuenta
