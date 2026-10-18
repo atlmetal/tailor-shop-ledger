@@ -40,13 +40,18 @@ RSpec.configure do |config|
   # Phone first: tag an example :desktop for the wide layout. Each size has its own driver
   # name, so Capybara never reuses a browser window of the other size.
   config.before(:each, type: :system) do |example|
-    name, screen_size = example.metadata[:desktop] ? [ :desktop_chrome, [ 1280, 800 ] ] : [ :phone_chrome, [ 390, 844 ] ]
+    desktop = example.metadata[:desktop]
+    name, (width, height) = desktop ? [ :desktop_chrome, [ 1280, 800 ] ] : [ :phone_chrome, [ 390, 844 ] ]
 
     # Chrome warns after a sign-in with a leaked password, like the factories' password123, and its warning
     # takes the focus, so the next example's typing never reaches the page.
-    driven_by :selenium, using: :headless_chrome, screen_size:, options: { name: } do |options|
+    driven_by :selenium, using: :headless_chrome, screen_size: [ width, height ], options: { name: } do |options|
       options.add_preference("profile.password_manager_leak_detection", false)
     end
+
+    # Headless Chrome counts its own bars in the window, which would leave the page about 140px shorter, so the
+    # page gets its size directly. On a phone, scrollbars float over the page instead of narrowing it.
+    page.driver.browser.execute_cdp("Emulation.setDeviceMetricsOverride", width:, height:, deviceScaleFactor: 1, mobile: !desktop)
   end
 
   # Icon buttons and links are found by their accessible name.
