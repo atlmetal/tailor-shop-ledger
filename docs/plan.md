@@ -206,7 +206,7 @@ Done when request specs show that a user only reaches their own shop, and that a
 
 - [x] The approved visual direction: Atkinson Hyperlegible Next and Mono self-hosted, the color tokens in Tailwind's `@theme`, and the layout with the shop's name, the account button and the tab bar, plus its wide layout.
 - [x] Sign-in and account pages in the same style.
-- [ ] Rails 8's PWA manifest, with the app's name and 192 and 512 px icons (maskable), linked from the layout.
+- [x] Rails 8's PWA manifest, with the app's name and 192 and 512 px icons (maskable), linked from the layout.
 
 Done when the empty shell matches the approved screens at 390px and holds up at 1280px, in screenshots the owner approves.
 
