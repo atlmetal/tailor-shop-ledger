@@ -7,7 +7,7 @@ module Users
     end
 
     def call
-      password = SecureRandom.base58(16)
+      password = User.generate_password
 
       User.transaction do
         @user.update!(password:)

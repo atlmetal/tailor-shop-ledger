@@ -53,4 +53,8 @@ RSpec.describe User, type: :model do
 
     it { expect { user.save }.to raise_error(ActiveRecord::RecordNotUnique) }
   end
+
+  describe ".generate_password" do
+    it { expect(described_class.generate_password).to match(/\A[a-km-np-z2-9]{12}\z/) }
+  end
 end

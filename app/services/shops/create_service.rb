@@ -12,7 +12,7 @@ module Shops
     end
 
     def call
-      password = SecureRandom.base58(16)
+      password = User.generate_password
 
       Shop.transaction do
         shop = Shop.create!(name: @name, started_on: @started_on)

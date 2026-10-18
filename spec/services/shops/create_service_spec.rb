@@ -8,13 +8,13 @@ RSpec.describe Shops::CreateService do
   let(:user) { instance_double(User) }
 
   before do
-    allow(SecureRandom).to receive(:base58).with(16).and_return("Gen3ratedPassw0rd")
+    allow(User).to receive(:generate_password).and_return("k7m2x9pq4hta")
     allow(Shop).to receive(:transaction).and_yield
     allow(Shop).to receive(:create!).with(name: "Modistería La Puntada", started_on:).and_return(shop)
-    allow(User).to receive(:create!).with(shop:, name: "Ana Gómez", email_address: "ana@example.com", password: "Gen3ratedPassw0rd").and_return(user)
+    allow(User).to receive(:create!).with(shop:, name: "Ana Gómez", email_address: "ana@example.com", password: "k7m2x9pq4hta").and_return(user)
   end
 
-  it { is_expected.to have_attributes(shop:, user:, password: "Gen3ratedPassw0rd") }
+  it { is_expected.to have_attributes(shop:, user:, password: "k7m2x9pq4hta") }
 
   it "creates the shop and its user in one transaction" do
     call

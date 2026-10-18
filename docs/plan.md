@@ -31,7 +31,7 @@ Decided by the owner on 2026-10-16 and 2026-10-17.
 - **No super-admin UI.** The operator creates a shop and its user with a rake task, gives a user a new password with another, and uses the console for support.
 - **No change history.** No paper_trail.
 - **One locale and time zone per installation**, as in the gym app. `en` or `es-CO`, through `APP_LOCALE`: `en` by default, the project's language, and `es-CO` by default in production. Always `America/Bogota`.
-- **No outgoing email in v0.1.** Users change their own password; a forgotten one goes through the operator.
+- **No outgoing email in v0.1.** Users change their own password; a forgotten one goes through the operator. Generated passwords are 12 lowercase letters and digits, without l, 1, o or 0, so the operator can read one out and the user can type it on a phone.
 - **Responsive.** Built for phones first and used the same way from a computer.
 - **Installable, not offline.** Rails 8's PWA manifest puts the app's icon on the phone's home screen, named "Taller" after the subdomain for every shop: the shop's own name is at the top of every page, and a long one would get cut off under the icon. The app needs a connection.
 - **Visual direction: "tape measure"** (approved as five phone screens, see Screens):
