@@ -1,9 +1,10 @@
 class ServicesController < ApplicationController
   before_action :set_service, only: %i[ edit update ]
 
+  # In the order they were added, so a shop can put the services it does most first.
   def index
-    @services = Service.active.order(:name)
-    @inactive_services = Service.inactive.order(:name)
+    @services = Service.active.order(:id)
+    @inactive_services = Service.inactive.order(:id)
   end
 
   def new

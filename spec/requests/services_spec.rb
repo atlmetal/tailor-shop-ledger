@@ -7,6 +7,7 @@ RSpec.describe "Services", type: :request do
   describe "GET /services" do
     before do
       create(:service, shop:, name: "Basta de pantalón", price: 8_000, material_cost: 500)
+      create(:service, shop:, name: "Ajuste de cintura")
       create(:service, shop:, name: "Cortinas", active: false)
       create(:service, name: "Bordado de enfrente")
       get services_path
@@ -15,6 +16,7 @@ RSpec.describe "Services", type: :request do
     it { expect(response.parsed_body.at("a[href='#{edit_service_path(Service.find_by!(name: "Basta de pantalón"))}']").text.squish).to eq("Basta de pantalón $8,000 Materials $500 Leaves you $7,500") }
     it { expect(response.parsed_body.at("details").text.squish).to eq("Deactivated (1) Cortinas $8,000 Activate") }
     it { expect(response.body).not_to include("Bordado de enfrente") }
+    it { expect(response.parsed_body.css(".panel > a .font-bold:first-child").map(&:text)).to eq([ "Basta de pantalón", "Ajuste de cintura" ]) }
   end
 
   describe "POST /services" do
