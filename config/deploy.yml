@@ -26,6 +26,7 @@ env:
   secret:
     - RAILS_MASTER_KEY
     - POSTGRES_PASSWORD
+    - SENTRY_DSN
   clear:
     # Solid Queue runs inside Puma: there is one server.
     SOLID_QUEUE_IN_PUMA: true

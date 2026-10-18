@@ -29,6 +29,10 @@ gem "rails-i18n"
 # Row-level multitenancy: every shop-owned table is scoped by shop_id [https://github.com/ErwinM/acts_as_tenant]
 gem "acts_as_tenant"
 
+# Production errors, with no personal data [https://github.com/getsentry/sentry-ruby]
+gem "sentry-ruby"
+gem "sentry-rails"
+
 # Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
 gem "solid_cache"
 gem "solid_queue"
