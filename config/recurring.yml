@@ -13,3 +13,9 @@ production:
   clear_solid_queue_finished_jobs:
     command: "SolidQueue::Job.clear_finished_in_batches(sleep_between_batches: 0.3)"
     schedule: every hour at minute 12
+
+  # 3:30 a.m. in Bogotá: after the gym app's backup on the same server at 3, and before the 4 a.m.
+  # reboots for security updates. The Healthchecks.io check expects its ping on the same schedule.
+  back_up_database:
+    class: BackupJob
+    schedule: "30 3 * * * America/Bogota"
