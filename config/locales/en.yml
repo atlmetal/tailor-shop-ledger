@@ -33,6 +33,7 @@ en:
       shop:
         name: Name
         started_on: Start date
+        work_days: Work days
       user:
         email_address: Email address
         name: Name
@@ -45,6 +46,10 @@ en:
           attributes:
             name:
               taken: is already used by another active service
+        shop:
+          attributes:
+            work_days:
+              blank: Mark at least one day to work out your daily goal.
         user:
           attributes:
             password:
@@ -83,6 +88,13 @@ en:
       started: "%{month}, when you started"
       submit: Add
       title: New fixed cost
+    work_days:
+      days:
+        one: 1 day
+        other: "%{count} days"
+      goal: in fixed costs. It's the goal you see in Today.
+      title: Days you work
+      works_html: In %{month} you work %{days}. Each day must cover
   layouts:
     navigation:
       account: Your account

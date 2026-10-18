@@ -2,7 +2,7 @@ module FixedCosts
   # The fixed costs page: this month's list and total, and the forms to change a fixed cost or add one, which
   # come back open with their errors when they fail.
   class MonthFacade
-    attr_reader :new_fixed_cost
+    attr_reader :shop, :new_fixed_cost
 
     delegate :month, :fixed_costs, :total, :work_days, :per_work_day, to: :summary
 

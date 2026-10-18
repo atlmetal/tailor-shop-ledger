@@ -35,6 +35,29 @@ module FixedCostsHelper
     l(month, format: :month)
   end
 
+  # One toggle per weekday, Monday first. Each saves the work days with its day flipped: "" keeps the list in
+  # the request when no day is left, so the shop is told to mark one.
+  def work_day_buttons(shop)
+    [ 1, 2, 3, 4, 5, 6, 0 ].map do |wday|
+      on = shop.work_days.include?(wday)
+      days = on ? shop.work_days - [ wday ] : shop.work_days + [ wday ]
+
+      button_to t("date.abbr_day_names")[wday].first(2).upcase_first, work_days_path, method: :patch, class: "work-day",
+        params: { shop: { work_days: [ "", *days ] } }, aria: { pressed: on, label: t("date.day_names")[wday].upcase_first }
+    end
+  end
+
+  # How many days the shop works this month and what each one must cover, or what to do with no day marked.
+  def work_days_summary(month)
+    return tag.p(month.shop.errors.messages_for(:work_days).to_sentence, class: "text-note") if month.shop.errors.include?(:work_days)
+
+    safe_join([
+      tag.p(t("fixed_costs.work_days.works_html", month: month_name(month.month), days: tag.strong(t("fixed_costs.work_days.days", count: month.work_days))), class: "text-note"),
+      tag.p(pesos(month.per_work_day), class: "font-mono text-title leading-[1.15] font-bold tracking-[-0.02em]"),
+      tag.p(t("fixed_costs.work_days.goal"), class: "text-meta text-graphite")
+    ])
+  end
+
   private
     def fixed_cost_change_note(fixed_cost, month)
       if (change = fixed_cost.change_after(month))

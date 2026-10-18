@@ -23,15 +23,23 @@ RSpec.describe Shop, type: :model do
     it { expect(shop.errors).to be_added(:started_on, :blank) }
   end
 
-  context "without work days" do
-    let(:attributes) { { work_days: [] } }
+  context "without work days, as the form sends them" do
+    let(:attributes) { { work_days: [ nil ] } }
 
-    it { expect { shop.save }.to raise_error(ActiveRecord::CheckViolation) }
+    it { expect(shop.errors).to be_added(:work_days, :blank) }
+    it { expect { shop.save(validate: false) }.to raise_error(ActiveRecord::CheckViolation) }
   end
 
   context "with a weekday outside 0 to 6" do
     let(:attributes) { { work_days: [ 1, 7 ] } }
 
-    it { expect { shop.save }.to raise_error(ActiveRecord::CheckViolation) }
+    it { expect(shop.errors).to be_added(:work_days, :inclusion) }
+    it { expect { shop.save(validate: false) }.to raise_error(ActiveRecord::CheckViolation) }
+  end
+
+  context "with work days repeated and out of order" do
+    let(:attributes) { { work_days: [ 6, 1, 1 ] } }
+
+    it { expect(shop.work_days).to eq([ 1, 6 ]) }
   end
 end

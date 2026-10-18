@@ -217,7 +217,7 @@ Done when the empty shell matches the approved screens at 390px and holds up at 
 - [x] A shared example for request specs: a user of another shop gets a 404. Services is the first controller with a shop's records, so it starts there, and every later controller uses it.
 - [x] Services: the list with what each one leaves, create, edit, deactivate and activate, and the folded list of deactivated ones.
 - [x] Fixed costs: the list with this month's amounts and total, add, change from a month (`FixedCosts::ChangeService`), remove from a month, the averaged mark, and the help about the home's bills.
-- [ ] Work days on the fixed costs page, with the month's work days and fixed costs per work day.
+- [x] Work days on the fixed costs page, with the month's work days and fixed costs per work day.
 
 Done when model and service specs cover a change from a later month leaving the current one alone, a second change in the same month replacing the first, and a removal; query specs cover the fixed costs per day of months with different numbers of work days; and request specs cover isolation.
 

@@ -21,6 +21,14 @@ RSpec.describe "Fixed costs", type: :system do
     expect(row).to have_no_text("October and the months before keep")
   end
 
+  it "spreads the fixed costs over the days the shop works" do
+    expect(page).to have_text("In October you work 27 days. Each day must cover $33,333", normalize_ws: true)
+
+    click_on "Saturday"
+
+    expect(page).to have_text("In October you work 22 days. Each day must cover $40,909", normalize_ws: true)
+  end
+
   it "changes the amount from the month chosen and notes it in the row" do
     row.fill_in "New monthly amount", with: "950000"
     row.click_on "Save change"

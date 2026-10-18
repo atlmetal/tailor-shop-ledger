@@ -33,6 +33,7 @@ es-CO:
       shop:
         name: Nombre
         started_on: Fecha de inicio
+        work_days: Días de trabajo
       user:
         email_address: Correo electrónico
         name: Nombre
@@ -45,6 +46,10 @@ es-CO:
           attributes:
             name:
               taken: ya lo tiene otro servicio activo
+        shop:
+          attributes:
+            work_days:
+              blank: Marca al menos un día para calcular tu meta diaria.
         user:
           attributes:
             password:
@@ -83,6 +88,13 @@ es-CO:
       started: "%{month}, cuando empezaste"
       submit: Agregar
       title: Nuevo gasto fijo
+    work_days:
+      days:
+        one: 1 día
+        other: "%{count} días"
+      goal: de gastos fijos. Es la meta que ves en Hoy.
+      title: Días que trabajas
+      works_html: En %{month} trabajas %{days}. Cada día debe cubrir
   layouts:
     navigation:
       account: Tu cuenta

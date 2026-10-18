@@ -79,6 +79,17 @@
   .change-form:has(option:nth-child(2):checked) .change-help-2,
   .change-form:has(option:nth-child(3):checked) .change-help-3 { @apply block; }
 
+  /* A work day's toggle: in ink while the shop works that day. */
+  .work-day { @apply flex min-h-12 w-full cursor-pointer items-center justify-center rounded-small border-[1.5px] border-control bg-white text-note font-bold aria-pressed:border-ink aria-pressed:bg-ink aria-pressed:text-white; }
+
+  /* A panel under a strip of tape, for what each work day has to cover. */
+  .tape-panel { @apply relative overflow-hidden rounded-panel border border-edge bg-white px-4 pt-5.5 pb-4; }
+  .tape-panel::before {
+    content: "";
+    @apply absolute inset-x-0 top-0 h-2;
+    background: repeating-linear-gradient(90deg, var(--color-ink) 0 1px, transparent 1px 8px) top / 100% 5px no-repeat, var(--color-tape);
+  }
+
   .flash-notice { @apply mt-3 mb-5 rounded-small border border-profit-edge bg-profit px-3.5 py-3 text-note; }
   .flash-alert { @apply mt-3 mb-5 rounded-small border border-loss-edge bg-loss px-3.5 py-3 text-note; }
 

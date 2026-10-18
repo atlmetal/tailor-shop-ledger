@@ -73,6 +73,34 @@ RSpec.describe FixedCostsHelper, type: :helper do
     end
   end
 
+  describe "#work_day_buttons" do
+    subject(:buttons) { helper.work_day_buttons(instance_double(Shop, work_days: [ 1, 2, 3, 4, 5, 6 ])) }
+
+    it { expect(buttons.size).to eq(7) }
+    it { expect(buttons.first).to have_css("button.work-day[aria-pressed='true'][aria-label='Monday']", text: "Mo") }
+    it { expect(buttons.last).to have_css("button.work-day[aria-pressed='false'][aria-label='Sunday']", text: "Su") }
+    it { expect(Capybara.string(buttons.first).all("input[name='shop[work_days][]']", visible: :hidden).map(&:value)).to eq([ "", "2", "3", "4", "5", "6" ]) }
+    it { expect(Capybara.string(buttons.last).all("input[name='shop[work_days][]']", visible: :hidden).map(&:value)).to eq([ "", "1", "2", "3", "4", "5", "6", "0" ]) }
+  end
+
+  describe "#work_days_summary" do
+    subject(:summary) { helper.work_days_summary(month) }
+
+    let(:month) { instance_double(FixedCosts::MonthFacade, shop: instance_double(Shop, errors:), month: october, work_days: 27, per_work_day: 44_074) }
+    let(:errors) { instance_double(ActiveModel::Errors, include?: false) }
+
+    it do
+      expect(Capybara.string(summary).all("p").map(&:text))
+        .to eq([ "In October you work 27 days. Each day must cover", "$44,074", "in fixed costs. It's the goal you see in Today." ])
+    end
+
+    context "with no day marked" do
+      let(:errors) { instance_double(ActiveModel::Errors, include?: true, messages_for: [ "Mark at least one day to work out your daily goal." ]) }
+
+      it { is_expected.to eq('<p class="text-note">Mark at least one day to work out your daily goal.</p>') }
+    end
+  end
+
   describe "#month_options" do
     before { travel_to Date.new(2026, 10, 20) }
 
