@@ -220,6 +220,10 @@ en:
       submit: Sign in
       title: Sign in
   shared:
+    loss_word:
+      text: Loss
+    profit_word:
+      text: Profit
     record_switch:
       expense: Expense
       income: Other income
@@ -231,5 +235,32 @@ en:
       services: Services
       title: Shop
   today:
+    day_off:
+      made: So far
+      no_goal: Today isn't one of your work days, so there's no goal.
+    goal:
+      covered_html: "<strong>Today's fixed costs are covered.</strong>"
+      goal_html: Goal %{goal}
+      left_html: "<strong>%{left} to go.</strong>"
+      made: So far
+      made_from: You charged %{charged} and the materials cost %{materials}.
+      of_goal: of the %{goal} you need today to cover the fixed costs.
+      progress: You have %{percent}% of today's goal
+      surplus_html: "<strong>Today's fixed costs are covered, and %{surplus} more.</strong>"
+    job:
+      job: "%{quantity} × %{service}"
+      materials: Materials %{amount}
     show:
+      goal: Today's goal
+      jobs: What you recorded today
+      month: "%{month}, so far"
+      month_note:
+        one: Materials, other expenses and the fixed costs of 1 work day already taken off.
+        other: Materials, other expenses and the fixed costs of %{count} work days already taken off.
+      no_jobs: No jobs recorded today yet.
+      record_entry: Record an expense or other income
+      record_job: Record a job
       title: Today
+      units:
+        one: 1 job
+        other: "%{count} jobs"

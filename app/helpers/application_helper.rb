@@ -53,6 +53,11 @@ module ApplicationHelper
     form.date_field attribute, min: current_tenant.started_on, max: Date.current, required: true, class: "form-input"
   end
 
+  # "octubre" in es-CO, "October" in en.
+  def month_name(month)
+    l(month, format: :month)
+  end
+
   # "Martes 20 de octubre" in es-CO, whose day names are lowercase; "Tuesday, October 20" in en.
   def day_title(date)
     l(date, format: :day).upcase_first

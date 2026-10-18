@@ -220,6 +220,10 @@ es-CO:
       submit: Iniciar sesión
       title: Iniciar sesión
   shared:
+    loss_word:
+      text: Pérdida
+    profit_word:
+      text: Ganancia
     record_switch:
       expense: Gasto
       income: Otro ingreso
@@ -231,5 +235,32 @@ es-CO:
       services: Servicios
       title: Taller
   today:
+    day_off:
+      made: Llevas
+      no_goal: Hoy no es uno de tus días de trabajo, así que no hay meta.
+    goal:
+      covered_html: "<strong>Cubriste los gastos fijos de hoy.</strong>"
+      goal_html: Meta %{goal}
+      left_html: "<strong>Te faltan %{left}.</strong>"
+      made: Llevas
+      made_from: Cobraste %{charged} y los materiales costaron %{materials}.
+      of_goal: de %{goal} que necesitas hoy para cubrir los gastos fijos.
+      progress: Llevas el %{percent} % de la meta de hoy
+      surplus_html: "<strong>Cubriste los gastos fijos de hoy, y %{surplus} más.</strong>"
+    job:
+      job: "%{quantity} × %{service}"
+      materials: Materiales %{amount}
     show:
+      goal: Meta de hoy
+      jobs: Lo que registraste hoy
+      month: "%{month}, hasta hoy"
+      month_note:
+        one: Ya descontados los materiales, los otros gastos y la parte de los fijos de 1 día de trabajo.
+        other: Ya descontados los materiales, los otros gastos y la parte de los fijos de %{count} días de trabajo.
+      no_jobs: Todavía no registras trabajos hoy.
+      record_entry: Registrar gasto u otro ingreso
+      record_job: Registrar trabajo
       title: Hoy
+      units:
+        one: 1 trabajo
+        other: "%{count} trabajos"

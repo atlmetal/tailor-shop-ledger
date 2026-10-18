@@ -84,6 +84,18 @@
   .stepper { @apply flex size-13 shrink-0 cursor-pointer items-center justify-center rounded-button border-[1.5px] border-control bg-white hover:bg-paper; }
   .quantity-field { @apply w-16 [appearance:textfield] bg-transparent text-center font-mono text-[1.75rem] font-bold [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none; }
 
+  /* The day's goal as a strip of tape measure: a track ticked every 8px, filled in yellow with longer ticks
+     every 40px as far as what the shop has made reaches. */
+  .goal-bar {
+    @apply relative h-11 overflow-hidden rounded-bar border border-tick;
+    background: repeating-linear-gradient(90deg, var(--color-tick) 0 1px, transparent 1px 8px) top left / 100% 10px no-repeat, var(--color-track);
+  }
+  .goal-bar-fill {
+    @apply absolute inset-y-0 left-0 border-r-2 border-ink;
+    background: repeating-linear-gradient(90deg, var(--color-ink) 0 2px, transparent 2px 40px) top left / 100% 20px no-repeat,
+      repeating-linear-gradient(90deg, var(--color-ink) 0 1px, transparent 1px 8px) top left / 100% 10px no-repeat, var(--color-tape);
+  }
+
   /* A work day's toggle: in ink while the shop works that day. */
   .work-day { @apply flex min-h-12 w-full cursor-pointer items-center justify-center rounded-small border-[1.5px] border-control bg-white text-note font-bold aria-pressed:border-ink aria-pressed:bg-ink aria-pressed:text-white; }
 

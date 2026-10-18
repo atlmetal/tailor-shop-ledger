@@ -31,10 +31,6 @@ module FixedCostsHelper
     end
   end
 
-  def month_name(month)
-    l(month, format: :month)
-  end
-
   # One toggle per weekday, Monday first. Each saves the work days with its day flipped: "" keeps the list in
   # the request when no day is left, so the shop is told to mark one.
   def work_day_buttons(shop)

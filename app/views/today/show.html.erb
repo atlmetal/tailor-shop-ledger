@@ -1,2 +1,30 @@
 <h1 class="page-title"><%= t(".title") %></h1>
-<p class="mt-0.5 text-graphite"><%= day_title(Date.current) %></p>
+<p class="mt-0.5 text-graphite"><%= day_title(@day.date) %></p>
+
+<section class="panel mt-4 flex flex-col gap-3.5 p-5" aria-labelledby="goal">
+  <h2 id="goal" class="text-meta font-bold text-graphite"><%= t(".goal") %></h2>
+  <%= goal_panel @day %>
+</section>
+
+<div class="mt-5 flex flex-col gap-2.5">
+  <%= link_to new_job_path, class: "btn-primary gap-2.5" do %>
+    <svg aria-hidden="true" class="size-5.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14" /><path d="M5 12h14" /></svg>
+    <%= t(".record_job") %>
+  <% end %>
+  <%= link_to t(".record_entry"), new_expense_path, class: "btn-secondary" %>
+</div>
+
+<section class="mt-5" aria-labelledby="today-jobs">
+  <div class="flex items-baseline justify-between gap-3">
+    <h2 id="today-jobs" class="text-xl font-extrabold"><%= t(".jobs") %></h2>
+    <span class="text-meta text-graphite"><%= t(".units", count: @day.units) %></span>
+  </div>
+  <%= today_jobs @day.jobs %>
+</section>
+
+<section class="panel mt-5 flex flex-col gap-2 px-5 pt-4 pb-5" aria-labelledby="month">
+  <h2 id="month" class="text-xl font-extrabold"><%= t(".month", month: month_name(@day.date).upcase_first) %></h2>
+  <%= result_word @day.month %>
+  <span class="<%= token_list("font-mono text-[2.125rem] leading-[1.1] font-bold tracking-[-0.02em]", result_amount_class(@day.month)) %>"><%= pesos(@day.month.total) %></span>
+  <span class="text-meta text-graphite"><%= t(".month_note", count: @day.month.work_days) %></span>
+</section>

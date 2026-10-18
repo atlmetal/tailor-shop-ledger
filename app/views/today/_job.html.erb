@@ -1,0 +1,10 @@
+<%= link_to edit_job_path(job), class: "flex min-h-17 items-center justify-between gap-3 py-3 pr-3 pl-4 hover:bg-paper" do %>
+  <span class="flex min-w-0 flex-col gap-0.5">
+    <span class="font-bold"><%= t(".job", quantity: job.quantity, service: job.service.name) %></span>
+    <span class="text-meta text-graphite"><%= t(".materials", amount: pesos(job.materials)) %></span>
+  </span>
+  <span class="flex shrink-0 items-center gap-1.5">
+    <span class="font-mono text-lg font-bold"><%= pesos(job.charged) %></span>
+    <svg aria-hidden="true" class="size-5 text-graphite" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7" /></svg>
+  </span>
+<% end %>

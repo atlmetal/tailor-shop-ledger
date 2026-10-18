@@ -1,0 +1,20 @@
+<div class="flex flex-col gap-0.5">
+  <span class="font-bold"><%= t(".made") %></span>
+  <span class="font-mono text-[2.75rem] leading-[1.05] font-bold tracking-[-0.02em]"><%= pesos(day.made) %></span>
+  <span class="text-note text-graphite"><%= t(".of_goal", goal: pesos(day.goal)) %></span>
+</div>
+
+<div class="flex flex-col gap-1.5">
+  <div class="goal-bar" role="img" aria-label="<%= t(".progress", percent: goal_percent(day)) %>">
+    <div class="goal-bar-fill" style="width: <%= goal_bar_width(day) %>"></div>
+  </div>
+  <div class="flex justify-between gap-3 text-sm text-graphite">
+    <span class="font-mono"><%= pesos(0) %></span>
+    <span><%= t(".goal_html", goal: tag.span(pesos(day.goal), class: "font-mono")) %></span>
+  </div>
+</div>
+
+<p class="flex items-start gap-2.5 rounded-small bg-paper px-3.5 py-3 text-note">
+  <svg aria-hidden="true" class="mt-0.5 size-5.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></svg>
+  <span><%= goal_note day %></span>
+</p>
