@@ -5,25 +5,24 @@ RSpec.describe ApplicationHelper, type: :helper do
     subject(:tab) { helper.tab_to("Today", path) { tag.svg } }
 
     let(:path) { "/" }
+    let(:request) { instance_double(ActionDispatch::Request, path: shown_path) }
+    let(:shown_path) { "/" }
 
-    before { allow(helper).to receive(:current_page?).with("/").and_return(current) }
+    before { allow(helper).to receive(:request).and_return(request) }
 
     context "when its page is the one shown" do
-      let(:current) { true }
-
       it { is_expected.to have_css("a.tab[href='/'][aria-current='page']", text: "Today") }
       it { is_expected.to have_css("a.tab svg") }
     end
 
     context "when another page is shown" do
-      let(:current) { false }
+      let(:shown_path) { "/account" }
 
       it { is_expected.to have_css("a.tab[href='/']:not([aria-current])", text: "Today") }
     end
 
     context "when its page isn't built yet" do
       let(:path) { nil }
-      let(:current) { false }
 
       it { is_expected.to have_css("span.tab", text: "Today") }
     end

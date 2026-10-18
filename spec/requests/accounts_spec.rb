@@ -29,6 +29,7 @@ RSpec.describe "Account", type: :request do
       let(:password_params) { super().merge(password_challenge: "wrong-password") }
 
       it { expect(response).to have_http_status(:unprocessable_content) }
+      it { expect(response.parsed_body.at("a[aria-current='page']")["href"]).to eq(account_path) }
       it { expect(user.reload.authenticate("password123")).to eq(user) }
       it { expect(Session.exists?(other_session.id)).to be(true) }
     end
