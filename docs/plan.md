@@ -87,6 +87,7 @@ Everything a shop owns carries `shop_id`: `services`, `jobs`, `fixed_costs`, `fi
 
 - What the shop pays every month, whether it works or not, each with its monthly amount: rent, electricity, water, gas, internet, a phone plan. Bills that vary use the average of the last ones, and are marked as averaged ("Promedio").
 - An amount applies from a month on: the current one or a later one, never an earlier one. Earlier months keep the amount they had. A second change for a month that already has one replaces it, so a typo can be fixed within the month.
+- A new fixed cost applies from the current month, one of the next two, or the month the shop started when that is earlier, so a shop that enters its days from paper carries the costs it already had, and a cost that starts now doesn't reach back to months it didn't exist.
 - Removing a fixed cost is a change to 0 from a month on. It leaves the list once it's 0 from the current month on, with no later change.
 - A month's fixed costs are the sum of the amounts that apply to it.
 - When the shop is in the home, only the shop's share of the home's bills goes here. Each user decides that share, and the page explains it with an example: if the home's electricity is $120.000 and 30 % of it belongs to the shop, enter $36.000; entering all the home's bills (rent, electricity, water, gas, internet) can show a loss that isn't the shop's. Mixing the home's accounts with the shop's is the third accounting trap.
