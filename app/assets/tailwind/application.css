@@ -50,13 +50,16 @@
 
 @layer components {
   .page-title { @apply text-title font-extrabold tracking-[-0.01em]; }
+  .panel { @apply overflow-hidden rounded-panel border border-edge bg-white; }
   .form-label { @apply block text-note font-bold; }
   .form-input { @apply mt-1.5 block h-13.5 w-full rounded-small border-[1.5px] border-control bg-white px-3.5 text-lg; }
+  .form-hint { @apply mt-1.5 text-meta text-graphite; }
   .field-error { @apply mt-1.5 text-meta font-semibold text-loss-ink; }
   /* Rails wraps an invalid field in .field_with_errors. */
   .field_with_errors .form-input { @apply border-loss-ink; }
-  .btn-primary { @apply flex min-h-14 w-full cursor-pointer items-center justify-center rounded-button bg-ink px-5 text-lg font-bold text-white hover:bg-black sm:w-auto; }
-  .btn-secondary { @apply flex min-h-13 w-full cursor-pointer items-center justify-center rounded-button border-[1.5px] border-ink bg-white px-5 font-bold hover:bg-paper sm:w-auto; }
+  .btn-primary { @apply flex min-h-14 w-full cursor-pointer items-center justify-center rounded-button bg-ink px-5 text-lg font-bold text-white hover:bg-black sm:w-fit; }
+  .btn-secondary { @apply flex min-h-13 w-full cursor-pointer items-center justify-center rounded-button border-[1.5px] border-ink bg-white px-5 font-bold hover:bg-paper sm:w-fit; }
+  .btn-small { @apply flex min-h-11 cursor-pointer items-center justify-center rounded-small border-[1.5px] border-control bg-white px-3.5 text-meta font-bold hover:bg-paper; }
   .flash-notice { @apply mt-3 mb-5 rounded-small border border-profit-edge bg-profit px-3.5 py-3 text-note; }
   .flash-alert { @apply mt-3 mb-5 rounded-small border border-loss-edge bg-loss px-3.5 py-3 text-note; }
 

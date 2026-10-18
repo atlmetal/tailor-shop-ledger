@@ -18,10 +18,16 @@ module ApplicationHelper
     link_to content, path, class: "tab", aria: { current: aria_current(path) }
   end
 
-  # By path rather than current_page?, which only matches GET requests and so would drop the mark when a form
-  # comes back with its errors.
+  # A link marks its whole section: Taller's link to /services also marks /services/12/edit. By path rather
+  # than current_page?, which only matches GET requests and so would drop the mark when a form comes back
+  # with its errors.
   def aria_current(path)
-    "page" if request.path == path
+    "page" if request.path == path || request.path.start_with?("#{path}/")
+  end
+
+  # Whole pesos, $15.000 in es-CO and $15,000 in en, with a true minus sign: −$47.000.
+  def pesos(amount)
+    "#{"−" if amount.negative?}#{number_to_currency(amount.abs, precision: 0)}"
   end
 
   # "Martes 20 de octubre" in es-CO, whose day names are lowercase; "Tuesday, October 20" in en.

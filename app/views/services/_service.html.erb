@@ -1,0 +1,10 @@
+<%= link_to edit_service_path(service), class: "flex min-h-18 flex-col justify-center gap-0.5 px-4 py-3 hover:bg-paper" do %>
+  <span class="flex items-baseline justify-between gap-3">
+    <span class="font-bold"><%= service.name %></span>
+    <span class="font-mono font-bold"><%= pesos(service.price) %></span>
+  </span>
+  <span class="flex items-baseline justify-between gap-3 text-meta">
+    <span class="text-graphite"><%= t(".materials", amount: pesos(service.material_cost)) %></span>
+    <span><%= service_leaves(service) %></span>
+  </span>
+<% end %>

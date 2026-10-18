@@ -28,6 +28,38 @@ RSpec.describe ApplicationHelper, type: :helper do
     end
   end
 
+  describe "#aria_current" do
+    subject(:aria_current) { helper.aria_current("/services") }
+
+    let(:request) { instance_double(ActionDispatch::Request, path: shown_path) }
+
+    before { allow(helper).to receive(:request).and_return(request) }
+
+    context "on the page itself" do
+      let(:shown_path) { "/services" }
+
+      it { is_expected.to eq("page") }
+    end
+
+    context "on a page of its section" do
+      let(:shown_path) { "/services/12/edit" }
+
+      it { is_expected.to eq("page") }
+    end
+
+    context "on a page whose path only starts the same" do
+      let(:shown_path) { "/services_report" }
+
+      it { is_expected.to be_nil }
+    end
+  end
+
+  describe "#pesos" do
+    it { expect(helper.pesos(1_234_567)).to eq("$1,234,567") }
+    it { expect(helper.pesos(-47_000)).to eq("−$47,000") }
+    it { expect(I18n.with_locale(:"es-CO") { helper.pesos(1_234_567) }).to eq("$1.234.567") }
+  end
+
   describe "#day_title" do
     subject(:day_title) { I18n.with_locale(locale) { helper.day_title(Date.new(2026, 10, 20)) } }
 

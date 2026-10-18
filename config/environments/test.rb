@@ -3,8 +3,13 @@
 # your test database is "scratch space" for the test suite and is wiped
 # and recreated between test runs. Don't rely on the data there!
 
+require "acts_as_tenant/test_tenant_middleware"
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
+
+  # Clears ActsAsTenant.test_tenant during requests, so request specs exercise the app's own shop lookup.
+  config.middleware.use ActsAsTenant::TestTenantMiddleware
 
   # While tests run files are not watched, reloading is not necessary.
   config.enable_reloading = false

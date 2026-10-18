@@ -1,0 +1,8 @@
+<h1 class="page-title"><%= t(".title") %></h1>
+
+<%= render "form", service: @service %>
+
+<div class="mt-10 border-t border-edge pt-6">
+  <p class="text-note text-graphite"><%= t(".deactivate_note") %></p>
+  <%= button_to t(".deactivate"), service_activation_path(@service), method: :delete, class: "btn-secondary mt-4" %>
+</div>

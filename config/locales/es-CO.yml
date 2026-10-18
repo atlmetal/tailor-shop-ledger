@@ -9,8 +9,18 @@ es-CO:
       title: Cuenta
     update:
       success: Tu contraseña cambió. Cerramos tus otras sesiones.
+  activations:
+    create:
+      activated: Activaste %{name}.
+      name_taken: "Ya tienes un servicio activo llamado %{name}: cámbiale el nombre para activar este."
+    destroy:
+      deactivated: Desactivaste %{name}. Lo encuentras en Desactivados.
   activerecord:
     attributes:
+      service:
+        material_cost: Materiales
+        name: Nombre
+        price: Precio
       shop:
         name: Nombre
         started_on: Fecha de inicio
@@ -22,6 +32,10 @@ es-CO:
         password_confirmation: Confirmación de contraseña
     errors:
       models:
+        service:
+          attributes:
+            name:
+              taken: ya lo tiene otro servicio activo
         user:
           attributes:
             password:
@@ -41,6 +55,34 @@ es-CO:
       reports: Reportes
       shop: Taller
       today: Hoy
+  services:
+    create:
+      saved: Guardaste %{name}.
+    edit:
+      deactivate: Desactivar
+      deactivate_note: "¿Ya no lo haces? Desactívalo: deja de salir al registrar un trabajo, y lo que ya registraste no cambia."
+      title: Editar servicio
+    form:
+      cancel: Cancelar
+      material_cost_hint: Lo que te cuestan los materiales cada vez que lo haces. Pon 0 si no usa materiales.
+      name_placeholder: "Ej.: basta de pantalón"
+      price_hint: Pon 0 si lo cotizas cada vez.
+      submit: Guardar
+    inactive:
+      activate: Activar
+      title: Desactivados (%{count})
+    index:
+      intro: Lo que cobras por cada servicio, lo que te cuestan sus materiales y lo que te deja.
+      new: Nuevo servicio
+      note: Si cambias un precio o unos materiales, lo que ya registraste no cambia.
+      title: Taller
+    new:
+      title: Nuevo servicio
+    service:
+      leaves_html: Te deja %{amount}
+      materials: Materiales %{amount}
+    update:
+      saved: Guardaste %{name}.
   sessions:
     create:
       invalid: Correo o contraseña incorrectos.

@@ -1,0 +1,17 @@
+<h1 class="page-title"><%= t(".title") %></h1>
+
+<p class="mt-5 text-note text-graphite"><%= t(".intro") %></p>
+
+<%= link_to new_service_path, class: "btn-secondary mt-5 gap-2" do %>
+  <svg aria-hidden="true" class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14" /><path d="M5 12h14" /></svg>
+  <%= t(".new") %>
+<% end %>
+
+<div class="panel mt-5 divide-y divide-divider empty:hidden"><%= render @services %></div>
+
+<%= inactive_services @inactive_services %>
+
+<p class="mt-5 flex items-start gap-2.5 text-meta text-graphite">
+  <svg aria-hidden="true" class="mt-0.5 size-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9" /><path d="M12 11v6" /><path d="M12 7.5v.5" /></svg>
+  <%= t(".note") %>
+</p>

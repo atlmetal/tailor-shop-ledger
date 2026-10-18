@@ -1,0 +1,16 @@
+<details class="panel group mt-5">
+  <summary class="flex min-h-14 cursor-pointer list-none items-center justify-between gap-3 px-4 font-bold [&::-webkit-details-marker]:hidden">
+    <%= t(".title", count: services.size) %>
+    <svg aria-hidden="true" class="size-5 group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6" /></svg>
+  </summary>
+
+  <% services.each do |service| %>
+    <div class="flex min-h-16 items-center justify-between gap-3 border-t border-divider py-2 pr-3 pl-4">
+      <span class="flex min-w-0 flex-col">
+        <span class="font-bold"><%= service.name %></span>
+        <span class="text-meta text-graphite"><%= pesos(service.price) %></span>
+      </span>
+      <%= button_to t(".activate"), service_activation_path(service), class: "btn-small" %>
+    </div>
+  <% end %>
+</details>

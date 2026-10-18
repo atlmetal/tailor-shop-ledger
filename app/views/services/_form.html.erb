@@ -1,0 +1,26 @@
+<%= form_with model: service, class: "mt-5 space-y-5" do |form| %>
+  <div>
+    <%= form.label :name, class: "form-label" %>
+    <%= form.text_field :name, required: true, autocomplete: "off", placeholder: t(".name_placeholder"), class: "form-input" %>
+    <%= field_error service, :name %>
+  </div>
+
+  <div>
+    <%= form.label :price, class: "form-label" %>
+    <%= form.text_field :price, value: number_with_delimiter(service.price), required: true, inputmode: "numeric", autocomplete: "off", class: "form-input font-mono" %>
+    <p class="form-hint"><%= t(".price_hint") %></p>
+    <%= field_error service, :price %>
+  </div>
+
+  <div>
+    <%= form.label :material_cost, class: "form-label" %>
+    <%= form.text_field :material_cost, value: number_with_delimiter(service.material_cost), required: true, inputmode: "numeric", autocomplete: "off", class: "form-input font-mono" %>
+    <p class="form-hint"><%= t(".material_cost_hint") %></p>
+    <%= field_error service, :material_cost %>
+  </div>
+
+  <div class="flex gap-2.5">
+    <%= form.submit t(".submit"), class: "btn-primary min-h-13 flex-1 sm:flex-none" %>
+    <%= link_to t(".cancel"), services_path, class: "btn-secondary w-auto" %>
+  </div>
+<% end %>

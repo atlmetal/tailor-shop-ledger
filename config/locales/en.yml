@@ -9,8 +9,18 @@ en:
       title: Account
     update:
       success: Your password has been changed. Your other sessions were signed out.
+  activations:
+    create:
+      activated: Activated %{name}.
+      name_taken: "You already have an active service called %{name}: rename it to activate this one."
+    destroy:
+      deactivated: Deactivated %{name}. You'll find it under Deactivated.
   activerecord:
     attributes:
+      service:
+        material_cost: Materials
+        name: Name
+        price: Price
       shop:
         name: Name
         started_on: Start date
@@ -22,6 +32,10 @@ en:
         password_confirmation: Password confirmation
     errors:
       models:
+        service:
+          attributes:
+            name:
+              taken: is already used by another active service
         user:
           attributes:
             password:
@@ -41,6 +55,34 @@ en:
       reports: Reports
       shop: Shop
       today: Today
+  services:
+    create:
+      saved: Saved %{name}.
+    edit:
+      deactivate: Deactivate
+      deactivate_note: "No longer doing it? Deactivate it: it stops showing when you record a job, and what you already recorded stays as it was."
+      title: Edit service
+    form:
+      cancel: Cancel
+      material_cost_hint: What its materials cost you each time you do it. Enter 0 if it uses none.
+      name_placeholder: "E.g.: trouser hem"
+      price_hint: Enter 0 if you quote it each time.
+      submit: Save
+    inactive:
+      activate: Activate
+      title: Deactivated (%{count})
+    index:
+      intro: What you charge for each service, what its materials cost you and what it leaves you.
+      new: New service
+      note: If you change a price or its materials, what you already recorded stays as it was.
+      title: Shop
+    new:
+      title: New service
+    service:
+      leaves_html: Leaves you %{amount}
+      materials: Materials %{amount}
+    update:
+      saved: Saved %{name}.
   sessions:
     create:
       invalid: Try another email address or password.

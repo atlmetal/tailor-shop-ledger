@@ -10,9 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_17_222416) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_18_094522) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "services", force: :cascade do |t|
+    t.bigint "shop_id", null: false
+    t.string "name", null: false
+    t.integer "price", null: false
+    t.integer "material_cost", null: false
+    t.boolean "active", default: true, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index "shop_id, lower((name)::text)", name: "index_services_on_shop_id_and_lower_name", unique: true, where: "active"
+    t.index ["shop_id"], name: "index_services_on_shop_id"
+    t.check_constraint "price >= 0 AND material_cost >= 0", name: "services_money_check"
+  end
 
   create_table "sessions", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -43,6 +56,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_17_222416) do
     t.index ["shop_id"], name: "index_users_on_shop_id", unique: true
   end
 
+  add_foreign_key "services", "shops"
   add_foreign_key "sessions", "users"
   add_foreign_key "users", "shops"
 end
