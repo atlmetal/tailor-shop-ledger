@@ -15,6 +15,15 @@ en:
       name_taken: "You already have an active service called %{name}: rename it to activate this one."
     destroy:
       deactivated: Deactivated %{name}. You'll find it under Deactivated.
+  activemodel:
+    attributes:
+      fixed_cost_change:
+        amount: New monthly amount
+        starts_on: From
+      new_fixed_cost:
+        amount: Monthly amount
+        name: Name
+        starts_on: From
   activerecord:
     attributes:
       service:
@@ -47,6 +56,33 @@ en:
   date:
     formats:
       day: "%A, %B %-d"
+      month: "%B"
+      month_year: "%B %Y"
+  fixed_costs:
+    change_form:
+      cancel: Cancel
+      help_later: "%{months} and the months before keep %{amount}."
+      help_now: "%{month} already counts the new amount. %{previous} and the months before keep %{amount}."
+      remove: Remove from that month
+      submit: Save change
+    fixed_cost:
+      averaged: Average
+      from: "From %{month}: %{amount}"
+      now_html: "Now: %{amount}"
+      removed_from: Removed from %{month}
+      until: "Until %{month}: %{amount}"
+    index:
+      home_bills: "Is the shop in your home? Enter only the shop's share of the home's bills. For example, if the home's electricity comes to $120,000 and 30% of it is the shop's, enter $36,000. If you enter the home's whole bills (rent, electricity, water, gas, internet), the shop can show a loss that isn't its own."
+      intro: "What you pay every month, whether you work or not. Electricity and water: the average of the last bills."
+      total: Total for %{month}
+    new_fixed_cost:
+      add: Add a fixed cost
+      averaged: It's the average of the last bills
+      cancel: Cancel
+      name_placeholder: "E.g.: shop rent"
+      started: "%{month}, when you started"
+      submit: Add
+      title: New fixed cost
   layouts:
     navigation:
       account: Your account
@@ -75,7 +111,6 @@ en:
       intro: What you charge for each service, what its materials cost you and what it leaves you.
       new: New service
       note: If you change a price or its materials, what you already recorded stays as it was.
-      title: Shop
     new:
       title: New service
     service:
@@ -93,6 +128,12 @@ en:
       password: Password
       submit: Sign in
       title: Sign in
+  shared:
+    taller_header:
+      fixed_costs: Fixed costs
+      label: Shop sections
+      services: Services
+      title: Shop
   today:
     show:
       title: Today

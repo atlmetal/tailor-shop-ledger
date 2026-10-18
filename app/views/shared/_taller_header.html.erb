@@ -1,0 +1,6 @@
+<h1 class="page-title"><%= t(".title") %></h1>
+
+<nav class="switch mt-5" aria-label="<%= t(".label") %>">
+  <%= link_to t(".services"), services_path, aria: { current: aria_current(services_path) } %>
+  <%= link_to t(".fixed_costs"), fixed_costs_path, aria: { current: aria_current(fixed_costs_path) } %>
+</nav>

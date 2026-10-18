@@ -1,0 +1,15 @@
+<%= form_details change, class: "group border-t border-divider first:border-t-0" do %>
+  <summary class="flex min-h-16 cursor-pointer list-none items-center justify-between gap-3 py-2 pr-2 pl-4 group-open:bg-profit [&::-webkit-details-marker]:hidden">
+    <span class="flex min-w-0 flex-col">
+      <span class="font-bold group-open:font-extrabold"><%= fixed_cost.name %></span>
+      <span class="flex flex-col group-open:hidden"><%= fixed_cost_notes fixed_cost, month %></span>
+    </span>
+    <span class="flex shrink-0 items-center gap-1">
+      <span class="font-mono font-bold group-open:hidden"><%= pesos(fixed_cost.amount_on(month)) %></span>
+      <span class="hidden pr-2 text-meta text-graphite group-open:inline"><%= t(".now_html", amount: tag.span(pesos(fixed_cost.amount_on(month)), class: "font-mono")) %></span>
+      <svg aria-hidden="true" class="size-11 p-3 group-open:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16v4z" /><path d="M13.5 6.5l4 4" /></svg>
+    </span>
+  </summary>
+
+  <%= render "change_form", change:, months: %>
+<% end %>

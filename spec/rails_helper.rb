@@ -36,6 +36,7 @@ rescue ActiveRecord::PendingMigrationError => e
 end
 RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
+  config.include ActiveSupport::Testing::TimeHelpers
 
   # Phone first: tag an example :desktop for the wide layout. Each size has its own driver
   # name, so Capybara never reuses a browser window of the other size.

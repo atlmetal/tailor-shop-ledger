@@ -15,6 +15,15 @@ es-CO:
       name_taken: "Ya tienes un servicio activo llamado %{name}: cámbiale el nombre para activar este."
     destroy:
       deactivated: Desactivaste %{name}. Lo encuentras en Desactivados.
+  activemodel:
+    attributes:
+      fixed_cost_change:
+        amount: Nuevo valor al mes
+        starts_on: Desde
+      new_fixed_cost:
+        amount: Valor al mes
+        name: Nombre
+        starts_on: Desde
   activerecord:
     attributes:
       service:
@@ -47,6 +56,33 @@ es-CO:
   date:
     formats:
       day: "%A %-d de %B"
+      month: "%B"
+      month_year: "%B de %Y"
+  fixed_costs:
+    change_form:
+      cancel: Cancelar
+      help_later: "%{months} y los meses anteriores siguen con %{amount}."
+      help_now: "%{month} ya se calcula con el valor nuevo. %{previous} y los meses anteriores siguen con %{amount}."
+      remove: Quitar desde ese mes
+      submit: Guardar cambio
+    fixed_cost:
+      averaged: Promedio
+      from: "Desde %{month}: %{amount}"
+      now_html: "Hoy: %{amount}"
+      removed_from: Se quita desde %{month}
+      until: "Hasta %{month}: %{amount}"
+    index:
+      home_bills: "¿El taller está en tu casa? Pon aquí solo la parte de las cuentas de la casa que le toca al taller. Por ejemplo, si la luz de la casa sale en $120.000 y el 30 % es del taller, pon $36.000. Si pones las cuentas completas de la casa (arriendo, luz, agua, gas, internet), el taller puede mostrar una pérdida que no es suya."
+      intro: "Lo que pagas cada mes, trabajes o no. Luz y agua: el promedio de los últimos recibos."
+      total: Total de %{month}
+    new_fixed_cost:
+      add: Agregar gasto fijo
+      averaged: Es el promedio de los últimos recibos
+      cancel: Cancelar
+      name_placeholder: "Ej.: arriendo del local"
+      started: "%{month}, cuando empezaste"
+      submit: Agregar
+      title: Nuevo gasto fijo
   layouts:
     navigation:
       account: Tu cuenta
@@ -75,7 +111,6 @@ es-CO:
       intro: Lo que cobras por cada servicio, lo que te cuestan sus materiales y lo que te deja.
       new: Nuevo servicio
       note: Si cambias un precio o unos materiales, lo que ya registraste no cambia.
-      title: Taller
     new:
       title: Nuevo servicio
     service:
@@ -93,6 +128,12 @@ es-CO:
       password: Contraseña
       submit: Iniciar sesión
       title: Iniciar sesión
+  shared:
+    taller_header:
+      fixed_costs: Gastos fijos
+      label: Secciones del taller
+      services: Servicios
+      title: Taller
   today:
     show:
       title: Hoy

@@ -1,0 +1,21 @@
+<%= render "shared/taller_header" %>
+
+<p class="mt-5 text-note text-graphite"><%= t(".intro") %></p>
+
+<div class="panel mt-5">
+  <% @month.fixed_costs.each do |fixed_cost| %>
+    <%= render "fixed_cost", fixed_cost:, change: @month.change_for(fixed_cost), months: @month.change_months, month: @month.month %>
+  <% end %>
+
+  <div class="flex items-baseline justify-between gap-3 border-t-2 border-dashed border-tick py-4 pr-14 pl-4 first:border-t-0">
+    <span class="font-extrabold"><%= t(".total", month: month_name(@month.month)) %></span>
+    <span class="font-mono text-xl font-bold"><%= pesos(@month.total) %></span>
+  </div>
+</div>
+
+<%= render "new_fixed_cost", new_fixed_cost: @month.new_fixed_cost %>
+
+<p class="mt-5 flex items-start gap-2.5 text-meta text-graphite">
+  <svg aria-hidden="true" class="mt-0.5 size-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9" /><path d="M12 11v6" /><path d="M12 7.5v.5" /></svg>
+  <%= t(".home_bills") %>
+</p>

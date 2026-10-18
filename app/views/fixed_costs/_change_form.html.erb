@@ -1,0 +1,24 @@
+<%= form_with model: change, url: fixed_cost_path(change.fixed_cost), method: :patch, namespace: dom_id(change.fixed_cost), class: "change-form flex flex-col gap-3 bg-profit px-4 pt-1 pb-4" do |form| %>
+  <div>
+    <%= form.label :amount, class: "form-label" %>
+    <%= money_field form, :amount, required: true %>
+    <%= field_error change, :amount %>
+  </div>
+
+  <div>
+    <%= form.label :starts_on, class: "form-label" %>
+    <%= form.select :starts_on, month_options(months), {}, class: "form-input" %>
+    <%= field_error change, :starts_on %>
+  </div>
+
+  <% change_helps(change.fixed_cost, months).each.with_index(1) do |help, position| %>
+    <p class="change-help change-help-<%= position %> text-meta"><%= help %></p>
+  <% end %>
+
+  <div class="flex gap-2.5">
+    <%= form.submit t(".submit"), class: "btn-primary min-h-13 flex-1" %>
+    <%= link_to t(".cancel"), fixed_costs_path, data: { turbo_action: "replace" }, class: "btn-secondary w-auto" %>
+  </div>
+
+  <%= form.button t(".remove"), name: "fixed_cost_change[remove]", value: "1", formnovalidate: true, class: "btn-link self-start text-loss-ink" %>
+<% end %>

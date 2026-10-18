@@ -1,0 +1,38 @@
+<%= form_details new_fixed_cost, class: "group mt-5" do %>
+  <summary class="btn-secondary list-none gap-2 group-open:hidden [&::-webkit-details-marker]:hidden">
+    <svg aria-hidden="true" class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14" /><path d="M5 12h14" /></svg>
+    <%= t(".add") %>
+  </summary>
+
+  <%= form_with model: new_fixed_cost, url: fixed_costs_path, class: "panel flex flex-col gap-5 p-4" do |form| %>
+    <h2 class="text-xl font-extrabold"><%= t(".title") %></h2>
+
+    <div>
+      <%= form.label :name, class: "form-label" %>
+      <%= form.text_field :name, required: true, autocomplete: "off", placeholder: t(".name_placeholder"), class: "form-input" %>
+      <%= field_error new_fixed_cost, :name %>
+    </div>
+
+    <div>
+      <%= form.label :amount, class: "form-label" %>
+      <%= money_field form, :amount, required: true %>
+      <%= field_error new_fixed_cost, :amount %>
+    </div>
+
+    <label class="flex min-h-11 items-center gap-3">
+      <%= form.check_box :averaged, class: "size-5.5 shrink-0 accent-ink" %>
+      <%= t(".averaged") %>
+    </label>
+
+    <div>
+      <%= form.label :starts_on, class: "form-label" %>
+      <%= form.select :starts_on, month_options(new_fixed_cost.months, started_on: new_fixed_cost.shop.started_on), {}, class: "form-input" %>
+      <%= field_error new_fixed_cost, :starts_on %>
+    </div>
+
+    <div class="flex gap-2.5">
+      <%= form.submit t(".submit"), class: "btn-primary min-h-13 flex-1" %>
+      <%= link_to t(".cancel"), fixed_costs_path, data: { turbo_action: "replace" }, class: "btn-secondary w-auto" %>
+    </div>
+  <% end %>
+<% end %>

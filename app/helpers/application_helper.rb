@@ -9,20 +9,25 @@ module ApplicationHelper
     render "layouts/navigation" if authenticated?
   end
 
-  # A tab of the tab bar, marked when its page is the one shown. A tab whose page isn't built yet has no path,
-  # and shows without a link.
-  def tab_to(label, path, &icon)
+  # A tab of the tab bar, marked when its page is the one shown, or one of the paths `also` gives. A tab whose
+  # page isn't built yet has no path, and shows without a link.
+  def tab_to(label, path, also: nil, &icon)
     content = safe_join([ capture(&icon), label ])
     return tag.span(content, class: "tab") unless path
 
-    link_to content, path, class: "tab", aria: { current: aria_current(path) }
+    link_to content, path, class: "tab", aria: { current: aria_current(path, *also) }
   end
 
   # A link marks its whole section: Taller's link to /services also marks /services/12/edit. By path rather
   # than current_page?, which only matches GET requests and so would drop the mark when a form comes back
   # with its errors.
-  def aria_current(path)
-    "page" if request.path == path || request.path.start_with?("#{path}/")
+  def aria_current(*paths)
+    "page" if paths.any? { request.path == it || request.path.start_with?("#{it}/") }
+  end
+
+  # A form folded in a <details>, which comes back open when it failed, to show its errors.
+  def form_details(form, **options, &)
+    tag.details(open: form.errors.any?, **options, &)
   end
 
   # Whole pesos, $15.000 in es-CO and $15,000 in en, with a true minus sign: −$47.000.

@@ -10,9 +10,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_18_094522) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_18_095921) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "fixed_cost_amounts", force: :cascade do |t|
+    t.bigint "shop_id", null: false
+    t.bigint "fixed_cost_id", null: false
+    t.date "starts_on", null: false
+    t.integer "amount", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["fixed_cost_id", "starts_on"], name: "index_fixed_cost_amounts_on_fixed_cost_id_and_starts_on", unique: true
+    t.index ["shop_id"], name: "index_fixed_cost_amounts_on_shop_id"
+    t.check_constraint "EXTRACT(day FROM starts_on) = 1::numeric", name: "fixed_cost_amounts_starts_on_check"
+    t.check_constraint "amount >= 0", name: "fixed_cost_amounts_amount_check"
+  end
+
+  create_table "fixed_costs", force: :cascade do |t|
+    t.bigint "shop_id", null: false
+    t.string "name", null: false
+    t.boolean "averaged", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["shop_id"], name: "index_fixed_costs_on_shop_id"
+  end
 
   create_table "services", force: :cascade do |t|
     t.bigint "shop_id", null: false
@@ -56,6 +78,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_094522) do
     t.index ["shop_id"], name: "index_users_on_shop_id", unique: true
   end
 
+  add_foreign_key "fixed_cost_amounts", "fixed_costs"
+  add_foreign_key "fixed_cost_amounts", "shops"
+  add_foreign_key "fixed_costs", "shops"
   add_foreign_key "services", "shops"
   add_foreign_key "sessions", "users"
   add_foreign_key "users", "shops"

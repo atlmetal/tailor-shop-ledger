@@ -9,6 +9,7 @@ RSpec.describe Shop, type: :model do
 
   it { is_expected.to be_valid }
   it { expect(described_class.new.work_days).to eq([ 1, 2, 3, 4, 5, 6 ]) }
+  it { expect(shop.work_days_in(Date.new(2026, 10, 1).all_month)).to eq(27) }
 
   context "without a name" do
     let(:attributes) { { name: "" } }
