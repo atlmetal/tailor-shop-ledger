@@ -20,6 +20,16 @@ es-CO:
         password: Contraseña
         password_challenge: Contraseña actual
         password_confirmation: Confirmación de contraseña
+    errors:
+      models:
+        user:
+          attributes:
+            password:
+              too_short:
+                one: es demasiado corta (mínimo %{count} carácter)
+                other: es demasiado corta (mínimo %{count} caracteres)
+            password_challenge:
+              invalid: no es correcta
   date:
     formats:
       day: "%A %-d de %B"
