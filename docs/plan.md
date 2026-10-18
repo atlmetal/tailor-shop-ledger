@@ -152,13 +152,14 @@ The approved design is five phone screens at 390px, in Spanish, with sample data
 
 ### Registrar (Record)
 
+- Above the title, the top row every page has: the shop's name and the account button. The approved screen's "‹ Hoy" link repeated the Hoy tab, and pointed the wrong way when Registrar was opened from another tab or from a day's report (decided after the approved screens).
 - A three-way switch: Trabajo, Gasto, Otro ingreso. Each opens its own form, so the switch needs no JavaScript.
 - "Fecha", a date input, today by default.
 - A job: "¿Qué servicio hiciste?", the services as radio rows with name and price, the chosen one tinted yellow; "Cantidad", with − and + buttons around the number, 1 at least; "Precio de cada uno", with "Cámbialo si cobraste otro precio."; "Materiales de cada uno", with "Pon 0 si el cliente trajo los materiales."; a summary with "Cobras", "Materiales" and "Te deja", updated while typing; "Guardar"; and "Guardar y registrar otro", which keeps the date and the service, sets the quantity back to 1 and confirms "**Guardado:** 2 × Basta de pantalón, $16.000. Sigue con el próximo."
 - One Stimulus controller fills in the price and materials of the chosen service, runs the − and + buttons and keeps the summary up to date. Apart from the one that formats money fields, no other JavaScript.
 - An expense: "¿En qué gastaste?", with the placeholder "Ej.: repuesto de la máquina"; "Valor"; the note "Las compras de telas, hilos y cremalleras no van aquí: ya están en los materiales de cada servicio."; "Guardar"; and "Últimos gastos", the last ten, with concept, date and amount.
 - Other income: "¿De dónde salió?", with the placeholder "Ej.: venta de retazos"; "Valor"; the note about income that isn't the shop's (decided after the approved screens); "Guardar"; and "Últimos otros ingresos".
-- Editing a job or an entry uses the same form, plus "Borrar".
+- Editing a job or an entry uses the same form, titled "Editar trabajo", "Editar gasto" or "Editar otro ingreso", without the switch or "Guardar y registrar otro": "Guardar" and "Cancelar" side by side, and "Borrar" under them. "Cancelar" goes where saving would (decided after the approved screens).
 
 ### Reportes (Reports)
 
