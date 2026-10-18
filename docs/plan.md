@@ -232,7 +232,7 @@ Done when a system spec records two jobs in a row with "Guardar y registrar otro
 
 #### Demo seeds (2 h, before M5)
 
-- [ ] Deterministic seeds (`Random.new(42)`, fixed lists), relative to today and built through the app's services: "Modistería La Puntada", from the approved screens, working Monday to Saturday, with its services (two of them deactivated), its fixed costs and a rent change from next month, and six months of jobs, expenses and other income, with some losing days; and a second shop working Monday to Friday, with fewer services and one month of history. Both users share a password that the seeds print.
+- [x] Deterministic seeds (`Random.new(42)`, fixed lists), relative to today and built through the app's services: "Modistería La Puntada", from the approved screens, working Monday to Saturday, with its services (two of them deactivated), its fixed costs and a rent change from next month, and six months of jobs, expenses and other income, with some losing days; and a second shop working Monday to Friday, with fewer services and one month of history. Both users share a password that the seeds print.
 
 Done when `bin/rails db:seed` builds both shops from any database, and CI runs it.
 

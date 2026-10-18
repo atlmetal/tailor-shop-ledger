@@ -10,6 +10,7 @@ CI.run do
   step "Security: Brakeman code analysis", "bin/brakeman --quiet --no-pager --exit-on-warn --exit-on-error"
 
   step "Tests: RSpec", "bin/rails db:test:prepare spec"
+  step "Seeds: demo shops", "env RAILS_ENV=test bin/rails db:seed"
 
   # Optional: set a green GitHub commit status to unblock PR merge.
   # Requires the `gh` CLI and `gh extension install basecamp/gh-signoff`.

@@ -16,6 +16,14 @@ RSpec.describe Shops::CreateService do
 
   it { is_expected.to have_attributes(shop:, user:, password: "k7m2x9pq4hta") }
 
+  context "with a password of its own" do
+    subject(:call) { described_class.call(name: "Modistería La Puntada", started_on:, user_name: "Ana Gómez", user_email: "ana@example.com", password: "costura-demo") }
+
+    before { allow(User).to receive(:create!).with(shop:, name: "Ana Gómez", email_address: "ana@example.com", password: "costura-demo").and_return(user) }
+
+    it { is_expected.to have_attributes(password: "costura-demo") }
+  end
+
   it "creates the shop and its user in one transaction" do
     call
 

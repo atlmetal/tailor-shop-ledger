@@ -1,9 +1,10 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+# Demo data: wipes the whole database and builds two demo shops through the app's own services,
+# deterministic and relative to today. Every milestone extends it with what it adds.
+if Rails.env.production?
+  puts "Seeds wipe the database and create accounts with a known password, so they never run in production."
+  return
+end
+
+require_relative "seeds/demo"
+
+Seeds::Demo.new.run
