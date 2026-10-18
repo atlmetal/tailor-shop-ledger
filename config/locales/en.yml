@@ -24,9 +24,9 @@ en:
     formats:
       day: "%A, %B %-d"
   layouts:
-    header:
+    navigation:
       account: Your account
-      navigation: Main
+      label: Main
       record: Record
       reports: Reports
       shop: Shop

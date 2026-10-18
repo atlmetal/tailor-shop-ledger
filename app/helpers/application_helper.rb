@@ -1,6 +1,12 @@
 module ApplicationHelper
-  def signed_in_header
-    render "layouts/header" if authenticated?
+  # The shop's name once signed in, the app's before.
+  def header_title
+    current_tenant&.name || t("app_name")
+  end
+
+  # The tab bar and the account button.
+  def signed_in_navigation
+    render "layouts/navigation" if authenticated?
   end
 
   # A tab of the tab bar, marked when its page is the one shown. A tab whose page isn't built yet has no path,

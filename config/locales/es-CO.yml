@@ -24,9 +24,9 @@ es-CO:
     formats:
       day: "%A %-d de %B"
   layouts:
-    header:
+    navigation:
       account: Tu cuenta
-      navigation: Principal
+      label: Principal
       record: Registrar
       reports: Reportes
       shop: Taller

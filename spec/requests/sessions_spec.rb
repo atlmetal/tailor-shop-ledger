@@ -13,6 +13,7 @@ RSpec.describe "Sessions", type: :request do
     before { get new_session_path }
 
     it { expect(response).to have_http_status(:ok) }
+    it { expect(response.parsed_body.at("header").text).to include("Tailor Shop Ledger") }
   end
 
   describe "POST /session" do
