@@ -250,7 +250,7 @@ Done when query specs cover a period in progress, a period across two months, th
 - [ ] `BackupJob` every night at 3:30 a.m. Bogotá time, after the gym app's at 3, copied from the gym app: a `pg_dump` of the primary database, uploaded with curl to the R2 bucket `tailor-shop-ledger-backups` (a lifecycle rule deletes objects after 30 days; its token has Object Read & Write on that bucket only). Then a ping to a Healthchecks.io check on the same schedule, in America/Bogota, or to the check's `/fail` URL when the backup fails. The ping URL lives in the encrypted credentials.
 - [ ] Sentry: a project of its own, errors only, with the gym app's initializer, which keeps personal data and the row PostgreSQL quotes in its errors out of the events.
 - [ ] Restore drill: download a scheduled backup from R2, restore it into a local database and run the app on it.
-- [ ] `docs/deploy.md`, adapted from the gym app's: the server it shares, DNS, Kamal, shops and passwords, backups, restoring and monitoring. The README points to it.
+- [x] `docs/deploy.md`, adapted from the gym app's: the server it shares, DNS, Kamal, shops and passwords, backups, restoring and monitoring. The README points to it.
 - [ ] With both apps running, check the server's memory (`free -m` and `docker stats --no-stream`).
 - [ ] On an Android phone, Chrome puts the app on the home screen. If Chrome asks for a service worker, register the one Rails generated, which caches nothing.
 
