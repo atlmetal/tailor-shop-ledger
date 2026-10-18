@@ -47,6 +47,7 @@ en:
       rate_limited: Too many attempts. Try again in a few minutes.
     new:
       email_address: Email address
+      forgot_password: Forgot your password? Ask whoever gave you your account for a new one.
       password: Password
       submit: Sign in
       title: Sign in

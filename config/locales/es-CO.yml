@@ -47,6 +47,7 @@ es-CO:
       rate_limited: Demasiados intentos. Vuelve a intentarlo en unos minutos.
     new:
       email_address: Correo electrónico
+      forgot_password: "¿Olvidaste tu contraseña? Pídele una nueva a quien te dio la cuenta."
       password: Contraseña
       submit: Iniciar sesión
       title: Iniciar sesión
