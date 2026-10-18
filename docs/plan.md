@@ -238,7 +238,7 @@ Done when `bin/rails db:seed` builds both shops from any database, and CI runs i
 
 #### M5. Today (3 h)
 
-- [ ] The results of a period as one query object (`Results::PeriodQuery`), which Reports reuses.
+- [x] The results of a period as one query object (`Results::PeriodQuery`), which Reports reuses.
 - [ ] Today as the home page: the goal panel with the tape bar and its note, the day off, the two record buttons, today's jobs and the month so far, through one facade.
 
 Done when query specs cover a period in progress, a period across two months, the shop's start date and a day off; and a system spec checks the day's goal after recording a job.
