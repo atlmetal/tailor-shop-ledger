@@ -53,6 +53,13 @@
   .panel { @apply overflow-hidden rounded-panel border border-edge bg-white; }
   .form-label { @apply block text-note font-bold; }
   .form-input { @apply mt-1.5 block h-13.5 w-full rounded-small border-[1.5px] border-control bg-white px-3.5 text-lg; }
+  /* A pesos field: the "$" and the input in one box, which takes the input's focus ring and error border. */
+  .money-field { @apply mt-1.5 flex h-13.5 items-center gap-2 rounded-small border-[1.5px] border-control bg-white px-3.5 font-mono text-xl; }
+  .money-field:focus-within { outline: 3px solid var(--color-ink); outline-offset: 2px; }
+  .money-field input { @apply h-full w-full min-w-0 bg-transparent font-bold; }
+  .money-field input:focus-visible { outline: none; }
+  .money-field .field_with_errors { @apply contents; }
+  .money-field:has(.field_with_errors) { @apply border-loss-ink; }
   .form-hint { @apply mt-1.5 text-meta text-graphite; }
   .field-error { @apply mt-1.5 text-meta font-semibold text-loss-ink; }
   /* Rails wraps an invalid field in .field_with_errors. */

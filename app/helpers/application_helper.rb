@@ -30,6 +30,17 @@ module ApplicationHelper
     "#{"−" if amount.negative?}#{number_to_currency(amount.abs, precision: 0)}"
   end
 
+  # A pesos field with the "$" before it, which takes digits only and groups them as the user types.
+  def money_field(form, attribute, **options)
+    tag.div(class: "money-field") do
+      safe_join([
+        tag.span(t("number.currency.format.unit"), class: "font-normal text-graphite", aria: { hidden: true }),
+        form.text_field(attribute, value: number_with_delimiter(form.object.public_send(attribute)), inputmode: "numeric", autocomplete: "off",
+          data: { controller: "money-field", action: "money-field#format", money_field_delimiter_value: t("number.currency.format.delimiter") }, **options)
+      ])
+    end
+  end
+
   # "Martes 20 de octubre" in es-CO, whose day names are lowercase; "Tuesday, October 20" in en.
   def day_title(date)
     l(date, format: :day).upcase_first

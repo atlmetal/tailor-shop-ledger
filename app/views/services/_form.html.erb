@@ -7,14 +7,14 @@
 
   <div>
     <%= form.label :price, class: "form-label" %>
-    <%= form.text_field :price, value: number_with_delimiter(service.price), required: true, inputmode: "numeric", autocomplete: "off", class: "form-input font-mono" %>
+    <%= money_field form, :price, required: true %>
     <p class="form-hint"><%= t(".price_hint") %></p>
     <%= field_error service, :price %>
   </div>
 
   <div>
     <%= form.label :material_cost, class: "form-label" %>
-    <%= form.text_field :material_cost, value: number_with_delimiter(service.material_cost), required: true, inputmode: "numeric", autocomplete: "off", class: "form-input font-mono" %>
+    <%= money_field form, :material_cost, required: true %>
     <p class="form-hint"><%= t(".material_cost_hint") %></p>
     <%= field_error service, :material_cost %>
   </div>
