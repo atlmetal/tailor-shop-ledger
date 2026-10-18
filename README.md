@@ -6,4 +6,4 @@ It is being built: the first version's plan is in [docs/plan.md](docs/plan.md).
 
 ## License
 
-[GNU Affero General Public License v3.0](LICENSE).
+[GNU Affero General Public License v3.0](LICENSE). The Atkinson Hyperlegible fonts in `app/assets/fonts` are under the [SIL Open Font License](app/assets/fonts/OFL.txt).

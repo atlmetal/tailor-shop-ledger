@@ -42,8 +42,15 @@ RSpec.configure do |config|
   config.before(:each, type: :system) do |example|
     name, screen_size = example.metadata[:desktop] ? [ :desktop_chrome, [ 1280, 800 ] ] : [ :phone_chrome, [ 390, 844 ] ]
 
-    driven_by :selenium, using: :headless_chrome, screen_size:, options: { name: }
+    # Chrome warns after a sign-in with a leaked password, like the factories' password123, and its warning
+    # takes the focus, so the next example's typing never reaches the page.
+    driven_by :selenium, using: :headless_chrome, screen_size:, options: { name: } do |options|
+      options.add_preference("profile.password_manager_leak_detection", false)
+    end
   end
+
+  # Icon buttons and links are found by their accessible name.
+  Capybara.enable_aria_label = true
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false

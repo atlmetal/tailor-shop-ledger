@@ -23,8 +23,13 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <main class="container mx-auto mt-28 px-5 flex">
+  <body class="bg-paper font-sans text-base text-ink">
+    <%= signed_in_header %>
+
+    <%# On phones the bottom padding keeps the end of the page clear of the tab bar. %>
+    <main class="mx-auto max-w-160 px-4 pt-0.5 pb-26 lg:pt-10 lg:pb-16">
+      <%= flash_messages %>
+
       <%= yield %>
     </main>
   </body>

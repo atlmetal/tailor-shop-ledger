@@ -1,0 +1,26 @@
+<header class="lg:border-b lg:border-edge lg:bg-white">
+  <div class="mx-auto flex max-w-160 items-center justify-between gap-3 px-4 pt-4 lg:grid lg:min-h-16 lg:max-w-5xl lg:grid-cols-[1fr_auto_1fr] lg:pt-0">
+    <p class="min-w-0 truncate text-meta leading-11 font-semibold text-graphite"><%= current_tenant.name %></p>
+
+    <nav class="tab-bar" aria-label="<%= t(".navigation") %>">
+      <%= tab_to t(".today"), root_path do %>
+        <svg aria-hidden="true" class="size-6.5 lg:size-5.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 10.5 12 3.5l8.5 7" /><path d="M5.5 9v11h13V9" /><path d="M10 20v-5.5h4V20" /></svg>
+      <% end %>
+      <%= tab_to t(".record"), nil do %>
+        <span aria-hidden="true" class="tab-record-icon">
+          <svg class="size-5.5 lg:size-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14" /><path d="M5 12h14" /></svg>
+        </span>
+      <% end %>
+      <%= tab_to t(".reports"), nil do %>
+        <svg aria-hidden="true" class="size-6.5 lg:size-5.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20v-8" /><path d="M12 20V5" /><path d="M19 20v-5" /><path d="M3 20h18" /></svg>
+      <% end %>
+      <%= tab_to t(".shop"), nil do %>
+        <svg aria-hidden="true" class="size-6.5 lg:size-5.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3" /><circle cx="6" cy="18" r="3" /><path d="M8.6 7.6 20 19" /><path d="M8.6 16.4 20 5" /></svg>
+      <% end %>
+    </nav>
+
+    <%= link_to account_path, aria: { label: t(".account"), current: aria_current(account_path) }, class: "flex size-11 shrink-0 items-center justify-center justify-self-end rounded-full hover:bg-divider aria-[current=page]:bg-ink aria-[current=page]:text-white" do %>
+      <svg aria-hidden="true" class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4" /><path d="M4 21c1.6-3.8 4.5-5.8 8-5.8s6.4 2 8 5.8" /></svg>
+    <% end %>
+  </div>
+</header>

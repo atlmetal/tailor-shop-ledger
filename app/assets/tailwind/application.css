@@ -1,1 +1,77 @@
 @import "tailwindcss";
+
+/* Atkinson Hyperlegible Next and Mono: variable fonts (weights 200 to 800), latin subset, self-hosted under
+   the SIL Open Font License (fonts/OFL.txt). */
+@font-face { font-family: "Atkinson Hyperlegible Next"; font-weight: 200 800; font-display: swap; src: url("atkinson-hyperlegible-next.woff2") format("woff2"); }
+@font-face { font-family: "Atkinson Hyperlegible Mono"; font-weight: 200 800; font-display: swap; src: url("atkinson-hyperlegible-mono.woff2") format("woff2"); }
+
+@theme {
+  --font-sans: "Atkinson Hyperlegible Next", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Atkinson Hyperlegible Mono", ui-monospace, monospace;
+
+  /* A 17px base, 16px for labels and notes, 15px for secondary text and 32px for page titles. */
+  --text-base: 1.0625rem;
+  --text-base--line-height: 1.45;
+  --text-note: 1rem;
+  --text-note--line-height: 1.45;
+  --text-meta: 0.9375rem;
+  --text-meta--line-height: 1.45;
+  --text-title: 2rem;
+  --text-title--line-height: 1.1;
+
+  /* The tape measure. Its yellow goes only on the goal bar, the Record tab and the marker over the current tab. */
+  --color-paper: #f4f3ef;
+  --color-ink: #1d1f1e;
+  --color-graphite: #575a55;
+  --color-edge: #dad8d0;
+  --color-divider: #eceae3;
+  --color-control: #858880;
+  --color-disabled: #9a9c96;
+  --color-tape: #f4c430;
+  --color-tick: #c9c5b9;
+  --color-track: #efede6;
+
+  /* A result always shows its word and icon as well, never its color alone. */
+  --color-profit: #fff6d6;
+  --color-profit-edge: #e2bc45;
+  --color-loss: #fbe9e2;
+  --color-loss-edge: #e3a58f;
+  --color-loss-ink: #b03a16;
+
+  --radius-panel: 1rem;
+  --radius-button: 0.875rem;
+  --radius-small: 0.75rem;
+  --radius-bar: 0.5rem;
+}
+
+@layer base {
+  :focus-visible { outline: 3px solid var(--color-ink); outline-offset: 2px; }
+}
+
+@layer components {
+  .page-title { @apply text-title font-extrabold tracking-[-0.01em]; }
+  .flash-notice { @apply mt-3 mb-5 rounded-small border border-profit-edge bg-profit px-3.5 py-3 text-note; }
+  .flash-alert { @apply mt-3 mb-5 rounded-small border border-loss-edge bg-loss px-3.5 py-3 text-note; }
+
+  /* Fixed to the bottom of a phone's screen; from lg up, part of the bar at the top. */
+  .tab-bar {
+    @apply fixed inset-x-0 bottom-0 z-10 grid h-19 grid-cols-[repeat(4,minmax(0,10rem))] justify-center gap-1 border-t border-edge bg-white px-2 pt-1.5 pb-2.5;
+    @variant lg { @apply static flex h-auto border-0 bg-transparent p-0; }
+  }
+  .tab {
+    @apply relative flex min-h-14 flex-col items-center justify-center gap-[3px] text-sm font-semibold text-graphite;
+    @variant lg { @apply min-h-16 flex-row gap-2 px-3 text-note hover:text-ink; }
+  }
+  .tab[aria-current="page"] { @apply font-extrabold text-ink; }
+  /* The strip of tape over the current tab hangs from the edge of the bar that faces the page. */
+  .tab[aria-current="page"]::before {
+    content: "";
+    @apply absolute inset-x-[22%] -top-1.5 h-1.25 rounded-b-[3px];
+    background: repeating-linear-gradient(90deg, var(--color-ink) 0 1px, transparent 1px 6px) top / 100% 3px no-repeat, var(--color-tape);
+    @variant lg { @apply inset-x-3 top-auto -bottom-px rounded-t-[3px] rounded-b-none; background-position: bottom; }
+  }
+  .tab-record-icon {
+    @apply flex size-8.5 items-center justify-center rounded-full bg-tape text-ink;
+    @variant lg { @apply size-7; }
+  }
+}

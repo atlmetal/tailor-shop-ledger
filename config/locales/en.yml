@@ -20,6 +20,17 @@ en:
         password: Password
         password_challenge: Current password
         password_confirmation: Password confirmation
+  date:
+    formats:
+      day: "%A, %B %-d"
+  layouts:
+    header:
+      account: Your account
+      navigation: Main
+      record: Record
+      reports: Reports
+      shop: Shop
+      today: Today
   sessions:
     create:
       invalid: Try another email address or password.
@@ -31,4 +42,4 @@ en:
       title: Sign in
   today:
     show:
-      account: Account
+      title: Today

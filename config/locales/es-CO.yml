@@ -20,6 +20,17 @@ es-CO:
         password: Contraseña
         password_challenge: Contraseña actual
         password_confirmation: Confirmación de contraseña
+  date:
+    formats:
+      day: "%A %-d de %B"
+  layouts:
+    header:
+      account: Tu cuenta
+      navigation: Principal
+      record: Registrar
+      reports: Reportes
+      shop: Taller
+      today: Hoy
   sessions:
     create:
       invalid: Correo o contraseña incorrectos.
@@ -31,4 +42,4 @@ es-CO:
       title: Iniciar sesión
   today:
     show:
-      account: Cuenta
+      title: Hoy
