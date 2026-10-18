@@ -87,9 +87,11 @@ test:
 production:
   primary: &primary_production
     <<: *default
+    # The PostgreSQL accessory in config/deploy.yml, which shares this password.
+    host: <%= ENV["DB_HOST"] %>
     database: tailor_shop_ledger_production
     username: tailor_shop_ledger
-    password: <%= ENV["TAILOR_SHOP_LEDGER_DATABASE_PASSWORD"] %>
+    password: <%= ENV["POSTGRES_PASSWORD"] %>
   cache:
     <<: *primary_production
     database: tailor_shop_ledger_production_cache
