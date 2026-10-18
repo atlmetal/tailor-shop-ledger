@@ -33,7 +33,7 @@ Decided by the owner on 2026-10-16 and 2026-10-17.
 - **One locale and time zone per installation**, as in the gym app. `en` or `es-CO`, through `APP_LOCALE`: `en` by default, the project's language, and `es-CO` by default in production. Always `America/Bogota`.
 - **No outgoing email in v0.1.** Users change their own password; a forgotten one goes through the operator.
 - **Responsive.** Built for phones first and used the same way from a computer.
-- **Installable, not offline.** Rails 8's PWA manifest puts the app's icon on the phone's home screen. The app needs a connection.
+- **Installable, not offline.** Rails 8's PWA manifest puts the app's icon on the phone's home screen, named "Taller" after the subdomain for every shop: the shop's own name is at the top of every page, and a long one would get cut off under the icon. The app needs a connection.
 - **Visual direction: "tape measure"** (approved as five phone screens, see Screens):
   - Neutrals: paper `#F4F3EF` background; ink `#1D1F1E` for text, primary buttons and the selected segment of a switch; graphite `#575A55` for secondary text; white `#FFFFFF` for panels and fields; `#DAD8D0` for panel borders, `#ECEAE3` for dividers between rows and `#858880` for switches and secondary buttons; `#9A9C96` for disabled controls.
   - Tape yellow `#F4C430` for the goal bar, the Record tab and the marker over the current tab; ticks `#C9C5B9` on a `#EFEDE6` track.
