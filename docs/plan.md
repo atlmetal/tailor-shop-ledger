@@ -307,7 +307,7 @@ The first shop takes deposits and is paid the rest later, sometimes in parts (ga
 - [x] Payments in `Results::PeriodQuery`, and the pending orders as a query object.
 - [x] The order's page: create, edit and delete an order; add, edit and delete its jobs through the job form; record, edit and delete its payments.
 - [x] Registrar's "Pedido"; on Hoy, "Te deben" and the day's payments; and the payments in a day's report.
-- [ ] Keep the customer's name out of the logs.
+- [x] Keep the customer's name out of the logs.
 - [ ] Demo seeds: La Puntada gets orders paid in two parts, one with a payment in between, one across two months, and some pending, one of them finished and never picked up.
 - [ ] README: the rules for orders, and the Today screenshot again.
 - [ ] Tag `v0.1.0` (moved from M8, since v0.1 now includes orders).
