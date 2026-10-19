@@ -1,8 +1,9 @@
 module Seeds
   # Two demo shops. "Modistería La Puntada", from the approved screens: Monday to Saturday, its services, two of
-  # them deactivated, its fixed costs with a rent change from next month, and six months of jobs, expenses and
-  # other income, some days at a loss, with today's jobs those of the Today screen. And "Arreglos El Dedal", in
-  # its owner's home: Monday to Friday, fewer services, and one month of history.
+  # them deactivated, its fixed costs with a rent change from next month, six months of jobs, expenses and other
+  # income, some days at a loss, with today's jobs those of the Today screen, and orders paid in parts, some still
+  # owed for. And "Arreglos El Dedal", in its owner's home: Monday to Friday, fewer services, and one month of
+  # history.
   # Everything goes through the app's own services and forms, so a seed that breaks a rule fails instead of
   # creating impossible data. Deterministic (Random.new(42)) and relative to today; one transaction, so a
   # failing seed leaves the database as it was.
@@ -19,7 +20,7 @@ module Seeds
                     shirt: [ 16_000, 500, 8 ], buttons: [ 7_000, 1_800, 12 ], lining: [ 35_000, 6_000, 4 ], dress: [ 180_000, 65_000, 1 ] },
         retired_services: { embroidery: [ 12_000, 2_000, 4 ], curtains: [ 45_000, 8_000, 1 ] },
         fixed_costs: { rent: [ 900_000, false ], electricity: [ 120_000, true ], water: [ 55_000, true ], internet: [ 70_000, false ], phone: [ 45_000, false ] },
-        rent_from_next_month: 950_000, expenses_a_month: 3, incomes_a_month: 1,
+        rent_from_next_month: 950_000, expenses_a_month: 3, incomes_a_month: 1, orders: true,
         # The Today screen's jobs, and the Record screen's latest expenses and other income, by day of this month
         # (instead of random ones).
         today: [ [ :trouser_hem, 2 ], [ :zipper, 1 ], [ :buttons, 1 ] ],
@@ -29,7 +30,7 @@ module Seeds
         services: { trouser_hem: [ 7_000, 400, 10 ], zipper: [ 14_000, 2_500, 5 ], waist: [ 12_000, 300, 5 ], jacket: [ 25_000, 3_000, 2 ] },
         retired_services: {},
         fixed_costs: { home_rent: [ 250_000, false ], home_electricity: [ 35_000, true ], internet: [ 40_000, false ] },
-        expenses_a_month: 1, incomes_a_month: 0, today: nil, this_month: [] }
+        expenses_a_month: 1, incomes_a_month: 0, orders: false, today: nil, this_month: [] }
     ].freeze
 
     EXPENSES = { overlocker: 35_000, transport: 12_000, spare_part: 28_000, scissors: 8_000, bulb: 6_000 }.freeze
@@ -91,6 +92,7 @@ module Seeds
           add_fixed_costs(shop, config)
           record_jobs(shop, config, services)
           record_entries(shop, config)
+          record_orders(services) if config[:orders]
           services.slice(*config[:retired_services].keys).each_value { it.update!(active: false) }
         end
       end
@@ -161,6 +163,25 @@ module Seeds
         config[:this_month].each do |kind, key, day, amount|
           occurred_on = @today.change(day:)
           Entry.create!(kind:, occurred_on:, concept: @texts[:entries][key], amount:) if occurred_on <= @today
+        end
+      end
+
+      # Orders as customers pay them, with fixed days and amounts: two paid off, one with a payment in between;
+      # one left last month and paid off on the 1st of this one; and three still owed for, one of them finished and
+      # never picked up. None comes in today, so Today keeps the approved screen's figures. :rest is what's owed.
+      def record_orders(services)
+        month = @today.beginning_of_month
+        [
+          [ "Carmen Díaz", @today - 70, { dress: 1 }, [ [ @today - 70, 72_000 ], [ @today - 52, :rest ] ] ],
+          [ "Patricia Rojas", @today - 45, { lining: 2, zipper: 1 }, [ [ @today - 45, 25_000 ], [ @today - 38, 30_000 ], [ @today - 31, :rest ] ] ],
+          [ "Sandra Castro", month - 5, { dress: 1, skirt_hem: 2 }, [ [ month - 5, 80_000 ], [ month, :rest ] ] ],
+          [ "Gloria Suárez", @today - 40, { dress: 1 }, [ [ @today - 40, 70_000 ] ] ],
+          [ "Marta Rodríguez", @today - 5, { trouser_hem: 3, zipper: 1 }, [ [ @today - 5, 20_000 ] ] ],
+          [ "Lucía Herrera", @today - 2, { skirt_hem: 2 }, [] ]
+        ].each do |customer_name, received_on, jobs, payments|
+          order = Order.create!(customer_name:, received_on:)
+          jobs.each { |key, quantity| Job.create!(order:, service: services[key], quantity:) }
+          payments.each { |paid_on, amount| Payment.create!(order:, paid_on:, amount: amount == :rest ? order.owed : amount) }
         end
       end
   end
