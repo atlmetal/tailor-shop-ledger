@@ -163,11 +163,11 @@ The approved design is five phone screens at 390px, in Spanish, with sample data
 
 ### Reportes (Reports)
 
-- A five-way switch: Día, Semana, Mes, Semestre, Año. Under it, the period's title and range between the previous and next arrows: "Octubre de 2026", "Del 1 al 20, hasta hoy".
-- The result panel: "Ganancia" with a check icon in the profit panel, or "Pérdida" with an alert icon in the loss panel; the amount in large mono type; and "17 días trabajados · 112 trabajos".
-- "Cómo se calcula": Cobrado por trabajos; Materiales (−); Otros ingresos (+); Otros gastos (−); Gastos fijos de 17 días (−); a dashed rule; and Ganancia or Pérdida with the amount.
+- A five-way switch: Día, Semana, Mes, Semestre, Año. Under it, the period's title and range between the previous and next arrows: "Octubre de 2026", "Del 1 al 20, hasta hoy". Every period in progress ends its range with ", hasta hoy", semester and year included. A week's title is its days, "Del 19 al 25 de octubre", so under it goes only "Hasta hoy" while it's in progress, or the days counted in the week the shop started; today says "Hoy, hasta ahora", and a past day adds nothing (decided after the approved screens).
+- The result panel: "Ganancia" with a check icon in the profit panel, or "Pérdida" with an alert icon in the loss panel; the amount in large mono type, a loss with its sign, "−$47.000", as everywhere (decided after the approved screens); and "17 días trabajados · 112 trabajos".
+- "Cómo se calcula": Cobrado por trabajos; Materiales (−); Otros ingresos (+); Otros gastos (−); Gastos fijos de 17 días (−); a dashed rule; and Ganancia or Pérdida with the amount. Each line keeps its sign even on 0: "−$0", "+$0".
 - The note "Los gastos fijos se reparten entre los días que trabajas: en octubre, cada día carga $44.074.", with the link "Ver gastos fijos".
-- Decided after the approved screens, in the same style: the services that left the most, month by month, and the day's records in the day view.
+- Decided after the approved screens, in the same style: in the day view, "Lo que registraste", with the day's jobs as in Hoy and its entries with "Gasto" or "Otro ingreso", or "No registraste nada este día."; in the other views, "Los servicios que más te dejaron", each with its units ("47 trabajos") and what it left; and under every view, "Mes a mes", each month with its result's word, icon and amount, the current one as "Octubre, hasta hoy".
 
 ### Taller (Shop): services and fixed costs
 
