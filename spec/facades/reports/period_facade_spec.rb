@@ -40,4 +40,12 @@ RSpec.describe Reports::PeriodFacade do
 
     it("is the month of the last day counted") { expect(report.fixed_costs_month).to eq(month) }
   end
+
+  describe "#top_services" do
+    let(:rows) { [ instance_double(Results::TopServicesQuery::Row) ] }
+
+    before { allow(Results::TopServicesQuery).to receive(:call).with(period: result.days).and_return(rows) }
+
+    it("ranks the services of the days counted") { expect(report.top_services).to eq(rows) }
+  end
 end

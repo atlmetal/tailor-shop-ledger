@@ -1,0 +1,15 @@
+<section class="mt-8" aria-labelledby="top-services">
+  <h2 id="top-services" class="text-xl font-extrabold"><%= t(".title") %></h2>
+
+  <ol class="panel mt-2.5 divide-y divide-divider">
+    <% rows.each do |row| %>
+      <li class="flex min-h-16 items-center justify-between gap-3 px-4 py-2.5">
+        <span class="flex min-w-0 flex-col gap-0.5">
+          <span class="font-bold"><%= row.service.name %></span>
+          <span class="text-meta text-graphite"><%= t("reports.result.units", count: row.units) %></span>
+        </span>
+        <%= top_service_left row %>
+      </li>
+    <% end %>
+  </ol>
+</section>

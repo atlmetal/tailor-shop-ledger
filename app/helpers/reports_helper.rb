@@ -60,6 +60,16 @@ module ReportsHelper
     tag.div(safe_join([ tag.span(label), tag.span(amount, class: "font-mono font-medium") ], " "), class: "flex min-h-11 items-center justify-between gap-3")
   end
 
+  # The services that left the most in the period; nothing while it has no jobs.
+  def top_services(rows)
+    render("reports/top_services", rows:) if rows.any?
+  end
+
+  # What a service left, in the loss color when its materials cost more than it charged.
+  def top_service_left(row)
+    tag.span(pesos(row.left), class: token_list("shrink-0 font-mono text-lg font-bold", "text-loss-ink": row.left.negative?))
+  end
+
   # What a line of the calculation takes off the result, "−$151.400", even when it's 0.
   def pesos_off(amount)
     "−#{number_to_currency(amount, precision: 0)}"

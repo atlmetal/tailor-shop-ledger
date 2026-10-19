@@ -259,7 +259,7 @@ Done when the app runs over HTTPS next to the gym app; a scheduled backup has be
 #### M7. Reports (6 h)
 
 - [x] The period switch, the arrows, the result panel and the calculation, with `Results::PeriodQuery`.
-- [ ] The services that left the most in the period.
+- [x] The services that left the most in the period.
 - [ ] Month by month: the last six months, the current one marked "hasta hoy".
 - [ ] In the day view, the day's jobs and entries, each opening its form. Saving, cancelling or deleting a past day's record then returns to that day's report, as the rule under Today says; until M7 every record returns to Today.
 

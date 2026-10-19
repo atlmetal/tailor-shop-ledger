@@ -1,6 +1,6 @@
 module Reports
-  # The Reports page: a period's result and how it's calculated, and the way to the periods around it and to the
-  # other kinds of period.
+  # The Reports page: a period's result and how it's calculated, the way to the periods around it and to the other
+  # kinds of period, and the services that left the most in it.
   class PeriodFacade
     attr_reader :period
 
@@ -38,6 +38,10 @@ module Reports
     # The fixed costs each work day carries in the month of the last day counted.
     def fixed_costs_month
       @fixed_costs_month ||= FixedCosts::MonthQuery.call(shop: @shop, month: days.end)
+    end
+
+    def top_services
+      @top_services ||= Results::TopServicesQuery.call(period: days)
     end
   end
 end

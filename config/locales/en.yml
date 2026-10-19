@@ -221,6 +221,8 @@ en:
       switch: Period
       title: Reports
       today_so_far: Today, so far
+    top_services:
+      title: The services that left you the most
   services:
     create:
       saved: Saved %{name}.

@@ -132,6 +132,29 @@ RSpec.describe ReportsHelper, type: :helper do
     it { expect(helper.result_summary(instance_double(Results::PeriodQuery::Result, work_days: 1, units: 1))).to eq("1 work day · 1 job") }
   end
 
+  describe "#top_services" do
+    let(:row) { Results::TopServicesQuery::Row.new(service: instance_double(Service, name: "Basta de pantalón"), units: 38, left: 285_000) }
+
+    it { expect(helper.top_services([ row ])).to have_css("ol li", text: "Basta de pantalón 38 jobs $285,000", normalize_ws: true) }
+    it("shows nothing while the period has no jobs") { expect(helper.top_services([])).to be_nil }
+  end
+
+  describe "#top_service_left" do
+    let(:row) { Results::TopServicesQuery::Row.new(service: instance_double(Service), units: 1, left:) }
+
+    context "when the service left something" do
+      let(:left) { 7_500 }
+
+      it { expect(helper.top_service_left(row)).to have_css("span.font-mono:not(.text-loss-ink)", text: "$7,500") }
+    end
+
+    context "when its materials cost more than it charged" do
+      let(:left) { -3_000 }
+
+      it { expect(helper.top_service_left(row)).to have_css("span.text-loss-ink", text: "−$3,000") }
+    end
+  end
+
   describe "#calculation_line" do
     it { expect(helper.calculation_line("Materials", "−$1,000")).to have_css("div > span + span.font-mono", text: "−$1,000") }
   end

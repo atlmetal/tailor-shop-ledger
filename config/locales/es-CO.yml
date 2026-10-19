@@ -221,6 +221,8 @@ es-CO:
       switch: Período
       title: Reportes
       today_so_far: Hoy, hasta ahora
+    top_services:
+      title: Los servicios que más te dejaron
   services:
     create:
       saved: Guardaste %{name}.
