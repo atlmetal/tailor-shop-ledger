@@ -73,8 +73,12 @@ module ReportsHelper
     tag.div(safe_join(rows.compact), class: "panel mt-2.5 divide-y divide-divider")
   end
 
-  # The services that left the most in the period; nothing while it has no jobs.
-  def top_services(rows)
+  # The services that left the most in the period; nothing while it has no jobs, or on a day's report, where they
+  # would repeat its records.
+  def top_services(report)
+    return if report.day?
+
+    rows = report.top_services
     render("reports/top_services", rows:) if rows.any?
   end
 

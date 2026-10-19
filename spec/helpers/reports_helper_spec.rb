@@ -154,10 +154,24 @@ RSpec.describe ReportsHelper, type: :helper do
   end
 
   describe "#top_services" do
-    let(:row) { Results::TopServicesQuery::Row.new(service: instance_double(Service, name: "Basta de pantalón"), units: 38, left: 285_000) }
+    subject(:section) { helper.top_services(report) }
 
-    it { expect(helper.top_services([ row ])).to have_css("ol li", text: "Basta de pantalón 38 jobs $285,000", normalize_ws: true) }
-    it("shows nothing while the period has no jobs") { expect(helper.top_services([])).to be_nil }
+    let(:report) { instance_double(Reports::PeriodFacade, day?: false, top_services: rows) }
+    let(:rows) { [ Results::TopServicesQuery::Row.new(service: instance_double(Service, name: "Basta de pantalón"), units: 38, left: 285_000) ] }
+
+    it { is_expected.to have_css("ol li", text: "Basta de pantalón 38 jobs $285,000", normalize_ws: true) }
+
+    context "with a period without jobs" do
+      let(:rows) { [] }
+
+      it { is_expected.to be_nil }
+    end
+
+    context "with a day's report" do
+      let(:report) { instance_double(Reports::PeriodFacade, day?: true) }
+
+      it("leaves them out, since they'd repeat the day's records") { is_expected.to be_nil }
+    end
   end
 
   describe "#top_service_left" do

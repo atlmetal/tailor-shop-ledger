@@ -123,7 +123,7 @@ Everything a shop owns carries `shop_id`: `services`, `jobs`, `fixed_costs`, `fi
 
 - Periods: day, week (Monday to Sunday), month, semester (January to June, July to December) and year. The current month opens by default. Arrows move to the previous or the next period, never past the current one and never before the one where the shop started. The switch keeps the date being viewed: each kind opens its period that holds the last day counted, so from September, Día opens September 30 and Año the whole year, and from a period in progress, the current one (decided after the approved screens).
 - Each period shows its title and the range counted, from its start, or the shop's if later, to its end, or today while it's in progress; its result; the work days counted and the jobs done; the calculation, line by line; and the fixed costs per work day of the month of its last day counted: the current month while the period is in progress, its last month once it's over (decided after the approved screens).
-- The services that left the most in the period: the top five by what they left, each with the units done.
+- The services that left the most in the period: the top five by what they left, each with the units done. The day view leaves them out, since they would repeat its records (decided after the approved screens).
 - Month by month, under every period: the result of each of the last six months, up to the current one, marked "hasta hoy" so it isn't compared as if it were complete. Months before the shop started don't show. The most recent comes first, and each opens its month's report (decided after the approved screens).
 - The day view also lists that day's jobs and entries, each opening its form: that is how a past record is corrected.
 

@@ -80,6 +80,7 @@ RSpec.describe "Reports", type: :request do
     before { get report_path("day", "2026-10-13") }
 
     it { expect(page_text).to include("What you recorded 2 × Basta de pantalón Materials $1,000 $16,000") }
+    it { expect(page_text).not_to include("The services that left you the most") }
     it("opens each record's form") { expect(response.parsed_body.at("[aria-labelledby='day-records'] a")["href"]).to eq(edit_job_path(Job.find_by!(done_on: Date.new(2026, 10, 13)))) }
   end
 
