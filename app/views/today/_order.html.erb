@@ -1,0 +1,7 @@
+<%= link_to order_path(order), class: "flex min-h-17 items-center justify-between gap-3 py-3 pr-3 pl-4 hover:bg-paper" do %>
+  <span class="flex min-w-0 flex-col gap-0.5">
+    <span class="font-bold"><%= t("orders.order", customer: order.customer_name) %></span>
+    <span class="text-meta text-graphite"><%= order_jobs_summary order %></span>
+  </span>
+  <svg aria-hidden="true" class="size-5 shrink-0 text-graphite" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7" /></svg>
+<% end %>

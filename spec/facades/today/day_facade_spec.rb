@@ -20,6 +20,15 @@ RSpec.describe Today::DayFacade do
   it { expect(day.progress).to eq(Rational(32_400, 44_074)) }
   it { expect(day.month).to eq(month) }
 
+  describe "what's owed" do
+    let(:rows) { [ Orders::PendingQuery::Row.new(order: instance_double(Order), owed: 25_000), Orders::PendingQuery::Row.new(order: instance_double(Order), owed: 30_000) ] }
+
+    before { allow(Orders::PendingQuery).to receive(:call).and_return(rows) }
+
+    it { expect(day.pending_orders).to eq(rows) }
+    it("adds up what each order owes") { expect(day.owed).to eq(55_000) }
+  end
+
   context "when what the shop made covers the day's fixed costs" do
     let(:charged) { 60_000 }
 

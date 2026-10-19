@@ -44,13 +44,50 @@ RSpec.describe TodayHelper, type: :helper do
     end
   end
 
-  describe "#today_jobs" do
-    it { expect(helper.today_jobs([])).to have_text("No jobs recorded today yet.") }
+  describe "#today_records" do
+    subject(:records) { helper.today_records(day) }
 
-    it "lists each job, opening its form" do
-      job = instance_double(Job, quantity: 2, service: instance_double(Service, name: "Basta de pantalón"), materials: 1_000, charged: 16_000, order: nil, to_param: "7")
+    let(:day) { instance_double(Today::DayFacade, jobs:, orders:, payments:) }
+    let(:jobs) { [ instance_double(Job, quantity: 2, service: instance_double(Service, name: "Basta de pantalón"), materials: 1_000, charged: 16_000, order: nil, to_param: "7") ] }
+    let(:order) { instance_double(Order, customer_name: "Marta Rodríguez", received_on: Date.new(2026, 10, 15), to_param: "3", jobs: [ instance_double(Job, quantity: 2, materials: 5_600) ]) }
+    let(:orders) { [ order ] }
+    let(:payments) { [ instance_double(Payment, order:, amount: 10_000, to_param: "5") ] }
 
-      expect(helper.today_jobs([ job ])).to have_link("2 × Basta de pantalón Materials $1,000 $16,000", href: "/jobs/7/edit", normalize_ws: true)
+    it("opens each job's form") { is_expected.to have_link("2 × Basta de pantalón Materials $1,000 $16,000", href: "/jobs/7/edit", normalize_ws: true) }
+    it("opens each order left") { is_expected.to have_link("Order for Marta Rodríguez 2 jobs · Materials $5,600", href: "/orders/3", normalize_ws: true) }
+    it("opens each payment's form") { is_expected.to have_link("Payment from Marta Rodríguez Order of October 15 $10,000", href: "/orders/3/payments/5/edit", normalize_ws: true) }
+
+    context "with nothing recorded yet" do
+      let(:jobs) { [] }
+      let(:orders) { [] }
+      let(:payments) { [] }
+
+      it { is_expected.to have_text("No jobs recorded today yet.") }
     end
+  end
+
+  describe "#order_jobs_summary" do
+    it { expect(helper.order_jobs_summary(instance_double(Order, jobs: []))).to eq("No jobs yet") }
+  end
+
+  describe "#owed_orders" do
+    subject(:section) { helper.owed_orders(day) }
+
+    let(:day) { instance_double(Today::DayFacade, pending_orders: rows, owed: 30_000) }
+    let(:rows) { [ Orders::PendingQuery::Row.new(order: instance_double(Order, customer_name: "Marta Rodríguez", received_on: Date.new(2026, 10, 15), to_param: "3"), owed: 30_000) ] }
+
+    it { is_expected.to have_text("Owed to you $30,000", normalize_ws: true) }
+    it { is_expected.to have_link("Marta Rodríguez Left on October 15 $30,000", href: "/orders/3", normalize_ws: true) }
+
+    context "with nothing owed" do
+      let(:rows) { [] }
+
+      it { is_expected.to be_nil }
+    end
+  end
+
+  describe "#owed_amount" do
+    it { expect(helper.owed_amount(Orders::PendingQuery::Row.new(order: nil, owed: 30_000))).to have_text("$30,000") }
+    it("says when an order has no jobs yet") { expect(helper.owed_amount(Orders::PendingQuery::Row.new(order: nil, owed: 0))).to have_text("No jobs yet") }
   end
 end

@@ -91,6 +91,20 @@ RSpec.describe "Reports", type: :request do
     it { expect(response.parsed_body.at("[aria-labelledby='day-records'] a")["href"]).to eq(edit_expense_path(Entry.sole)) }
   end
 
+  describe "GET /reports/day/:date with an order's payment" do
+    let(:order) { create(:order, shop:, customer_name: "Marta Rodríguez", received_on: Date.new(2026, 10, 12)) }
+
+    before do
+      create(:job, order:, service: create(:service, shop:, price: 30_000))
+      create(:payment, order:, paid_on: Date.new(2026, 10, 14), amount: 10_000)
+      get report_path("day", "2026-10-14")
+    end
+
+    it { expect(page_text).to include("Charged for jobs $10,000") }
+    it { expect(page_text).to include("What you recorded Payment from Marta Rodríguez Order of October 12 $10,000 Transporte Expense $35,000") }
+    it("opens the payment's form") { expect(response.parsed_body.at("[aria-labelledby='day-records'] a")["href"]).to eq(edit_order_payment_path(order, Payment.sole)) }
+  end
+
   describe "GET a period before the shop started" do
     before { get report_path("month", "2026-07-01") }
 

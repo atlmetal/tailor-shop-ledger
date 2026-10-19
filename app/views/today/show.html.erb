@@ -19,8 +19,10 @@
     <h2 id="today-jobs" class="text-xl font-extrabold"><%= t(".jobs") %></h2>
     <span class="text-meta text-graphite"><%= t(".units", count: @day.units) %></span>
   </div>
-  <%= today_jobs @day.jobs %>
+  <%= today_records @day %>
 </section>
+
+<%= owed_orders @day %>
 
 <section class="panel mt-5 flex flex-col gap-2 px-5 pt-4 pb-5" aria-labelledby="month">
   <div class="flex items-center justify-between gap-3">

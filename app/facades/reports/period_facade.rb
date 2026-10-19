@@ -56,9 +56,20 @@ module Reports
       kind == "day"
     end
 
-    # The day's jobs and entries, each opening its form: how a past record is corrected.
+    # The day's records, each opening its form or its order: how a past record is corrected. Its jobs on their own,
+    # since an order's show under the order.
     def jobs
-      Job.includes(:service).where(done_on: period.range).order(:id)
+      Job.includes(:service).where(done_on: period.range, order: nil).order(:id)
+    end
+
+    # The orders left that day, with their jobs.
+    def orders
+      Order.includes(:jobs).where(received_on: period.range).order(:id)
+    end
+
+    # The payments that came in for orders that day.
+    def payments
+      Payment.includes(:order).where(paid_on: period.range).order(:id)
     end
 
     def entries
