@@ -267,7 +267,7 @@ Done when specs cover the boundaries of weeks, semesters and years, a period bef
 
 #### M8. README (2 h)
 
-- [ ] README: what the app is and who it's for, screenshots at phone width from the demo seeds (Today, Record, Reports and the shop), the accounting rules, stack, local setup, tests, deploy and license.
+- [x] README: what the app is and who it's for, screenshots at phone width from the demo seeds (Today, Record, Reports and the shop), the accounting rules, stack, local setup, tests, deploy and license.
 - [ ] Tag `v0.1.0`.
 
 Done when `bin/rails db:seed` on an empty database gives the demo shown in the screenshots.
