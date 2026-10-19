@@ -320,9 +320,9 @@ Done when model specs cover a payment over the order's total, a payment before i
 
 #### The first shop
 
-- [ ] Create the first shop with the rake task, starting on the first day it wrote down on paper.
+- [x] Create the first shop with the rake task, starting on the first day it wrote down on paper. Created on 2026-10-19 starting that day: the owner chose to start fresh, with no paper days to enter. Moving its start back later is a console change, and only safe before it adds its fixed costs, since earlier months would be left without them.
 
-Done when the first shop has its services, fixed costs and work days, and has entered the days it wrote down on paper, with the same totals as the paper.
+Done when the first shop has its services, fixed costs and work days, and records its days in the app.
 
 ### Before a second shop
 
