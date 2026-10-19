@@ -182,6 +182,45 @@ en:
       reports: Reports
       shop: Shop
       today: Today
+  reports:
+    result:
+      calculation: How it's calculated
+      charged: Charged for jobs
+      expenses: Other expenses
+      fixed_costs:
+        one: Fixed costs of 1 day
+        other: Fixed costs of %{count} days
+      incomes: Other income
+      materials: Materials
+      units:
+        one: 1 job
+        other: "%{count} jobs"
+      work_days:
+        one: 1 work day
+        other: "%{count} work days"
+    show:
+      days: "%{month} %{from} to %{to}"
+      fixed_costs_note: "Fixed costs are spread over the days you work: in %{month}, each day carries %{amount}."
+      kinds:
+        day: Day
+        month: Month
+        semester: Half
+        week: Week
+        year: Year
+      next: Next period
+      previous: Previous period
+      range:
+        months: "%{from} to %{to}"
+        same_month: "%{month} %{from} to %{to}"
+      range_so_far: "%{range}, so far"
+      see_fixed_costs: See fixed costs
+      semester:
+        first: First half of %{year}
+        second: Second half of %{year}
+      so_far: So far
+      switch: Period
+      title: Reports
+      today_so_far: Today, so far
   services:
     create:
       saved: Saved %{name}.
@@ -260,6 +299,7 @@ en:
       no_jobs: No jobs recorded today yet.
       record_entry: Record an expense or other income
       record_job: Record a job
+      see_reports: See reports
       title: Today
       units:
         one: 1 job

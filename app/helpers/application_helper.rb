@@ -9,13 +9,9 @@ module ApplicationHelper
     render "layouts/navigation" if authenticated?
   end
 
-  # A tab of the tab bar, marked when its page is the one shown, or one of the paths `also` gives. A tab whose
-  # page isn't built yet has no path, and shows without a link.
+  # A tab of the tab bar, marked when its page is the one shown, or one of the paths `also` gives.
   def tab_to(label, path, also: nil, &icon)
-    content = safe_join([ capture(&icon), label ])
-    return tag.span(content, class: "tab") unless path
-
-    link_to content, path, class: "tab", aria: { current: aria_current(path, *also) }
+    link_to safe_join([ capture(&icon), label ]), path, class: "tab", aria: { current: aria_current(path, *also) }
   end
 
   # A link marks its whole section: Taller's link to /services also marks /services/12/edit. By path rather

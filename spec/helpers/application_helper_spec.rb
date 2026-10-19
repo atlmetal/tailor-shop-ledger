@@ -20,12 +20,6 @@ RSpec.describe ApplicationHelper, type: :helper do
 
       it { is_expected.to have_css("a.tab[href='/']:not([aria-current])", text: "Today") }
     end
-
-    context "when its page isn't built yet" do
-      let(:path) { nil }
-
-      it { is_expected.to have_css("span.tab", text: "Today") }
-    end
   end
 
   describe "#aria_current" do

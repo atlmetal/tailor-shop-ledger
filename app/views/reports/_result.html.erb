@@ -1,0 +1,21 @@
+<div class="<%= result_panel_class(result) %> mt-5 flex flex-col gap-1.5 p-5">
+  <%= result_word result, size: :large %>
+  <span class="<%= token_list("font-mono text-[2.625rem] leading-[1.1] font-bold tracking-[-0.02em]", result_amount_class(result)) %>"><%= pesos(result.total) %></span>
+  <span class="text-meta text-graphite"><%= result_summary result %></span>
+</div>
+
+<section class="panel mt-5 flex flex-col gap-1 px-5 pt-4 pb-5" aria-labelledby="calculation">
+  <h2 id="calculation" class="mb-1 text-lg font-extrabold"><%= t(".calculation") %></h2>
+  <div class="divide-y divide-divider">
+    <%= calculation_line t(".charged"), pesos(result.charged) %>
+    <%= calculation_line t(".materials"), pesos_off(result.materials) %>
+    <%= calculation_line t(".incomes"), pesos_on(result.incomes) %>
+    <%= calculation_line t(".expenses"), pesos_off(result.expenses) %>
+    <%= calculation_line t(".fixed_costs", count: result.work_days), pesos_off(result.fixed_costs) %>
+  </div>
+  <div aria-hidden="true" class="mt-0.5 border-t-2 border-dashed border-tick"></div>
+  <div class="<%= token_list("flex items-baseline justify-between gap-3", result_amount_class(result)) %>">
+    <span class="font-extrabold"><%= result_name result %></span>
+    <span class="font-mono text-[1.375rem] font-bold"><%= pesos(result.total) %></span>
+  </div>
+</section>

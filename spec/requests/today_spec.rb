@@ -26,7 +26,8 @@ RSpec.describe "Today", type: :request do
     it { expect(page_text).to include("So far $15,000 of the $44,074 you need today to cover the fixed costs.") }
     it { expect(page_text).to include("$29,074 to go. You charged $16,000 and the materials cost $1,000.") }
     it { expect(page_text).to include("What you recorded today 2 jobs 2 × Basta de pantalón Materials $1,000 $16,000") }
-    it { expect(page_text).to include("October, so far Loss −$734,259 Materials, other expenses and the fixed costs of 17 work days already taken off.") }
+    it { expect(page_text).to include("October, so far See reports Loss −$734,259 Materials, other expenses and the fixed costs of 17 work days already taken off.") }
+    it { expect(response.parsed_body.at_css("a:contains('See reports')")["href"]).to eq("/reports") }
   end
 
   describe "GET / on a day off" do

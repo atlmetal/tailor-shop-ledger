@@ -13,6 +13,10 @@ Rails.application.routes.draw do
   resources :expenses, controller: "entries", only: %i[ new create edit update destroy ], defaults: { kind: "expense" }
   resources :incomes, controller: "entries", only: %i[ new create edit update destroy ], defaults: { kind: "income" }
 
+  # The current month, or the period of a kind that holds a date, named by its first day: /reports/week/2026-10-12.
+  get "reports" => "reports#show"
+  get "reports/:kind/:date" => "reports#show", as: :report, constraints: { kind: /day|week|month|semester|year/, date: /\d{4}-\d{2}-\d{2}/ }
+
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check

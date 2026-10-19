@@ -23,7 +23,10 @@
 </section>
 
 <section class="panel mt-5 flex flex-col gap-2 px-5 pt-4 pb-5" aria-labelledby="month">
-  <h2 id="month" class="text-xl font-extrabold"><%= t(".month", month: month_name(@day.date).upcase_first) %></h2>
+  <div class="flex items-center justify-between gap-3">
+    <h2 id="month" class="text-xl font-extrabold"><%= t(".month", month: month_name(@day.date).upcase_first) %></h2>
+    <%= link_to t(".see_reports"), reports_path, class: "btn-link text-note" %>
+  </div>
   <%= result_word @day.month %>
   <span class="<%= token_list("font-mono text-[2.125rem] leading-[1.1] font-bold tracking-[-0.02em]", result_amount_class(@day.month)) %>"><%= pesos(@day.month.total) %></span>
   <span class="text-meta text-graphite"><%= t(".month_note", count: @day.month.work_days) %></span>

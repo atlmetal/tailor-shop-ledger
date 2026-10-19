@@ -72,6 +72,9 @@
   .switch { @apply grid auto-cols-fr grid-flow-col gap-1 rounded-button border-[1.5px] border-control bg-white p-1; }
   .switch > * { @apply flex min-h-11 items-center justify-center rounded-[10px] text-note font-bold; }
   .switch > [aria-current="page"] { @apply bg-ink text-white; }
+  /* Reports' five kinds of period, set tighter to fit a phone. */
+  .switch-compact { @apply gap-0.5; }
+  .switch-compact > * { @apply px-0.5 text-sm whitespace-nowrap sm:text-note; }
 
   /* The change form says which months keep the old amount for the month selected, with no JavaScript. */
   .change-help { @apply hidden; }
@@ -106,6 +109,12 @@
     @apply absolute inset-x-0 top-0 h-2;
     background: repeating-linear-gradient(90deg, var(--color-ink) 0 1px, transparent 1px 8px) top / 100% 5px no-repeat, var(--color-tape);
   }
+
+  /* Reports: the arrows to the periods before and after, dimmed where there's none, and a period's result in a
+     panel tinted by it. */
+  .period-arrow { @apply flex size-11 shrink-0 items-center justify-center rounded-small border-[1.5px] border-control bg-white aria-disabled:border-edge aria-disabled:bg-transparent aria-disabled:text-disabled; }
+  .result-profit { @apply rounded-panel border border-profit-edge bg-profit; }
+  .result-loss { @apply rounded-panel border border-loss-edge bg-loss; }
 
   .flash-notice { @apply mt-3 mb-5 rounded-small border border-profit-edge bg-profit px-3.5 py-3 text-note; }
   .flash-alert { @apply mt-3 mb-5 rounded-small border border-loss-edge bg-loss px-3.5 py-3 text-note; }

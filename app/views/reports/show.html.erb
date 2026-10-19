@@ -1,0 +1,23 @@
+<h1 class="page-title"><%= t(".title") %></h1>
+
+<nav class="switch switch-compact mt-5" aria-label="<%= t(".switch") %>"><%= safe_join period_links(@report) %></nav>
+
+<div class="mt-5 flex items-center justify-between gap-2">
+  <%= period_arrow @report.previous, t(".previous") do %>
+    <svg aria-hidden="true" class="size-5.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7" /></svg>
+  <% end %>
+  <div class="flex min-w-0 flex-col items-center text-center text-balance">
+    <h2 class="text-[1.1875rem] font-extrabold"><%= period_title @report.period %></h2>
+    <p class="text-meta text-graphite"><%= period_detail @report %></p>
+  </div>
+  <%= period_arrow @report.following, t(".next") do %>
+    <svg aria-hidden="true" class="size-5.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7" /></svg>
+  <% end %>
+</div>
+
+<%= render "reports/result", result: @report.result %>
+
+<p class="mt-5 text-meta text-graphite">
+  <%= t(".fixed_costs_note", month: month_name(@report.fixed_costs_month.month), amount: pesos(@report.fixed_costs_month.per_work_day)) %>
+  <%= link_to t(".see_fixed_costs"), fixed_costs_path, class: "btn-link text-ink" %>
+</p>

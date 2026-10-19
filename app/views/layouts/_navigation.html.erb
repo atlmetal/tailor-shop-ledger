@@ -7,7 +7,7 @@
       <svg class="size-5.5 lg:size-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14" /><path d="M5 12h14" /></svg>
     </span>
   <% end %>
-  <%= tab_to t(".reports"), nil do %>
+  <%= tab_to t(".reports"), reports_path do %>
     <svg aria-hidden="true" class="size-6.5 lg:size-5.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20v-8" /><path d="M12 20V5" /><path d="M19 20v-5" /><path d="M3 20h18" /></svg>
   <% end %>
   <%= tab_to t(".shop"), services_path, also: [ fixed_costs_path, work_days_path ] do %>

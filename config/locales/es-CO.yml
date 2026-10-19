@@ -182,6 +182,45 @@ es-CO:
       reports: Reportes
       shop: Taller
       today: Hoy
+  reports:
+    result:
+      calculation: Cómo se calcula
+      charged: Cobrado por trabajos
+      expenses: Otros gastos
+      fixed_costs:
+        one: Gastos fijos de 1 día
+        other: Gastos fijos de %{count} días
+      incomes: Otros ingresos
+      materials: Materiales
+      units:
+        one: 1 trabajo
+        other: "%{count} trabajos"
+      work_days:
+        one: 1 día trabajado
+        other: "%{count} días trabajados"
+    show:
+      days: Del %{from} al %{to}
+      fixed_costs_note: "Los gastos fijos se reparten entre los días que trabajas: en %{month}, cada día carga %{amount}."
+      kinds:
+        day: Día
+        month: Mes
+        semester: Semestre
+        week: Semana
+        year: Año
+      next: Período siguiente
+      previous: Período anterior
+      range:
+        months: Del %{from} al %{to}
+        same_month: Del %{from} al %{to} de %{month}
+      range_so_far: "%{range}, hasta hoy"
+      see_fixed_costs: Ver gastos fijos
+      semester:
+        first: Primer semestre de %{year}
+        second: Segundo semestre de %{year}
+      so_far: Hasta hoy
+      switch: Período
+      title: Reportes
+      today_so_far: Hoy, hasta ahora
   services:
     create:
       saved: Guardaste %{name}.
@@ -260,6 +299,7 @@ es-CO:
       no_jobs: Todavía no registras trabajos hoy.
       record_entry: Registrar gasto u otro ingreso
       record_job: Registrar trabajo
+      see_reports: Ver reportes
       title: Hoy
       units:
         one: 1 trabajo
