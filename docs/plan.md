@@ -213,7 +213,7 @@ Not in the approved screens: built in M9 with their tokens and patterns, and app
 
 ### v0.1: one shop's accounts, deployed and backed up (about 54 hours)
 
-No shop uses the app, the first one included, until v0.1 is finished. The deploy still comes before Reports, so the server, the backups and their restore are proven early.
+No shop uses the app, the first one included, until v0.1 is finished. The deploy still comes before Reports, so the server, the backups and their restore are proven early. Tagged `v0.1.0` on 2026-10-19, when the first shop started using it.
 
 #### M0. Setup (4 h)
 

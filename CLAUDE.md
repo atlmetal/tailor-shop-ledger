@@ -23,7 +23,7 @@ It is the owner's public portfolio project, licensed AGPL-3.0, and real shops us
 
 ## Scope
 
-v0.1 is what one shop needs to know whether its work pays, deployed and backed up. Details and order are in `docs/plan.md`.
+v0.1, what one shop needs to know whether its work pays, deployed and backed up, was tagged `v0.1.0` on 2026-10-19, and the first shop started using it that day. What comes next, and in what order, is in `docs/plan.md`: before a second shop joins, a privacy notice, terms of use, and a way for a shop to take its records and leave.
 
 Out, until shops ask for it: due dates and work status on orders, customer data beyond the name on an order, receipts, invoicing, inventory, supplies per recipe, payment methods, Excel export, charts, offline mode, several users per shop.
 

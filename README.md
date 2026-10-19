@@ -15,7 +15,7 @@ A Ruby on Rails app that shows small tailoring and alteration shops whether thei
 
 Small shops in Colombia that do alterations, sewing and dressmaking. One person runs each, alone and usually at home, working as customers bring garments in. They write their work down in a notebook and have never kept accounts, so costs are what they struggle with. Most of them only have an Android phone.
 
-So the app is built for that phone first: large type, 44 px touch targets, a numeric keyboard on every money field, and an icon on the home screen. Several shops share one installation, each with a single user who never sees another shop. It runs at taller.yunquelabs.com, where the operator creates each shop; there's no public demo, but the demo seeds below build one locally.
+So the app is built for that phone first: large type, 44 px touch targets, a numeric keyboard on every money field, and an icon on the home screen. Several shops share one installation, each with a single user who never sees another shop. It runs at taller.yunquelabs.com, where the operator creates each shop, and its first shop started using v0.1.0 in October 2026. There's no public demo, but the demo seeds below build one locally.
 
 ## The accounting rules
 

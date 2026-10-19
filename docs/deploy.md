@@ -130,7 +130,13 @@ healthchecks:
   ping_url: <the check's ping URL, https://hc-ping.com/...>
 ```
 
-To take a backup by hand, before a risky deploy for example, run `BackupJob.perform_now` in `bin/kamal console`. It pings the check too.
+To take a backup by hand, before a risky deploy for example, run `BackupJob.perform_now` in `bin/kamal console`. It pings the check too. Without an interactive terminal, the same in one command:
+
+```sh
+bin/kamal app exec --reuse 'bin/rails runner "BackupJob.perform_now"'
+```
+
+Anyone who has the check's ping URL can ping it and hide a failing backup, so it's a secret. If it leaks, create a new check with the same settings, put its URL in the credentials, deploy, take a backup by hand to see the new check's ping arrive, and then delete the old check.
 
 ## Restoring a backup
 
