@@ -173,7 +173,7 @@ The approved design is five phone screens at 390px, in Spanish, with sample data
 ### Registrar (Record)
 
 - Above the title, the top row every page has: the shop's name and the account button. The approved screen's "‹ Hoy" link repeated the Hoy tab, and pointed the wrong way when Registrar was opened from another tab or from a day's report (decided after the approved screens).
-- A three-way switch: Trabajo, Gasto, Otro ingreso. Each opens its own form, so the switch needs no JavaScript.
+- A three-way switch: Trabajo, Gasto, Otro ingreso. Each opens its own form, so the switch needs no JavaScript. Orders added "Pedido" after Trabajo (see Pedidos).
 - "Fecha", a date input, today by default.
 - A job: "¿Qué servicio hiciste?", the services as radio rows with name and price, the chosen one tinted yellow; "Cantidad", with − and + buttons around the number, 1 at least; "Precio de cada uno", with "Cámbialo si cobraste otro precio."; "Materiales de cada uno", with "Pon 0 si el cliente trajo los materiales."; a summary with "Cobras", "Materiales" and "Te deja", updated while typing; "Guardar"; and "Guardar y registrar otro", which keeps the date and the service, sets the quantity back to 1 and confirms "**Guardado:** 2 × Basta de pantalón, $16.000. Sigue con el próximo."
 - One Stimulus controller fills in the price and materials of the chosen service, runs the − and + buttons and keeps the summary up to date. Apart from the one that formats money fields, no other JavaScript.
@@ -199,11 +199,15 @@ The approved design is five phone screens at 390px, in Spanish, with sample data
 
 ### Pedidos (Orders)
 
-Not in the approved screens: built in M9 with their tokens and patterns, and their copy recorded here once the owner approves the screenshots.
+Not in the approved screens: built in M9 with their tokens and patterns, and approved by the owner in screenshots on 2026-10-19.
 
-- Registrar's switch gains "Pedido", whose form takes the customer's name and the day, and goes on to the order's first job.
-- The order's page: the customer's name and day; its jobs, with "Agregar trabajo"; its total, what's been paid and what's owed; its payments, with "Registrar pago"; and its edit form, with "Borrar pedido" and its note.
-- On Hoy, "Te deben", and the day's records with payments and orders, as in the day's report.
+- Registrar's switch has four options, Trabajo, Pedido, Gasto and Otro ingreso, each as wide as its word, so "Otro ingreso" fits at 360px.
+- A new order: "¿De quién es el pedido?", with the placeholder "Ej.: Marta Rodríguez" and "Solo el nombre, para reconocerlo."; "¿Cuándo te lo dejó?", today by default; the note "Un pedido es lo que te dejan para pagarte después, casi siempre con un abono. Cada pago cuenta el día que te lo dan."; and "Seguir", which goes on to its first job.
+- The order's page: the customer's name as its title, and "Lo dejó el jueves 15 de octubre" with "Editar". Once it has jobs, a panel with "Te debe", the amount in large mono type and "Ya te pagó $20.000 de $39.000."; or, paid off, "Pagado" with a check icon, the total and "Te pagó todo el pedido.". "Registrar pago", the primary button, while something is owed. "Trabajos", with the units on the right and its jobs as in Hoy, and "Agregar trabajo": the primary button while it has none, under "Agrega lo que te dejó: un trabajo por cada servicio.", and outlined after. "Pagos", each with its day and amount, or "Todavía no te ha pagado nada."
+- An order's job: "Agregar trabajo" or "Editar trabajo", with "Pedido de Marta Rodríguez" under it, back to the order; the job form without its date, asking "¿Qué servicio te pidieron?", with "Cámbialo si acordaste otro precio."; "Guardar" and "Guardar y agregar otro", or, editing, "Guardar", "Cancelar" and "Borrar".
+- A payment: "Registrar pago" or "Editar pago", with the order's link under it; "Fecha", from the order's day to today; "Valor", empty for the first payment and with what's owed for the next ones, over "Te debe $19.000." or, editing, "Sin este pago, te debe $39.000."; "Guardar" and "Cancelar", and "Borrar" when editing.
+- Editing an order: its name and day, "Guardar" and "Cancelar"; then "Bórralo solo si devolviste el abono: el pedido sale de tus cuentas con sus trabajos y pagos. Si ya compraste materiales que no vas a usar, regístralos como gasto." and "Borrar pedido".
+- On Hoy, under "Lo que registraste hoy", "Te deben", with the total on the right: each pending order with the customer's name, "Lo dejó el 15 de octubre" and what it owes, or "Sin trabajos". In the day's records, on Hoy and in the day's report, an order left that day reads "Pedido de Marta Rodríguez" with "4 trabajos · Materiales $4.300", opening the order, and a payment "Pago de Marta Rodríguez" with "Pedido del 15 de octubre" and its amount, opening its form.
 
 ## Milestones
 
