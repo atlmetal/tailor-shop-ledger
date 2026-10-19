@@ -251,7 +251,7 @@ Done when query specs cover a period in progress, a period across two months, th
 - [x] Sentry: a project of its own, errors only, with the gym app's initializer, which keeps personal data and the row PostgreSQL quotes in its errors out of the events.
 - [ ] Restore drill: download a scheduled backup from R2, restore it into a local database and run the app on it.
 - [x] `docs/deploy.md`, adapted from the gym app's: the server it shares, DNS, Kamal, shops and passwords, backups, restoring and monitoring. The README points to it.
-- [ ] With both apps running, check the server's memory (`free -m` and `docker stats --no-stream`).
+- [x] With both apps running, check the server's memory (`free -m` and `docker stats --no-stream`).
 - [ ] On an Android phone, Chrome puts the app on the home screen. If Chrome asks for a service worker, register the one Rails generated, which caches nothing.
 
 Done when the app runs over HTTPS next to the gym app; a scheduled backup has been restored following the written steps; and Healthchecks.io got the night's ping.
