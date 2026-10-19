@@ -22,7 +22,7 @@ class JobsController < ApplicationController
 
   def update
     if @job.update(job_params)
-      redirect_to record_return_path(@job)
+      redirect_to record_return_path(@job.done_on)
     else
       render :edit, status: :unprocessable_content
     end
@@ -30,7 +30,7 @@ class JobsController < ApplicationController
 
   def destroy
     @job.destroy!
-    redirect_to record_return_path(@job)
+    redirect_to record_return_path(@job.done_on)
   end
 
   private
@@ -52,7 +52,7 @@ class JobsController < ApplicationController
         saved = t(".saved", quantity: @job.quantity, service: @job.service.name, charged: helpers.pesos(@job.charged))
         redirect_to new_job_path(done_on: @job.done_on, service_id: @job.service_id), flash: { saved: }
       else
-        redirect_to record_return_path(@job)
+        redirect_to record_return_path(@job.done_on)
       end
     end
 end

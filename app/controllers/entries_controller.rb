@@ -10,7 +10,7 @@ class EntriesController < ApplicationController
     @entry = Entry.new(entry_params.merge(kind:))
 
     if @entry.save
-      redirect_to record_return_path(@entry)
+      redirect_to record_return_path(@entry.occurred_on)
     else
       render :new, status: :unprocessable_content
     end
@@ -21,7 +21,7 @@ class EntriesController < ApplicationController
 
   def update
     if @entry.update(entry_params)
-      redirect_to record_return_path(@entry)
+      redirect_to record_return_path(@entry.occurred_on)
     else
       render :edit, status: :unprocessable_content
     end
@@ -29,7 +29,7 @@ class EntriesController < ApplicationController
 
   def destroy
     @entry.destroy!
-    redirect_to record_return_path(@entry)
+    redirect_to record_return_path(@entry.occurred_on)
   end
 
   private

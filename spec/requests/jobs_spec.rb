@@ -44,6 +44,12 @@ RSpec.describe "Jobs", type: :request do
       it { expect(Job.sole.price).to eq(10_000) }
     end
 
+    context "for a day before today" do
+      let(:job_params) { super().merge(done_on: "2026-10-13") }
+
+      it("goes to that day's report") { expect(response).to redirect_to(report_path("day", "2026-10-13")) }
+    end
+
     context "without a service" do
       let(:job_params) { super().except(:service_id) }
 
@@ -71,6 +77,13 @@ RSpec.describe "Jobs", type: :request do
 
     it("offers the job's service though it was deactivated") { expect(response.parsed_body.css(".service-option .font-semibold").map(&:text)).to eq([ "Basta de pantalón", "Cambio de cremallera" ]) }
     it { expect(response.parsed_body.at("input[name='job[service_id]'][checked]")["value"]).to eq(service.id.to_s) }
+    it("cancels back to Today") { expect(response.parsed_body.at("a:contains('Cancel')")["href"]).to eq(root_path) }
+  end
+
+  describe "GET /jobs/:id/edit of a day before today" do
+    before { get edit_job_path(create(:job, service:, done_on: Date.new(2026, 10, 13))) }
+
+    it("cancels back to that day's report") { expect(response.parsed_body.at("a:contains('Cancel')")["href"]).to eq(report_path("day", "2026-10-13")) }
   end
 
   describe "GET /jobs/:id/edit of another shop" do
@@ -86,6 +99,22 @@ RSpec.describe "Jobs", type: :request do
 
     it { expect(response).to redirect_to(root_path) }
     it { expect(job.reload.quantity).to eq(3) }
+  end
+
+  describe "PATCH /jobs/:id of a day before today" do
+    let(:job) { create(:job, service:, done_on: Date.new(2026, 10, 13)) }
+    let(:done_on) { "2026-10-12" }
+
+    before { patch job_path(job), params: { job: { done_on: } } }
+
+    it("goes to the report of its new day") { expect(response).to redirect_to(report_path("day", "2026-10-12")) }
+
+    context "with a date after today" do
+      let(:done_on) { "2026-10-21" }
+
+      it { expect(response).to have_http_status(:unprocessable_content) }
+      it("cancels back to the day it has saved") { expect(response.parsed_body.at("a:contains('Cancel')")["href"]).to eq(report_path("day", "2026-10-13")) }
+    end
   end
 
   describe "PATCH /jobs/:id of another shop" do
@@ -104,6 +133,12 @@ RSpec.describe "Jobs", type: :request do
 
     it { expect(response).to redirect_to(root_path) }
     it { expect(Job.exists?(job.id)).to be(false) }
+  end
+
+  describe "DELETE /jobs/:id of a day before today" do
+    before { delete job_path(create(:job, service:, done_on: Date.new(2026, 10, 13))) }
+
+    it { expect(response).to redirect_to(report_path("day", "2026-10-13")) }
   end
 
   describe "DELETE /jobs/:id of another shop" do

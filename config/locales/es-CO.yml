@@ -183,6 +183,12 @@ es-CO:
       shop: Taller
       today: Hoy
   reports:
+    day_records:
+      none: No registraste nada este día.
+      title: Lo que registraste
+    entry:
+      expense: Gasto
+      income: Otro ingreso
     months:
       so_far: "%{month}, hasta hoy"
       title: Mes a mes

@@ -12,10 +12,10 @@ class ApplicationController < ActionController::Base
   helper_method :record_return_path
 
   private
-    # Where saving, cancelling or deleting a job or an entry goes: Today, until the day's report exists (M7)
-    # and takes the records of past days.
-    def record_return_path(_record)
-      root_path
+    # Where saving, cancelling or deleting a job or an entry goes, by its date: Today for today, and that day's
+    # report for a day before. Cancelar takes the date saved, which a failed change of date leaves as it was.
+    def record_return_path(date)
+      date == Date.current ? root_path : report_path("day", date)
     end
 
     # The shop comes from the signed-in user: URLs carry no shop.

@@ -22,6 +22,8 @@
   <%= link_to t(".see_fixed_costs"), fixed_costs_path, class: "btn-link text-ink" %>
 </p>
 
+<%= day_records @report %>
+
 <%= top_services @report.top_services %>
 
 <%= render "reports/months", months: @report.months %>

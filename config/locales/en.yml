@@ -183,6 +183,12 @@ en:
       shop: Shop
       today: Today
   reports:
+    day_records:
+      none: Nothing recorded on this day.
+      title: What you recorded
+    entry:
+      expense: Expense
+      income: Other income
     months:
       so_far: "%{month}, so far"
       title: Month by month

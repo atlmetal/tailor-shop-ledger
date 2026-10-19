@@ -35,6 +35,7 @@ RSpec.describe "Reports", type: :request do
     it { expect(response.parsed_body.at("[aria-label='Next period']")["aria-disabled"]).to eq("true") }
     it("opens each kind of period on today") { expect(response.parsed_body.css("nav.switch a").pluck("href")).to eq(%w[ /reports/day/2026-10-20 /reports/week/2026-10-19 /reports/month/2026-10-01 /reports/semester/2026-07-01 /reports/year/2026-01-01 ]) }
     it { expect(response.body).not_to include(other_shop.name) }
+    it("lists records only on a day's report") { expect(page_text).not_to include("What you recorded") }
   end
 
   describe "GET /reports/month/:date of a month over" do
@@ -71,7 +72,22 @@ RSpec.describe "Reports", type: :request do
     before { get report_path("day", "2026-10-18") }
 
     it { expect(page_text).to include("Sunday, October 18 Profit $0 0 work days · 0 jobs") }
+    it { expect(page_text).to include("What you recorded Nothing recorded on this day.") }
     it { expect(page_text).not_to include("The services that left you the most") }
+  end
+
+  describe "GET /reports/day/:date with records" do
+    before { get report_path("day", "2026-10-13") }
+
+    it { expect(page_text).to include("What you recorded 2 × Basta de pantalón Materials $1,000 $16,000") }
+    it("opens each record's form") { expect(response.parsed_body.at("[aria-labelledby='day-records'] a")["href"]).to eq(edit_job_path(Job.find_by!(done_on: Date.new(2026, 10, 13)))) }
+  end
+
+  describe "GET /reports/day/:date with an expense" do
+    before { get report_path("day", "2026-10-14") }
+
+    it { expect(page_text).to include("What you recorded Transporte Expense $35,000") }
+    it { expect(response.parsed_body.at("[aria-labelledby='day-records'] a")["href"]).to eq(edit_expense_path(Entry.sole)) }
   end
 
   describe "GET a period before the shop started" do

@@ -1,6 +1,6 @@
 module Reports
   # The Reports page: a period's result and how it's calculated, the way to the periods around it and to the other
-  # kinds of period, the services that left the most in it, and the last six months.
+  # kinds of period, the services that left the most in it, the last six months, and on a day, its records.
   class PeriodFacade
     attr_reader :period
 
@@ -50,6 +50,19 @@ module Reports
       @months ||= Array.new(6) { Date.current.beginning_of_month.months_ago(it) }
         .select { it >= @shop.started_on.beginning_of_month }
         .index_with { Results::PeriodQuery.call(shop: @shop, period: it.all_month) }
+    end
+
+    def day?
+      kind == "day"
+    end
+
+    # The day's jobs and entries, each opening its form: how a past record is corrected.
+    def jobs
+      Job.includes(:service).where(done_on: period.range).order(:id)
+    end
+
+    def entries
+      Entry.where(occurred_on: period.range).order(:id)
     end
   end
 end

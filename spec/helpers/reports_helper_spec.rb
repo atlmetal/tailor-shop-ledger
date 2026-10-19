@@ -132,6 +132,27 @@ RSpec.describe ReportsHelper, type: :helper do
     it { expect(helper.result_summary(instance_double(Results::PeriodQuery::Result, work_days: 1, units: 1))).to eq("1 work day · 1 job") }
   end
 
+  describe "#day_records" do
+    it("shows nothing outside a day's report") { expect(helper.day_records(instance_double(Reports::PeriodFacade, day?: false))).to be_nil }
+  end
+
+  describe "#day_record_rows" do
+    subject(:rows) { helper.day_record_rows(jobs, entries) }
+
+    let(:jobs) { [ instance_double(Job, quantity: 2, service: instance_double(Service, name: "Basta de pantalón"), materials: 1_000, charged: 16_000, to_param: "7") ] }
+    let(:entries) { [ instance_double(Entry, concept: "Transporte", kind: "expense", amount: 12_000, to_param: "3") ] }
+
+    it { is_expected.to have_link("2 × Basta de pantalón Materials $1,000 $16,000", href: "/jobs/7/edit", normalize_ws: true) }
+    it { is_expected.to have_link("Transporte Expense $12,000", href: "/expenses/3/edit", normalize_ws: true) }
+
+    context "with a day that has no records" do
+      let(:jobs) { [] }
+      let(:entries) { [] }
+
+      it { is_expected.to have_text("Nothing recorded on this day.") }
+    end
+  end
+
   describe "#top_services" do
     let(:row) { Results::TopServicesQuery::Row.new(service: instance_double(Service, name: "Basta de pantalón"), units: 38, left: 285_000) }
 

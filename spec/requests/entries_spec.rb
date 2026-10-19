@@ -42,6 +42,30 @@ RSpec.describe "Entries", type: :request do
       it { expect(response).to have_http_status(:unprocessable_content) }
       it { expect(Entry.count).to eq(0) }
     end
+
+    context "for a day before today" do
+      let(:entry_params) { super().merge(occurred_on: "2026-10-13") }
+
+      it("goes to that day's report") { expect(response).to redirect_to(report_path("day", "2026-10-13")) }
+    end
+  end
+
+  describe "GET /expenses/:id/edit of a day before today" do
+    before { get edit_expense_path(create(:entry, shop:, occurred_on: Date.new(2026, 10, 13))) }
+
+    it("cancels back to that day's report") { expect(response.parsed_body.at("a:contains('Cancel')")["href"]).to eq(report_path("day", "2026-10-13")) }
+  end
+
+  describe "PATCH /expenses/:id of a day before today" do
+    before { patch expense_path(create(:entry, shop:, occurred_on: Date.new(2026, 10, 13))), params: { entry: { amount: "15,000" } } }
+
+    it { expect(response).to redirect_to(report_path("day", "2026-10-13")) }
+  end
+
+  describe "DELETE /expenses/:id of a day before today" do
+    before { delete expense_path(create(:entry, shop:, occurred_on: Date.new(2026, 10, 13))) }
+
+    it { expect(response).to redirect_to(report_path("day", "2026-10-13")) }
   end
 
   describe "PATCH /expenses/:id" do
