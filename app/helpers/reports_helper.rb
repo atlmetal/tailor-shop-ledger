@@ -70,6 +70,12 @@ module ReportsHelper
     tag.span(pesos(row.left), class: token_list("shrink-0 font-mono text-lg font-bold", "text-loss-ink": row.left.negative?))
   end
 
+  # "Octubre, hasta hoy" for the current month, so it isn't compared as if it were complete; "Septiembre" otherwise.
+  def month_label(month)
+    name = month_name(month).upcase_first
+    month == Date.current.beginning_of_month ? t("reports.months.so_far", month: name) : name
+  end
+
   # What a line of the calculation takes off the result, "−$151.400", even when it's 0.
   def pesos_off(amount)
     "−#{number_to_currency(amount, precision: 0)}"

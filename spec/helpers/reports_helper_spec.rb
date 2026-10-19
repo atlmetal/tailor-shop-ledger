@@ -155,6 +155,14 @@ RSpec.describe ReportsHelper, type: :helper do
     end
   end
 
+  describe "#month_label" do
+    before { travel_to Date.new(2026, 10, 20) }
+
+    it("marks the current month so it isn't compared as if it were complete") { expect(helper.month_label(Date.new(2026, 10, 1))).to eq("October, so far") }
+    it { expect(helper.month_label(Date.new(2026, 9, 1))).to eq("September") }
+    it { expect(I18n.with_locale(:"es-CO") { helper.month_label(Date.new(2026, 10, 1)) }).to eq("Octubre, hasta hoy") }
+  end
+
   describe "#calculation_line" do
     it { expect(helper.calculation_line("Materials", "−$1,000")).to have_css("div > span + span.font-mono", text: "−$1,000") }
   end

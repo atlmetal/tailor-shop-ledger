@@ -28,6 +28,8 @@ RSpec.describe "Reports", type: :request do
     it { expect(page_text).to include("How it's calculated Charged for jobs $16,000 Materials −$1,000 Other income +$0 Other expenses −$35,000 Fixed costs of 17 days −$749,259 Loss −$769,259") }
     it { expect(page_text).to include("Fixed costs are spread over the days you work: in October, each day carries $44,074. See fixed costs") }
     it { expect(page_text).to include("The services that left you the most Basta de pantalón 2 jobs $15,000") }
+    it { expect(page_text).to include("Month by month October, so far Loss −$769,259 September Loss −$1,167,500 August Loss −$1,144,231") }
+    it("opens each month's report") { expect(response.parsed_body.css("[aria-labelledby='months'] a").pluck("href")).to eq(%w[ /reports/month/2026-10-01 /reports/month/2026-09-01 /reports/month/2026-08-01 ]) }
     it { expect(response.parsed_body.at("a.tab[aria-current='page']").text.squish).to eq("Reports") }
     it { expect(response.parsed_body.at("a[aria-label='Previous period']")["href"]).to eq("/reports/month/2026-09-01") }
     it { expect(response.parsed_body.at("[aria-label='Next period']")["aria-disabled"]).to eq("true") }

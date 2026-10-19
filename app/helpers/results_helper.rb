@@ -1,7 +1,8 @@
 # A result always shows its word and icon, never its color alone.
 module ResultsHelper
-  # The word's text and icon in each size: medium in Today's month panel, large in Reports' result panel.
-  WORD_SIZES = { medium: [ "gap-2 text-note font-bold", "size-5.5" ], large: [ "gap-2 font-extrabold", "size-6" ] }.freeze
+  # The word's text and icon in each size: small in Reports' month by month, medium in Today's month panel, large
+  # in Reports' result panel.
+  WORD_SIZES = { small: [ "gap-1.5 text-meta font-bold", "size-4.5" ], medium: [ "gap-2 text-note font-bold", "size-5.5" ], large: [ "gap-2 font-extrabold", "size-6" ] }.freeze
 
   # "Ganancia" with a check from 0 up, "Pérdida" with an alert below it.
   def result_word(result, size: :medium)

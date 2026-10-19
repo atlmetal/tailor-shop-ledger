@@ -183,6 +183,9 @@ es-CO:
       shop: Taller
       today: Hoy
   reports:
+    months:
+      so_far: "%{month}, hasta hoy"
+      title: Mes a mes
     result:
       calculation: Cómo se calcula
       charged: Cobrado por trabajos

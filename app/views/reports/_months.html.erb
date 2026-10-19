@@ -1,0 +1,18 @@
+<section class="mt-8" aria-labelledby="months">
+  <h2 id="months" class="text-xl font-extrabold"><%= t(".title") %></h2>
+
+  <div class="panel mt-2.5 divide-y divide-divider">
+    <% months.each do |month, result| %>
+      <%= link_to report_path("month", month), class: "flex min-h-17 items-center justify-between gap-3 py-3 pr-3 pl-4 hover:bg-paper" do %>
+        <span class="flex min-w-0 flex-col gap-0.5">
+          <span class="font-bold"><%= month_label month %></span>
+          <%= result_word result, size: :small %>
+        </span>
+        <span class="flex shrink-0 items-center gap-1.5">
+          <span class="<%= token_list("font-mono text-lg font-bold", result_amount_class(result)) %>"><%= pesos(result.total) %></span>
+          <svg aria-hidden="true" class="size-5 text-graphite" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7" /></svg>
+        </span>
+      <% end %>
+    <% end %>
+  </div>
+</section>

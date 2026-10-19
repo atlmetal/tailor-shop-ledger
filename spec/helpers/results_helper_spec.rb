@@ -8,6 +8,7 @@ RSpec.describe ResultsHelper, type: :helper do
 
     it { expect(helper.result_word(result)).to have_css("span.text-note", text: "Profit") }
     it { expect(helper.result_word(result, size: :large)).to have_css("span.font-extrabold svg.size-6") }
+    it { expect(helper.result_word(result, size: :small)).to have_css("span.text-meta svg.size-4\\.5") }
     it { expect(helper.result_name(result)).to eq("Profit") }
     it { expect(helper.result_amount_class(result)).to be_nil }
     it { expect(helper.result_panel_class(result)).to eq("result-profit") }

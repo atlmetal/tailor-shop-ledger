@@ -1,6 +1,6 @@
 module Reports
   # The Reports page: a period's result and how it's calculated, the way to the periods around it and to the other
-  # kinds of period, and the services that left the most in it.
+  # kinds of period, the services that left the most in it, and the last six months.
   class PeriodFacade
     attr_reader :period
 
@@ -42,6 +42,14 @@ module Reports
 
     def top_services
       @top_services ||= Results::TopServicesQuery.call(period: days)
+    end
+
+    # Each of the last six months up to the current one with its result, the most recent first, and none from
+    # before the shop started. ponytail: a few queries per month; fine for six.
+    def months
+      @months ||= Array.new(6) { Date.current.beginning_of_month.months_ago(it) }
+        .select { it >= @shop.started_on.beginning_of_month }
+        .index_with { Results::PeriodQuery.call(shop: @shop, period: it.all_month) }
     end
   end
 end

@@ -48,4 +48,24 @@ RSpec.describe Reports::PeriodFacade do
 
     it("ranks the services of the days counted") { expect(report.top_services).to eq(rows) }
   end
+
+  describe "#months" do
+    let(:month_result) { instance_double(Results::PeriodQuery::Result) }
+
+    before { allow(Results::PeriodQuery).to receive(:call).and_return(month_result) }
+
+    it("goes back from the current month, without the ones before the shop started") { expect(report.months.keys).to eq([ Date.new(2026, 10, 1), Date.new(2026, 9, 1), Date.new(2026, 8, 1) ]) }
+    it { expect(report.months.values).to all(eq(month_result)) }
+
+    it "counts each month whole" do
+      report.months
+      expect(Results::PeriodQuery).to have_received(:call).with(shop:, period: Date.new(2026, 9, 1)..Date.new(2026, 9, 30))
+    end
+
+    context "with a shop that started long before" do
+      let(:shop) { instance_double(Shop, started_on: Date.new(2025, 11, 4)) }
+
+      it("keeps the last six") { expect(report.months.keys).to eq([ Date.new(2026, 10, 1), Date.new(2026, 9, 1), Date.new(2026, 8, 1), Date.new(2026, 7, 1), Date.new(2026, 6, 1), Date.new(2026, 5, 1) ]) }
+    end
+  end
 end

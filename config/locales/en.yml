@@ -183,6 +183,9 @@ en:
       shop: Shop
       today: Today
   reports:
+    months:
+      so_far: "%{month}, so far"
+      title: Month by month
     result:
       calculation: How it's calculated
       charged: Charged for jobs
