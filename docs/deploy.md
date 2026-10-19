@@ -147,10 +147,11 @@ Restoring a dump locally is the drill that shows the backups work.
    pg_restore --no-owner --no-acl --dbname=tailor_shop_ledger_restore tailor_shop_ledger_production-<time>.dump
    ```
 
-2. Run the app on it. Every migration must show `up`:
+2. Run the app on it. Every migration must show `up`, but those your code has and the deployed one doesn't, which show `down`: migrate them as the next deploy will, sending the schema dump elsewhere so `db/schema.rb` stays as it is.
 
    ```sh
    DATABASE_URL=postgres:///tailor_shop_ledger_restore bin/rails db:migrate:status
+   DATABASE_URL=postgres:///tailor_shop_ledger_restore SCHEMA=/tmp/restore_schema.rb bin/rails db:migrate
    DATABASE_URL=postgres:///tailor_shop_ledger_restore bin/dev
    ```
 
