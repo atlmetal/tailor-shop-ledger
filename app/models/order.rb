@@ -4,8 +4,8 @@
 class Order < ApplicationRecord
   acts_as_tenant :shop
 
-  has_many :jobs, dependent: :delete_all
-  has_many :payments, dependent: :delete_all
+  has_many :jobs, -> { order(:id) }, dependent: :delete_all
+  has_many :payments, -> { order(:paid_on, :id) }, dependent: :delete_all
 
   normalizes :customer_name, with: ->(name) { name.squish }
 

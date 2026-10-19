@@ -9,6 +9,11 @@ Rails.application.routes.draw do
   resource :work_days, only: :update
 
   resources :jobs, only: %i[ new create edit update destroy ]
+  # An order's jobs and payments live under it, so the order they belong to comes from the URL.
+  resources :orders, only: %i[ new create show edit update destroy ] do
+    resources :jobs, only: %i[ new create edit update destroy ], module: :orders
+    resources :payments, only: %i[ new create edit update destroy ], module: :orders
+  end
   # Expenses and other income are both entries: one controller, told apart by the kind each route gives.
   resources :expenses, controller: "entries", only: %i[ new create edit update destroy ], defaults: { kind: "expense" }
   resources :incomes, controller: "entries", only: %i[ new create edit update destroy ], defaults: { kind: "income" }

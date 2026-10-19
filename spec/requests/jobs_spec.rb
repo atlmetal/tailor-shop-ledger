@@ -86,6 +86,12 @@ RSpec.describe "Jobs", type: :request do
     it("cancels back to that day's report") { expect(response.parsed_body.at("a:contains('Cancel')")["href"]).to eq(report_path("day", "2026-10-13")) }
   end
 
+  describe "GET /jobs/:id/edit of a job in an order" do
+    before { get edit_job_path(create(:job, order: create(:order, shop:), service:)) }
+
+    it("finds it only under its order") { expect(response).to have_http_status(:not_found) }
+  end
+
   describe "GET /jobs/:id/edit of another shop" do
     before { get edit_job_path(create(:job)) }
 

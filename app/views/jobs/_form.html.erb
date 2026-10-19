@@ -1,12 +1,9 @@
-<%= form_with model: job, class: "mt-5 flex flex-col gap-5", data: { controller: "job-form", action: "input->job-form#update", job_form_delimiter_value: t("number.currency.format.delimiter"), job_form_unit_value: t("number.currency.format.unit") } do |form| %>
-  <div>
-    <%= form.label :done_on, class: "form-label" %>
-    <%= record_date_field form, :done_on %>
-    <%= field_error job, :done_on %>
-  </div>
+<%= form_with model: job_form_model(job), class: "mt-5 flex flex-col gap-5", data: { controller: "job-form", action: "input->job-form#update", job_form_delimiter_value: t("number.currency.format.delimiter"), job_form_unit_value: t("number.currency.format.unit") } do |form| %>
+  <%= field_error job, :base %>
+  <%= job_date_field form, job %>
 
   <fieldset class="min-w-0">
-    <legend class="form-label mb-2"><%= t(".service") %></legend>
+    <legend class="form-label mb-2"><%= job_form_text job, :service %></legend>
     <div class="flex flex-col gap-2">
       <% services.each do |service| %>
         <label class="service-option">
@@ -37,7 +34,7 @@
   <div>
     <%= form.label :price, class: "form-label" %>
     <%= money_field form, :price, required: true, data: { job_form_target: "price" } %>
-    <p class="form-hint"><%= t(".price_hint") %></p>
+    <p class="form-hint"><%= job_form_text job, :price_hint %></p>
     <%= field_error job, :price %>
   </div>
 

@@ -1,4 +1,7 @@
+# Jobs on their own, paid when they're done. An order's jobs go through Orders::JobsController.
 class JobsController < ApplicationController
+  include JobForm
+
   before_action :set_job, only: %i[ edit update destroy ]
   before_action :set_services, only: %i[ new create edit update ]
 
@@ -35,12 +38,7 @@ class JobsController < ApplicationController
 
   private
     def set_job
-      @job = Job.find(params[:id])
-    end
-
-    # The active services, and the one the job has when it was deactivated after.
-    def set_services
-      @services = Service.active.or(Service.where(id: @job&.service_id)).order(:id)
+      @job = Job.where(order: nil).find(params[:id])
     end
 
     def job_params
@@ -49,8 +47,7 @@ class JobsController < ApplicationController
 
     def redirect_after_create
       if params[:another]
-        saved = t(".saved", quantity: @job.quantity, service: @job.service.name, charged: helpers.pesos(@job.charged))
-        redirect_to new_job_path(done_on: @job.done_on, service_id: @job.service_id), flash: { saved: }
+        redirect_to new_job_path(done_on: @job.done_on, service_id: @job.service_id), flash: { saved: saved_notice }
       else
         redirect_to record_return_path(@job.done_on)
       end

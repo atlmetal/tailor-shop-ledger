@@ -1,0 +1,26 @@
+<h1 class="page-title break-words"><%= @order.customer_name %></h1>
+<div class="mt-0.5 flex items-center justify-between gap-3">
+  <p class="text-graphite"><%= order_received_on @order %></p>
+  <%= link_to t(".edit"), edit_order_path(@order), class: "btn-link shrink-0 text-note" %>
+</div>
+
+<%= order_summary @order %>
+
+<%= record_payment_button @order %>
+
+<section class="mt-8" aria-labelledby="order-jobs">
+  <div class="flex items-baseline justify-between gap-3">
+    <h2 id="order-jobs" class="text-xl font-extrabold"><%= t(".jobs") %></h2>
+    <span class="text-meta text-graphite"><%= order_units @order %></span>
+  </div>
+  <%= order_jobs @order %>
+  <%= link_to new_order_job_path(@order), class: add_job_class(@order) do %>
+    <svg aria-hidden="true" class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14" /><path d="M5 12h14" /></svg>
+    <%= t(".add_job") %>
+  <% end %>
+</section>
+
+<section class="mt-8" aria-labelledby="order-payments">
+  <h2 id="order-payments" class="text-xl font-extrabold"><%= t(".payments") %></h2>
+  <%= order_payments @order %>
+</section>

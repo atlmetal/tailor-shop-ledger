@@ -1,0 +1,6 @@
+<h1 class="page-title"><%= t(".title") %></h1>
+<%= order_link @order %>
+
+<%= render "form", payment: @payment %>
+
+<%= button_to t(".delete"), order_payment_path(@order, @payment), method: :delete, form: { data: { turbo_confirm: t(".confirm_delete") } }, class: "btn-link mt-3 text-loss-ink" %>

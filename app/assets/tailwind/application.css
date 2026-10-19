@@ -75,6 +75,9 @@
   /* Reports' five kinds of period, set tighter to fit a phone. */
   .switch-compact { @apply gap-0.5; }
   .switch-compact > * { @apply px-0.5 text-sm whitespace-nowrap sm:text-note; }
+  /* Record's four kinds, each as wide as its word needs, so "Otro ingreso" fits on a phone. */
+  .switch-record { @apply flex gap-0.5; }
+  .switch-record > * { @apply flex-auto px-1.5 whitespace-nowrap; }
 
   /* The change form says which months keep the old amount for the month selected, with no JavaScript. */
   .change-help { @apply hidden; }

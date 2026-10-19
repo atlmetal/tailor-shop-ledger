@@ -48,7 +48,7 @@ RSpec.describe TodayHelper, type: :helper do
     it { expect(helper.today_jobs([])).to have_text("No jobs recorded today yet.") }
 
     it "lists each job, opening its form" do
-      job = instance_double(Job, quantity: 2, service: instance_double(Service, name: "Basta de pantalón"), materials: 1_000, charged: 16_000, to_param: "7")
+      job = instance_double(Job, quantity: 2, service: instance_double(Service, name: "Basta de pantalón"), materials: 1_000, charged: 16_000, order: nil, to_param: "7")
 
       expect(helper.today_jobs([ job ])).to have_link("2 × Basta de pantalón Materials $1,000 $16,000", href: "/jobs/7/edit", normalize_ws: true)
     end

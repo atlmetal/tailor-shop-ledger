@@ -1,0 +1,16 @@
+<%= form_with model: order, class: "mt-5 flex flex-col gap-5" do |form| %>
+  <div>
+    <%= form.label :customer_name, t("orders.form.customer_name"), class: "form-label" %>
+    <%= form.text_field :customer_name, required: true, maxlength: 60, autocomplete: "off", autocapitalize: "words", placeholder: t("orders.form.placeholder"), class: "form-input" %>
+    <p class="form-hint"><%= t("orders.form.customer_name_hint") %></p>
+    <%= field_error order, :customer_name %>
+  </div>
+
+  <div>
+    <%= form.label :received_on, t("orders.form.received_on"), class: "form-label" %>
+    <%= record_date_field form, :received_on %>
+    <%= field_error order, :received_on %>
+  </div>
+
+  <%= yield form %>
+<% end %>

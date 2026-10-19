@@ -1,0 +1,19 @@
+<%= form_with model: [ payment.order, payment ], class: "mt-5 flex flex-col gap-5" do |form| %>
+  <div>
+    <%= form.label :paid_on, class: "form-label" %>
+    <%= form.date_field :paid_on, min: payment.order.received_on, max: Date.current, required: true, class: "form-input" %>
+    <%= field_error payment, :paid_on %>
+  </div>
+
+  <div>
+    <%= form.label :amount, class: "form-label" %>
+    <%= money_field form, :amount, required: true, placeholder: "0" %>
+    <p class="form-hint"><%= payment_owed_hint payment %></p>
+    <%= field_error payment, :amount %>
+  </div>
+
+  <div class="flex gap-2.5">
+    <%= form.submit t("orders.payments.form.save"), class: "btn-primary flex-1" %>
+    <%= link_to t("orders.payments.form.cancel"), order_path(payment.order), class: "btn-secondary w-auto" %>
+  </div>
+<% end %>

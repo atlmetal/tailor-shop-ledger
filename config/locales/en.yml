@@ -32,6 +32,7 @@ en:
         kind: Kind
         occurred_on: Date
       job:
+        base: Job
         done_on: Date
         material_cost: Materials of each
         price: Price of each
@@ -187,6 +188,8 @@ en:
       materials: Materials
       one_less: One less
       one_more: One more
+      order_price_hint: Change it if you agreed on another price.
+      order_service: Which service did they ask for?
       price_hint: Change it if you charged another price.
       save: Save
       save_and_another: Save and record another
@@ -203,6 +206,56 @@ en:
       reports: Reports
       shop: Shop
       today: Today
+  orders:
+    edit:
+      confirm_delete: "Delete this order with its jobs and payments? It can't be undone."
+      delete: Delete order
+      delete_note: "Delete it only if you gave the deposit back: the order leaves your accounts with its jobs and payments. If you already bought materials you won't use, record them as an expense."
+      title: Edit order
+    form:
+      cancel: Cancel
+      customer_name: Whose order is it?
+      customer_name_hint: Just their name, to tell it apart.
+      placeholder: "E.g.: Marta Rodríguez"
+      received_on: When did they leave it?
+      save: Save
+    jobs:
+      new:
+        save_and_another: Save and add another
+        title: Add a job
+    new:
+      continue: Continue
+      note: "An order is work left with you to be paid for later, usually with a deposit. Each payment counts the day you get it."
+      title: Record
+    order: Order for %{customer}
+    owed:
+      owed: Owes you
+      paid: Has paid you %{paid} of %{total}.
+    paid_off:
+      note: Paid you the whole order.
+      paid_off: Paid off
+    payments:
+      edit:
+        confirm_delete: "Delete this payment? It can't be undone."
+        delete: Delete
+        title: Edit payment
+      form:
+        cancel: Cancel
+        owed: Owes you %{amount}.
+        owed_without: Without this payment, owes you %{amount}.
+        save: Save
+      new:
+        title: Record a payment
+    show:
+      add_job: Add a job
+      edit: Edit
+      jobs: Jobs
+      no_jobs: "Add what they left you: one job for each service."
+      no_payments: No payments yet.
+      payments: Payments
+      received_on: Left on %{day}
+      record_payment: Record a payment
+      summary: What's owed
   reports:
     day_records:
       none: Nothing recorded on this day.
@@ -300,6 +353,7 @@ en:
       income: Other income
       job: Job
       label: What you're recording
+      order: Order
     taller_header:
       fixed_costs: Fixed costs
       label: Shop sections
@@ -321,6 +375,15 @@ en:
     job:
       job: "%{quantity} × %{service}"
       materials: Materials %{amount}
+    order:
+      detail: "%{units} · Materials %{materials}"
+    owed:
+      no_jobs: No jobs yet
+      received_on: Left on %{day}
+      title: Owed to you
+    payment:
+      detail: Order of %{day}
+      title: Payment from %{customer}
     show:
       goal: Today's goal
       jobs: What you recorded today

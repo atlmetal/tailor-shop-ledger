@@ -1,0 +1,8 @@
+<section class="panel mt-4 flex flex-col gap-0.5 p-5" aria-label="<%= t("orders.show.summary") %>">
+  <span class="flex items-center gap-1.5 font-bold">
+    <svg aria-hidden="true" class="size-5.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>
+    <%= t(".paid_off") %>
+  </span>
+  <span class="font-mono text-[2.75rem] leading-[1.05] font-bold tracking-[-0.02em]"><%= pesos(order.total) %></span>
+  <span class="text-note text-graphite"><%= t(".note") %></span>
+</section>

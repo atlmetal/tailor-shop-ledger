@@ -32,6 +32,7 @@ es-CO:
         kind: Tipo
         occurred_on: Fecha
       job:
+        base: Trabajo
         done_on: Fecha
         material_cost: Materiales de cada uno
         price: Precio de cada uno
@@ -187,6 +188,8 @@ es-CO:
       materials: Materiales
       one_less: Quitar uno
       one_more: Agregar uno
+      order_price_hint: Cámbialo si acordaste otro precio.
+      order_service: "¿Qué servicio te pidieron?"
       price_hint: Cámbialo si cobraste otro precio.
       save: Guardar
       save_and_another: Guardar y registrar otro
@@ -203,6 +206,56 @@ es-CO:
       reports: Reportes
       shop: Taller
       today: Hoy
+  orders:
+    edit:
+      confirm_delete: "¿Borrar este pedido con sus trabajos y pagos? No se puede deshacer."
+      delete: Borrar pedido
+      delete_note: "Bórralo solo si devolviste el abono: el pedido sale de tus cuentas con sus trabajos y pagos. Si ya compraste materiales que no vas a usar, regístralos como gasto."
+      title: Editar pedido
+    form:
+      cancel: Cancelar
+      customer_name: "¿De quién es el pedido?"
+      customer_name_hint: Solo el nombre, para reconocerlo.
+      placeholder: "Ej.: Marta Rodríguez"
+      received_on: "¿Cuándo te lo dejó?"
+      save: Guardar
+    jobs:
+      new:
+        save_and_another: Guardar y agregar otro
+        title: Agregar trabajo
+    new:
+      continue: Seguir
+      note: "Un pedido es lo que te dejan para pagarte después, casi siempre con un abono. Cada pago cuenta el día que te lo dan."
+      title: Registrar
+    order: Pedido de %{customer}
+    owed:
+      owed: Te debe
+      paid: Ya te pagó %{paid} de %{total}.
+    paid_off:
+      note: Te pagó todo el pedido.
+      paid_off: Pagado
+    payments:
+      edit:
+        confirm_delete: "¿Borrar este pago? No se puede deshacer."
+        delete: Borrar
+        title: Editar pago
+      form:
+        cancel: Cancelar
+        owed: Te debe %{amount}.
+        owed_without: Sin este pago, te debe %{amount}.
+        save: Guardar
+      new:
+        title: Registrar pago
+    show:
+      add_job: Agregar trabajo
+      edit: Editar
+      jobs: Trabajos
+      no_jobs: "Agrega lo que te dejó: un trabajo por cada servicio."
+      no_payments: Todavía no te ha pagado nada.
+      payments: Pagos
+      received_on: Lo dejó el %{day}
+      record_payment: Registrar pago
+      summary: Lo que te debe
   reports:
     day_records:
       none: No registraste nada este día.
@@ -300,6 +353,7 @@ es-CO:
       income: Otro ingreso
       job: Trabajo
       label: Qué vas a registrar
+      order: Pedido
     taller_header:
       fixed_costs: Gastos fijos
       label: Secciones del taller
@@ -321,6 +375,15 @@ es-CO:
     job:
       job: "%{quantity} × %{service}"
       materials: Materiales %{amount}
+    order:
+      detail: "%{units} · Materiales %{materials}"
+    owed:
+      no_jobs: Sin trabajos
+      received_on: Lo dejó el %{day}
+      title: Te deben
+    payment:
+      detail: Pedido del %{day}
+      title: Pago de %{customer}
     show:
       goal: Meta de hoy
       jobs: Lo que registraste hoy

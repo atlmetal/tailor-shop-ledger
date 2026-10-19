@@ -1,0 +1,14 @@
+<h1 class="page-title"><%= t(".title") %></h1>
+
+<%= render layout: "form", locals: { order: @order } do |form| %>
+  <div class="flex gap-2.5">
+    <%= form.submit t("orders.form.save"), class: "btn-primary flex-1" %>
+    <%= link_to t("orders.form.cancel"), order_path(@order), class: "btn-secondary w-auto" %>
+  </div>
+<% end %>
+
+<section class="mt-8 flex flex-col items-start gap-1" aria-labelledby="delete-order">
+  <h2 id="delete-order" class="sr-only"><%= t(".delete") %></h2>
+  <p class="text-meta text-graphite"><%= t(".delete_note") %></p>
+  <%= button_to t(".delete"), order_path(@order), method: :delete, form: { data: { turbo_confirm: t(".confirm_delete") } }, class: "btn-link text-loss-ink" %>
+</section>

@@ -1,0 +1,5 @@
+<section class="panel mt-4 flex flex-col gap-0.5 p-5" aria-label="<%= t("orders.show.summary") %>">
+  <span class="font-bold"><%= t(".owed") %></span>
+  <span class="font-mono text-[2.75rem] leading-[1.05] font-bold tracking-[-0.02em]"><%= pesos(order.owed) %></span>
+  <span class="text-note text-graphite"><%= t(".paid", paid: pesos(order.paid), total: pesos(order.total)) %></span>
+</section>
