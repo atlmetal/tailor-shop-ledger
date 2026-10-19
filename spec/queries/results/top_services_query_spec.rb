@@ -51,6 +51,17 @@ RSpec.describe Results::TopServicesQuery do
     it("keeps the top five") { expect(names).to eq([ "Basta de pantalón", "Cambio de cremallera", "Ruedo", "Cintura", "Botones" ]) }
   end
 
+  context "with an order's jobs" do
+    let(:dress) { create(:service, shop:, name: "Confección de vestido", price: 180_000, material_cost: 65_000) }
+
+    before do
+      create(:job, order: create(:order, shop:, received_on: Date.new(2026, 10, 9)), service: dress)
+      create(:job, order: create(:order, shop:, received_on: Date.new(2026, 9, 29)), service: dress)
+    end
+
+    it("counts those of the orders left in the period, with what they'll leave") { expect(rows.first).to have_attributes(service: dress, units: 1, left: 115_000) }
+  end
+
   context "with another shop's jobs" do
     before { create(:job, done_on: Date.new(2026, 10, 7), quantity: 9) }
 

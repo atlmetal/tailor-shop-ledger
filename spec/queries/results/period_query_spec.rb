@@ -65,6 +65,28 @@ RSpec.describe Results::PeriodQuery do
     it("carries no fixed costs, and still counts what the shop made") { is_expected.to have_attributes(work_days: 0, fixed_costs: 0, charged: 16_000, total: 15_000) }
   end
 
+  context "with orders" do
+    let(:september_order) { create(:order, shop:, received_on: Date.new(2026, 9, 28)) }
+    let(:october_order) { create(:order, shop:, received_on: Date.new(2026, 10, 15)) }
+
+    before do
+      create(:job, order: september_order, service:, quantity: 3)
+      create(:payment, order: september_order, paid_on: Date.new(2026, 9, 28), amount: 10_000)
+      create(:payment, order: september_order, paid_on: Date.new(2026, 10, 5), amount: 14_000)
+      create(:job, order: october_order, service:, quantity: 2)
+      create(:payment, order: october_order, paid_on: Date.new(2026, 10, 15), amount: 6_000)
+    end
+
+    it("counts the payments that came in, and never an order's prices") { expect(result.charged).to eq(14_000 + 6_000) }
+    it("counts the materials and units of the orders left in it") { is_expected.to have_attributes(materials: 1_000, units: 2) }
+
+    context "in the month an order with its rest still to come was left" do
+      let(:period) { Date.new(2026, 9, 1)..Date.new(2026, 9, 30) }
+
+      it("counts its deposit, its materials and its units") { is_expected.to have_attributes(charged: 10_000, materials: 1_500, units: 3) }
+    end
+  end
+
   context "with another shop's jobs and entries" do
     before do
       create(:job, done_on: Date.new(2026, 10, 5))
