@@ -303,7 +303,7 @@ Done when `bin/rails db:seed` on an empty database gives the demo shown in the s
 
 The first shop takes deposits and is paid the rest later, sometimes in parts (gathered on 2026-10-19), and it starts only once v0.1 handles them.
 
-- [ ] `orders` and `payments`, and jobs in an order, with their validations.
+- [x] `orders` and `payments`, and jobs in an order, with their validations.
 - [ ] Payments in `Results::PeriodQuery`, and the pending orders as a query object.
 - [ ] The order's page: create, edit and delete an order; add, edit and delete its jobs through the job form; record, edit and delete its payments.
 - [ ] Registrar's "Pedido"; on Hoy, "Te deben" and the day's payments; and the payments in a day's report.

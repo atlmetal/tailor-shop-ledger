@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_18_110144) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_19_150002) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -58,9 +58,32 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_110144) do
     t.integer "material_cost", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "order_id"
+    t.index ["order_id"], name: "index_jobs_on_order_id"
     t.index ["service_id"], name: "index_jobs_on_service_id"
     t.index ["shop_id", "done_on"], name: "index_jobs_on_shop_id_and_done_on"
     t.check_constraint "quantity >= 1 AND price >= 0 AND material_cost >= 0", name: "jobs_amounts_check"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.bigint "shop_id", null: false
+    t.string "customer_name", null: false
+    t.date "received_on", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["shop_id", "received_on"], name: "index_orders_on_shop_id_and_received_on"
+  end
+
+  create_table "payments", force: :cascade do |t|
+    t.bigint "shop_id", null: false
+    t.bigint "order_id", null: false
+    t.date "paid_on", null: false
+    t.integer "amount", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_payments_on_order_id"
+    t.index ["shop_id", "paid_on"], name: "index_payments_on_shop_id_and_paid_on"
+    t.check_constraint "amount > 0", name: "payments_amount_check"
   end
 
   create_table "services", force: :cascade do |t|
@@ -109,8 +132,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_110144) do
   add_foreign_key "fixed_cost_amounts", "fixed_costs"
   add_foreign_key "fixed_cost_amounts", "shops"
   add_foreign_key "fixed_costs", "shops"
+  add_foreign_key "jobs", "orders"
   add_foreign_key "jobs", "services"
   add_foreign_key "jobs", "shops"
+  add_foreign_key "orders", "shops"
+  add_foreign_key "payments", "orders"
+  add_foreign_key "payments", "shops"
   add_foreign_key "services", "shops"
   add_foreign_key "sessions", "users"
   add_foreign_key "users", "shops"

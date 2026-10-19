@@ -38,6 +38,12 @@ es-CO:
         quantity: Cantidad
         service: Servicio
         service_id: Servicio
+      order:
+        customer_name: Nombre
+        received_on: Fecha
+      payment:
+        amount: Valor
+        paid_on: Fecha
       service:
         material_cost: Materiales
         name: Nombre
@@ -65,11 +71,26 @@ es-CO:
               less_than_or_equal_to: no puede ser después de hoy
         job:
           attributes:
+            base:
+              less_than_paid: "Los pagos del pedido sumarían más que sus trabajos: baja o borra un pago primero."
             done_on:
               greater_than_or_equal_to: no puede ser antes de que empezaras a llevar las cuentas aquí
               less_than_or_equal_to: no puede ser después de hoy
             service:
               required: no está elegido
+        order:
+          attributes:
+            received_on:
+              after_payments: no puede ser después de su primer pago
+              greater_than_or_equal_to: no puede ser antes de que empezaras a llevar las cuentas aquí
+              less_than_or_equal_to: no puede ser después de hoy
+        payment:
+          attributes:
+            amount:
+              more_than_owed: es más de lo que te deben del pedido
+            paid_on:
+              greater_than_or_equal_to: no puede ser antes del día en que te dejaron el pedido
+              less_than_or_equal_to: no puede ser después de hoy
         service:
           attributes:
             name:

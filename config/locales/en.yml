@@ -38,6 +38,12 @@ en:
         quantity: Quantity
         service: Service
         service_id: Service
+      order:
+        customer_name: Name
+        received_on: Date
+      payment:
+        amount: Amount
+        paid_on: Date
       service:
         material_cost: Materials
         name: Name
@@ -65,11 +71,26 @@ en:
               less_than_or_equal_to: can't be after today
         job:
           attributes:
+            base:
+              less_than_paid: "The order's payments would come to more than its jobs: lower or delete a payment first."
             done_on:
               greater_than_or_equal_to: can't be before you started keeping your accounts here
               less_than_or_equal_to: can't be after today
             service:
               required: isn't chosen
+        order:
+          attributes:
+            received_on:
+              after_payments: can't be after its first payment
+              greater_than_or_equal_to: can't be before you started keeping your accounts here
+              less_than_or_equal_to: can't be after today
+        payment:
+          attributes:
+            amount:
+              more_than_owed: is more than the order owes
+            paid_on:
+              greater_than_or_equal_to: can't be before the day the order was left
+              less_than_or_equal_to: can't be after today
         service:
           attributes:
             name:
