@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-Tailor Shop Ledger: a Ruby on Rails app that shows small tailoring and alteration shops whether their work pays. A shop records the services it offers, with their price and material cost; the jobs it charges for; its fixed costs, occasional expenses and other income. The app turns that into a goal for the day and results by day, week, month, semester and year. Several shops share one installation, each with one user who usually works alone, from a phone, and has never kept accounts.
+Tailor Shop Ledger: a Ruby on Rails app that shows small tailoring and alteration shops whether their work pays. A shop records the services it offers, with their price and material cost; the jobs it charges for, and the orders customers pay for in parts; its fixed costs, occasional expenses and other income. The app turns that into a goal for the day and results by day, week, month, semester and year. Several shops share one installation, each with one user who usually works alone, from a phone, and has never kept accounts.
 
 It is the owner's public portfolio project, licensed AGPL-3.0, and real shops use it at `taller.yunquelabs.com`. Code quality and a clear README matter as much as features. Built by a single developer in limited time: keep it small, finished and well tested rather than broad and half-built.
 
@@ -25,11 +25,11 @@ It is the owner's public portfolio project, licensed AGPL-3.0, and real shops us
 
 v0.1 is what one shop needs to know whether its work pays, deployed and backed up. Details and order are in `docs/plan.md`.
 
-Out, until shops ask for it: order tracking (customer, due date, status), customer data, receipts, invoicing, inventory, supplies per recipe, payment methods, Excel export, charts, offline mode, several users per shop.
+Out, until shops ask for it: due dates and work status on orders, customer data beyond the name on an order, receipts, invoicing, inventory, supplies per recipe, payment methods, Excel export, charts, offline mode, several users per shop.
 
 ## The accounting rules are the product
 
-Costs are what these shops struggle with, so the rules under Business rules in `docs/plan.md` are what makes the app useful. Materials count once, inside each job: supply purchases are never recorded as expenses. Fixed costs spread over the days the shop works, so the day the rent is paid doesn't show a loss and every other day an inflated profit. When the shop is in the home, the help texts warn that charging the whole home's bills to the shop, or counting income that isn't the shop's, distorts its result. Don't change these rules without the owner.
+Costs are what these shops struggle with, so the rules under Business rules in `docs/plan.md` are what makes the app useful. Materials count once, inside each job: supply purchases are never recorded as expenses, except a cancelled order's that can't be used. An order's payments count the day each one arrives, and its materials the day the customer leaves the work. Fixed costs spread over the days the shop works, so the day the rent is paid doesn't show a loss and every other day an inflated profit. When the shop is in the home, the help texts warn that charging the whole home's bills to the shop, or counting income that isn't the shop's, distorts its result. Don't change these rules without the owner.
 
 ## Stack
 

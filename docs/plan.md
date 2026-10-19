@@ -16,7 +16,7 @@ Small tailoring shops in Colombia that do alterations, sewing and dressmaking. W
 
 - One person runs each shop, alone and usually at home, working on demand as customers bring work, most often Monday to Saturday.
 - Each shop offers its own services, depending on its machines and skills. Prices are mostly fixed, though they can vary with the garment or the work, and some services use no materials.
-- Customers pay when the work is done, with no deposits.
+- Most customers pay when the work is done. For some work they leave a deposit, which usually covers the materials, and pay the rest when it's done, now and then with a payment in between; one deposit can cover several garments. When the work can't be done, the deposit goes back. The shop tells those orders apart by the customer's name, the dates and the garments (gathered from the first shop on 2026-10-19).
 - Supplies are bought for each order, with no stock, and their prices change about once a year.
 - Today they write their work down in a notebook. Costs are the hardest part: they don't know how to keep accounts.
 - Most would use the app from an Android phone, since many have no computer, but some do.
@@ -49,19 +49,22 @@ Decided by the owner on 2026-10-16 and 2026-10-17.
 
 ## Domain model
 
-Everything a shop owns carries `shop_id`: `services`, `jobs`, `fixed_costs`, `fixed_cost_amounts` and `entries`. `users` belong to a shop but aren't scoped by the tenant, since signing in looks them up by email. Money is integer pesos. Dates are `date` columns; use `Date.current`, never `Date.today`.
+Everything a shop owns carries `shop_id`: `services`, `jobs`, `fixed_costs`, `fixed_cost_amounts`, `entries`, `orders` and `payments`. `users` belong to a shop but aren't scoped by the tenant, since signing in looks them up by email. Money is integer pesos. Dates are `date` columns; use `Date.current`, never `Date.today`.
 
 | Table | Columns | Constraints |
 |---|---|---|
 | `shops` | name, started_on, work_days (integer array of weekdays, 0 for Sunday; default Monday to Saturday) | at least one work day, each from 0 to 6 |
 | `users` | shop, name, email_address, password_digest | Rails auth generator; unique email |
 | `services` | name, price, material_cost, active (default true) | price and material cost 0 or more; unique name among the shop's active services, ignoring case |
-| `jobs` | service, done_on, quantity, price, material_cost | quantity 1 or more; price and material cost 0 or more; done_on from the shop's started_on to today |
+| `jobs` | service, order (optional), done_on, quantity, price, material_cost | quantity 1 or more; price and material cost 0 or more; done_on from the shop's started_on to today, and the order's received_on in an order |
 | `fixed_costs` | name, averaged (default false) | |
 | `fixed_cost_amounts` | fixed_cost, starts_on, amount | starts_on is the first day of a month; unique (fixed cost, starts_on); amount 0 or more |
 | `entries` | kind (`expense`, `income`), occurred_on, concept, amount | amount above 0; occurred_on from the shop's started_on to today |
+| `orders` | customer_name, received_on | customer name present, up to 60 characters; received_on from the shop's started_on to today, and no later than its payments |
+| `payments` | order, paid_on, amount | amount above 0; paid_on from the order's received_on to today; an order's payments add up to its total at most |
 
 - A job's `price` and `material_cost` are per unit, copied from its service when it's recorded, so changing a service never changes recorded jobs. A job charges quantity × price, uses quantity × material cost in materials, and leaves the difference.
+- An order's total is what its jobs charge, and what the customer owes is that total minus its payments.
 - `Job` is a piece of work for a customer. Background jobs keep the `Job` suffix in `app/jobs`, like `BackupJob`.
 - `started_on` is the day the shop starts keeping its accounts here. The operator sets it when creating the shop; nothing before it counts.
 
@@ -77,11 +80,25 @@ Everything a shop owns carries `shop_id`: `services`, `jobs`, `fixed_costs`, `fi
 ### Jobs
 
 - One record per service done: its date, service, quantity, and the price and material cost of each unit. Several garments under the same service make one record with a quantity; different services make one record each.
-- A job is recorded the day the customer pays, which is when the work is done.
-- The date defaults to today and can be any day from the shop's `started_on` to today, so days written on paper can be entered later.
+- A job on its own is recorded the day the customer pays, which is when the work is done. Work the customer pays for later, usually in parts, goes in an order instead (see Orders).
+- The date defaults to today and can be any day from the shop's `started_on` to today, so days written on paper can be entered later. A job in an order takes the order's day.
 - Choosing a service fills in its price and material cost, and both can be changed in each record: a quoted price, or 0 in materials when the customer brought them.
-- Supply purchases are never recorded as expenses: they are already in each job's material cost. Counting them twice is the first accounting trap.
+- Supply purchases are never recorded as expenses: they are already in each job's material cost. Counting them twice is the first accounting trap. The one exception is a cancelled order's (see Orders).
 - Jobs can be edited and deleted. The service list in the form shows the active services, plus the job's own when editing.
+
+### Orders
+
+Decided by the owner on 2026-10-19, for the first shop.
+
+- Work a customer leaves and pays for later goes in an order: the customer's name, the day they left it, its jobs and its payments. One order holds everything the customer left together, under one deposit.
+- The payments are usually a deposit when the customer leaves the work, which covers its materials, and the rest when it's done; now and then one in between.
+- The customer's name is all the app keeps about a customer: no phone, address or ID (see Privacy).
+- An order's jobs are recorded with the job form and its rules, without a date of their own: they take the order's day, and move with it.
+- Each payment counts as charged for jobs the day it arrives. An order's jobs never count their price, since its payments do; they count their materials and units the day the order was left, which is when the materials are bought, and the services that left the most count them that day too. The owner chose this over counting a whole order the day it's paid off: the deposit covers the materials, and the last payment the shop's work and profit.
+- A payment's date defaults to today and goes from the order's day to today. An order's payments never add up to more than its total.
+- An order is pending while it has no jobs yet or its payments don't cover them. A finished order nobody picks up stays pending: its deposit and materials already counted, and the rest never came.
+- Cancelling an order deletes it with its jobs and payments, since the deposit goes back to the customer: it leaves the accounts as if it never existed. The page says to delete it only when the deposit went back, and that materials already bought for it that can't be used go in as an expense: the only materials that do, since no job carries them.
+- The order, its jobs and its payments are edited and deleted from the order's page.
 
 ### Fixed costs
 
@@ -111,13 +128,16 @@ Everything a shop owns carries `shop_id`: `services`, `jobs`, `fixed_costs`, `fi
 ### Results
 
 - Result = charged for jobs − materials + other income − other expenses − the fixed costs of the period. From 0 up it's a profit ("Ganancia"); below 0, a loss ("Pérdida").
+- Charged for jobs is what the jobs on their own charged, plus the payments that came in for orders.
 - The jobs of a period count their units: a record with quantity 2 counts 2.
 
 ### Today
 
 - The day's goal is today's share of the fixed costs, when today is a work day. What the shop has made towards it ("Llevas") is today's charged amount minus today's materials. The bar fills with it, up to the goal, and the note under it says how much is left, or that the day's fixed costs are covered and by how much more.
 - On a day the shop doesn't work there's no goal: the panel says so and shows what the shop made.
-- After saving or deleting a job or an entry, the app goes to Today when its date is today, and to that day's report otherwise.
+- The day's records include the payments that came in, and an order's jobs under its customer's name.
+- "Te deben": the pending orders, the oldest first, each with its customer, its day and what's owed, opening its order; and the total owed.
+- After saving or deleting a job or an entry, the app goes to Today when its date is today, and to that day's report otherwise. Saving or deleting anything inside an order goes back to the order's page, and deleting the order goes to Today.
 
 ### Reports
 
@@ -125,11 +145,11 @@ Everything a shop owns carries `shop_id`: `services`, `jobs`, `fixed_costs`, `fi
 - Each period shows its title and the range counted, from its start, or the shop's if later, to its end, or today while it's in progress; its result; the work days counted and the jobs done; the calculation, line by line; and the fixed costs per work day of the month of its last day counted: the current month while the period is in progress, its last month once it's over (decided after the approved screens).
 - The services that left the most in the period: the top five by what they left, each with the units done. The day view leaves them out, since they would repeat its records (decided after the approved screens).
 - Month by month, under every period: the result of each of the last six months, up to the current one, marked "hasta hoy" so it isn't compared as if it were complete. Months before the shop started don't show. The most recent comes first, and each opens its month's report (decided after the approved screens).
-- The day view also lists that day's jobs and entries, each opening its form: that is how a past record is corrected.
+- The day view also lists that day's jobs, the payments that came in and its entries, each opening its form: that is how a past record is corrected.
 
 ### Privacy
 
-- v0.1 stores no customer data: only what the shop does, charges and spends.
+- The only customer data the app stores is the customer's name on an order, which the shop needs to tell its orders apart: no phone, address or ID. The name stays out of the logs, and Sentry's defaults already leave request bodies out (decided on 2026-10-19).
 - Before a second shop joins, a privacy notice and written terms of use (see Before a second shop).
 
 ## Screens
@@ -177,9 +197,17 @@ The approved design is five phone screens at 390px, in Spanish, with sample data
 - Changing a fixed cost, inside its row: "Hoy: $900.000"; "Nuevo valor al mes"; "Desde", this month or one of the next two; a line saying which months keep the old amount ("Octubre y los meses anteriores siguen con $900.000."); "Guardar cambio" and "Cancelar". Afterwards the row notes the change: "Desde noviembre: $950.000".
 - "Días que trabajas", on the fixed costs page: seven toggles, Lu to Do, and "En octubre trabajas **27 días**. Cada día debe cubrir **$44.074** de gastos fijos. Es la meta que ves en Hoy."; with none marked, "Marca al menos un día para calcular tu meta diaria."
 
+### Pedidos (Orders)
+
+Not in the approved screens: built in M9 with their tokens and patterns, and their copy recorded here once the owner approves the screenshots.
+
+- Registrar's switch gains "Pedido", whose form takes the customer's name and the day, and goes on to the order's first job.
+- The order's page: the customer's name and day; its jobs, with "Agregar trabajo"; its total, what's been paid and what's owed; its payments, with "Registrar pago"; and its edit form, with "Borrar pedido" and its note.
+- On Hoy, "Te deben", and the day's records with payments and orders, as in the day's report.
+
 ## Milestones
 
-### v0.1: one shop's accounts, deployed and backed up (about 42 hours)
+### v0.1: one shop's accounts, deployed and backed up (about 54 hours)
 
 No shop uses the app, the first one included, until v0.1 is finished. The deploy still comes before Reports, so the server, the backups and their restore are proven early.
 
@@ -268,9 +296,23 @@ Done when specs cover the boundaries of weeks, semesters and years, a period bef
 #### M8. README (2 h)
 
 - [x] README: what the app is and who it's for, screenshots at phone width from the demo seeds (Today, Record, Reports and the shop), the accounting rules, stack, local setup, tests, deploy and license.
-- [ ] Tag `v0.1.0`.
 
 Done when `bin/rails db:seed` on an empty database gives the demo shown in the screenshots.
+
+#### M9. Orders (12 h)
+
+The first shop takes deposits and is paid the rest later, sometimes in parts (gathered on 2026-10-19), and it starts only once v0.1 handles them.
+
+- [ ] `orders` and `payments`, and jobs in an order, with their validations.
+- [ ] Payments in `Results::PeriodQuery`, and the pending orders as a query object.
+- [ ] The order's page: create, edit and delete an order; add, edit and delete its jobs through the job form; record, edit and delete its payments.
+- [ ] Registrar's "Pedido"; on Hoy, "Te deben" and the day's payments; and the payments in a day's report.
+- [ ] Keep the customer's name out of the logs.
+- [ ] Demo seeds: La Puntada gets orders paid in two parts, one with a payment in between, one across two months, and some pending, one of them finished and never picked up.
+- [ ] README: the rules for orders, and the Today screenshot again.
+- [ ] Tag `v0.1.0` (moved from M8, since v0.1 now includes orders).
+
+Done when model specs cover a payment over the order's total, a payment before its order's day and an order's day moving its jobs; query specs cover a deposit and the rest in different months, a pending order and one without jobs; request specs cover isolation; a system spec takes an order with two jobs and a deposit, then its last payment, checking Today after each; and the owner approves the new pages in screenshots at phone and desktop width.
 
 #### The first shop
 
@@ -280,7 +322,7 @@ Done when the first shop has its services, fixed costs and work days, and has en
 
 ### Before a second shop
 
-- [ ] A privacy notice under Colombian Law 1581, linked from the sign-in page, and written terms of use, including what happens to a shop's data when it leaves.
+- [ ] A privacy notice under Colombian Law 1581, linked from the sign-in page, and written terms of use, including the customers' names a shop keeps on its orders and what happens to a shop's data when it leaves.
 - [ ] Export a shop's records, so it can take them when it leaves, and a rake task that deletes a shop with everything it owns, listing it first.
 
 ### Only when shops ask for it
@@ -289,4 +331,4 @@ Done when the first shop has its services, fixed costs and work days, and has en
 - [ ] How long each service takes, to see which one pays the most per hour.
 - [ ] The accounts with and without the home's share (an idea of the owner's): a "belongs to the home" mark on fixed costs, expenses and other income; Today adds a line under the bar with the goal without the home's share, and Reports splits fixed costs into the shop's own and the home's share, with the profit before and after that share. Both views at once, never a switch.
 - [ ] A holiday calendar, for shops that close on holidays.
-- [ ] Order tracking: customer, due date and status.
+- [ ] Due dates for orders and the state of their work (in progress, ready), to keep the shop's queue.
