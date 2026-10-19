@@ -1,11 +1,11 @@
 # Tailor Shop Ledger
 
-A Ruby on Rails app that shows small tailoring and alteration shops whether their work pays. A shop records the services it offers, with their price and material cost; the jobs it charges for; its fixed costs, occasional expenses and other income. The app turns that into a goal for the day and results by day, week, month, semester and year.
+A Ruby on Rails app that shows small tailoring and alteration shops whether their work pays. A shop records the services it offers, with their price and material cost; the jobs it charges for, and the orders customers pay for in parts; its fixed costs, occasional expenses and other income. The app turns that into a goal for the day and results by day, week, month, semester and year.
 
 <p align="center">
   <img src="docs/screenshots/today.png" width="24%" alt="Today: the day's goal on a strip of tape measure, $32,400 made of the $44,074 the fixed costs need today, and what's left to go">
-  <img src="docs/screenshots/record.png" width="24%" alt="Record: a job's date and its service, picked from the shop's list with its price">
-  <img src="docs/screenshots/reports.png" width="24%" alt="Reports: October so far, a profit of $334,241, and how it's calculated line by line">
+  <img src="docs/screenshots/record.png" width="24%" alt="Record: a job, an order, an expense or other income; here a job's date and its service, picked from the shop's list with its price">
+  <img src="docs/screenshots/reports.png" width="24%" alt="Reports: October so far, a profit of $472,741, and how it's calculated line by line">
   <img src="docs/screenshots/shop.png" width="24%" alt="Shop: each service with its price, its materials and what it leaves">
 </p>
 
@@ -25,7 +25,11 @@ The rules are the product. Three of them keep a shop from fooling itself:
 - **Fixed costs are spread over the days the shop works.** Rent, electricity or a phone plan are monthly amounts, and each work day carries the month's total divided by its work days: that share is the day's goal on Today. Charging the rent on the day it's paid would show that day as a loss and every other one with an inflated profit.
 - **The home's accounts stay out.** When the shop is in the home, only the shop's share of the home's bills goes into fixed costs, and money that isn't the shop's, like the rent of a room, isn't other income. The help texts explain it with an example.
 
-A period's result is what its jobs charged, less their materials, plus other income, less other expenses and the fixed costs of its work days: a profit from 0 up, a loss below. Changing a service's price never changes the jobs already recorded, and a new amount for a fixed cost applies from a month on, never to the months before it. The full rules are in [docs/plan.md](docs/plan.md).
+A period's result is what its jobs charged, less their materials, plus other income, less other expenses and the fixed costs of its work days: a profit from 0 up, a loss below.
+
+Work a customer pays for later goes in an order: usually a deposit when they leave it, which covers its materials, and the rest when it's done. Each payment counts the day it comes in, and the order's materials and jobs the day it was left, so a day's figures follow the money that actually came in. Today also lists what customers still owe. An order that's cancelled is deleted, since the deposit goes back.
+
+Changing a service's price never changes the jobs already recorded, and a new amount for a fixed cost applies from a month on, never to the months before it. The full rules are in [docs/plan.md](docs/plan.md).
 
 ## Stack
 

@@ -309,7 +309,7 @@ The first shop takes deposits and is paid the rest later, sometimes in parts (ga
 - [x] Registrar's "Pedido"; on Hoy, "Te deben" and the day's payments; and the payments in a day's report.
 - [x] Keep the customer's name out of the logs.
 - [x] Demo seeds: La Puntada gets orders paid in two parts, one with a payment in between, one across two months, and some pending, one of them finished and never picked up.
-- [ ] README: the rules for orders, and the Today screenshot again.
+- [x] README: the rules for orders, and the screenshots that orders change: Record, with its new switch, and Reports' figures. Today's stays as it was, since "Te deben" falls below the first screen.
 - [ ] Tag `v0.1.0` (moved from M8, since v0.1 now includes orders).
 
 Done when model specs cover a payment over the order's total, a payment before its order's day and an order's day moving its jobs; query specs cover a deposit and the rest in different months, a pending order and one without jobs; request specs cover isolation; a system spec takes an order with two jobs and a deposit, then its last payment, checking Today after each; and the owner approves the new pages in screenshots at phone and desktop width.
