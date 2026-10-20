@@ -1,9 +1,9 @@
 module Seeds
   # Two demo shops. "Modistería La Puntada", from the approved screens: Monday to Saturday, its services, two of
   # them deactivated, its fixed costs with a rent change from next month, six months of jobs, expenses and other
-  # income, some days at a loss, with today's jobs those of the Today screen, and orders paid in parts, some still
-  # owed for. And "Arreglos El Dedal", in its owner's home: Monday to Friday, fewer services, and one month of
-  # history.
+  # income, some days at a loss, with today's jobs those of the Today screen, orders paid in parts, some still
+  # owed for, and two customers who pay up front, one of whom owes. And "Arreglos El Dedal", in its owner's home:
+  # Monday to Friday, fewer services, and one month of history.
   # Everything goes through the app's own services and forms, so a seed that breaks a rule fails instead of
   # creating impossible data. Deterministic (Random.new(42)) and relative to today; one transaction, so a
   # failing seed leaves the database as it was.
@@ -20,17 +20,17 @@ module Seeds
                     shirt: [ 16_000, 500, 8 ], buttons: [ 7_000, 1_800, 12 ], lining: [ 35_000, 6_000, 4 ], dress: [ 180_000, 65_000, 1 ] },
         retired_services: { embroidery: [ 12_000, 2_000, 4 ], curtains: [ 45_000, 8_000, 1 ] },
         fixed_costs: { rent: [ 900_000, false ], electricity: [ 120_000, true ], water: [ 55_000, true ], internet: [ 70_000, false ], phone: [ 45_000, false ] },
-        rent_from_next_month: 950_000, expenses_a_month: 3, incomes_a_month: 1, orders: true,
-        # The Today screen's jobs, and the Record screen's latest expenses and other income, by day of this month
-        # (instead of random ones).
-        today: [ [ :trouser_hem, 2 ], [ :zipper, 1 ], [ :buttons, 1 ] ],
+        rent_from_next_month: 950_000, expenses_a_month: 3, incomes_a_month: 1, orders: true, advances: true,
+        # The Today screen's jobs but its zipper, which is an advance's (see record_advances), and the Record
+        # screen's latest expenses and other income, by day of this month (instead of random ones).
+        today: [ [ :trouser_hem, 2 ], [ :buttons, 1 ] ],
         this_month: [ [ "expense", :overlocker, 14, 35_000 ], [ "expense", :transport, 3, 12_000 ], [ "income", :scraps, 9, 20_000 ] ] },
       { name: "Arreglos El Dedal", user: "Rosa Pérez", email: "rosa@demo.test", started_on: ->(today) { today.prev_month },
         work_days: [ 1, 2, 3, 4, 5 ], jobs_a_day: [ 0, 1, 1, 2, 2, 3, 4 ],
         services: { trouser_hem: [ 7_000, 400, 10 ], zipper: [ 14_000, 2_500, 5 ], waist: [ 12_000, 300, 5 ], jacket: [ 25_000, 3_000, 2 ] },
         retired_services: {},
         fixed_costs: { home_rent: [ 250_000, false ], home_electricity: [ 35_000, true ], internet: [ 40_000, false ] },
-        expenses_a_month: 1, incomes_a_month: 0, orders: false, today: nil, this_month: [] }
+        expenses_a_month: 1, incomes_a_month: 0, orders: false, advances: false, today: nil, this_month: [] }
     ].freeze
 
     EXPENSES = { overlocker: 35_000, transport: 12_000, spare_part: 28_000, scissors: 8_000, bulb: 6_000 }.freeze
@@ -93,6 +93,7 @@ module Seeds
           record_jobs(shop, config, services)
           record_entries(shop, config)
           record_orders(services) if config[:orders]
+          record_advances(services) if config[:advances]
           services.slice(*config[:retired_services].keys).each_value { it.update!(active: false) }
         end
       end
@@ -182,6 +183,23 @@ module Seeds
           order = Order.create!(customer_name:, received_on:)
           jobs.each { |key, quantity| Job.create!(order:, service: services[key], quantity:) }
           payments.each { |paid_on, amount| Payment.create!(order:, paid_on:, amount: amount == :rest ? order.owed : amount) }
+        end
+      end
+
+      # Customers who pay up front, with fixed days and amounts: Hotel Almendros for the last months, which ran past
+      # its balance once before its next top-up, and ends with the advances screens' balance after today's zipper,
+      # one of the Today screen's jobs; and Lucía Restrepo, since this month, who owes a little.
+      def record_advances(services)
+        [
+          [ "Hotel Almendros", [ [ @today - 75, 200_000 ], [ @today - 47, 150_000 ], [ @today - 19, 300_000 ], [ @today - 4, 100_000 ] ],
+            [ [ @today - 72, :shirt, 4 ], [ @today - 66, :trouser_hem, 6 ], [ @today - 58, :lining, 2 ], [ @today - 51, :waist, 5 ], [ @today - 40, :buttons, 10 ],
+              [ @today - 31, :waist, 2 ], [ @today - 17, :trouser_hem, 6 ], [ @today - 13, :shirt, 4 ], [ @today - 8, :waist, 5 ], [ @today - 5, :buttons, 10 ],
+              [ @today - 1, :trouser_hem, 3 ], [ @today, :zipper, 1 ] ] ],
+          [ "Lucía Restrepo", [ [ @today - 15, 120_000 ] ], [ [ @today - 12, :lining, 2 ], [ @today - 6, :skirt_hem, 2 ], [ @today - 1, :zipper, 2 ] ] ]
+        ].each do |customer_name, top_ups, jobs|
+          advance = Advance.create!(customer_name:)
+          top_ups.each { |paid_on, amount| TopUp.create!(advance:, paid_on:, amount:) }
+          jobs.each { |done_on, key, quantity| Job.create!(advance:, service: services[key], done_on:, quantity:) }
         end
       end
   end
