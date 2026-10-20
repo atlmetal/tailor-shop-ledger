@@ -62,6 +62,18 @@ RSpec.describe Results::TopServicesQuery do
     it("counts those of the orders left in the period, with what they'll leave") { expect(rows.first).to have_attributes(service: dress, units: 1, left: 115_000) }
   end
 
+  context "with an advance's jobs" do
+    let(:advance) { create(:advance, shop:).tap { create(:top_up, advance: it, amount: 200_000) } }
+    let(:lining) { create(:service, shop:, name: "Forro de chaqueta", price: 35_000, material_cost: 6_000) }
+
+    before do
+      create(:job, advance:, service: lining, done_on: Date.new(2026, 10, 12), quantity: 2)
+      create(:job, advance:, service: lining, done_on: Date.new(2026, 9, 30))
+    end
+
+    it("counts those done in the period, as jobs on their own") { expect(rows.first).to have_attributes(service: lining, units: 2, left: 58_000) }
+  end
+
   context "with another shop's jobs" do
     before { create(:job, done_on: Date.new(2026, 10, 7), quantity: 9) }
 

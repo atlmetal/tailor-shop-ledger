@@ -26,6 +26,9 @@ es-CO:
         starts_on: Desde
   activerecord:
     attributes:
+      advance:
+        customer_name: Nombre
+        jobs: trabajos
       entry:
         amount: Valor
         concept: Concepto
@@ -53,6 +56,9 @@ es-CO:
         name: Nombre
         started_on: Fecha de inicio
         work_days: Días de trabajo
+      top_up:
+        amount: Valor
+        paid_on: Fecha
       user:
         email_address: Correo electrónico
         name: Nombre
@@ -65,6 +71,13 @@ es-CO:
           association_invalid: es de otro taller
           tenant_mismatch: es de otro taller
       models:
+        advance:
+          attributes:
+            base:
+              restrict_dependent_destroy:
+                has_many: Tiene trabajos, así que no se puede borrar.
+            customer_name:
+              taken: ya lo tiene otro adelanto
         entry:
           attributes:
             occurred_on:
@@ -100,6 +113,11 @@ es-CO:
           attributes:
             work_days:
               blank: Marca al menos un día para calcular tu meta diaria.
+        top_up:
+          attributes:
+            paid_on:
+              greater_than_or_equal_to: no puede ser antes de que empezaras a llevar las cuentas aquí
+              less_than_or_equal_to: no puede ser después de hoy
         user:
           attributes:
             password:

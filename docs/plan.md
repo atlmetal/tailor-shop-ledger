@@ -360,7 +360,7 @@ Done when the first shop has its services, fixed costs and work days, and record
 
 A customer of the first shop pays a sum up front and brings work until it runs out (gathered on 2026-10-20).
 
-- [ ] `advances` and `top_ups`, and jobs in an advance, with their validations.
+- [x] `advances` and `top_ups`, and jobs in an advance, with their validations.
 - [ ] The advance's page: create and edit an advance, and delete one without jobs; add, edit and delete its jobs through the job form, with the balance each one leaves and the warning past it; record, edit and delete its top-ups.
 - [ ] On Hoy, "Adelantos"; and an advance's jobs in the day's records, on Hoy and in a day's report.
 - [ ] Demo seeds: La Puntada gets an advance with top-ups and jobs across several months, running past its balance once before the next top-up.

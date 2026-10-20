@@ -26,6 +26,9 @@ en:
         starts_on: From
   activerecord:
     attributes:
+      advance:
+        customer_name: Name
+        jobs: jobs
       entry:
         amount: Amount
         concept: Concept
@@ -53,6 +56,9 @@ en:
         name: Name
         started_on: Start date
         work_days: Work days
+      top_up:
+        amount: Amount
+        paid_on: Date
       user:
         email_address: Email address
         name: Name
@@ -65,6 +71,13 @@ en:
           association_invalid: belongs to another shop
           tenant_mismatch: belongs to another shop
       models:
+        advance:
+          attributes:
+            base:
+              restrict_dependent_destroy:
+                has_many: It has jobs, so it can't be deleted.
+            customer_name:
+              taken: is already used by another advance
         entry:
           attributes:
             occurred_on:
@@ -100,6 +113,11 @@ en:
           attributes:
             work_days:
               blank: Mark at least one day to work out your daily goal.
+        top_up:
+          attributes:
+            paid_on:
+              greater_than_or_equal_to: can't be before you started keeping your accounts here
+              less_than_or_equal_to: can't be after today
         user:
           attributes:
             password:

@@ -87,6 +87,24 @@ RSpec.describe Results::PeriodQuery do
     end
   end
 
+  context "with an advance" do
+    let(:advance) { create(:advance, shop:) }
+
+    before do
+      create(:top_up, advance:, paid_on: Date.new(2026, 9, 25), amount: 50_000)
+      create(:top_up, advance:, paid_on: Date.new(2026, 10, 2), amount: 100_000)
+      create(:job, advance:, service:, done_on: Date.new(2026, 9, 28), quantity: 4)
+      create(:job, advance:, service:, done_on: Date.new(2026, 10, 6), quantity: 3)
+      create(:job, advance:, service:, done_on: Date.new(2026, 10, 19), quantity: 25)
+    end
+
+    it("counts its jobs as jobs on their own, the day each is done, and never its top-ups") do
+      is_expected.to have_attributes(charged: 28 * 8_000, materials: 28 * 500, units: 28)
+    end
+
+    it("counts the jobs past its balance too") { expect(advance.balance).to eq(150_000 - 32 * 8_000) }
+  end
+
   context "with another shop's jobs and entries" do
     before do
       create(:job, done_on: Date.new(2026, 10, 5))

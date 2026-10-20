@@ -1,12 +1,14 @@
 # A piece of work for a customer. On its own, it's recorded the day they pay for it; in an order, which they pay
-# for in parts, it takes the order's day and never counts its price, since the order's payments do. Its price and
-# material cost are per unit and its own: copied from its service when it's recorded, so changing the service
-# never changes the job.
+# for in parts, it takes the order's day and never counts its price, since the order's payments do; in an
+# advance, which they paid up front, it keeps the day it's done and counts as a job on its own does. Never in an
+# order and an advance at once. Its price and material cost are per unit and its own: copied from its service
+# when it's recorded, so changing the service never changes the job.
 class Job < ApplicationRecord
   acts_as_tenant :shop
 
   belongs_to :service
   belongs_to :order, optional: true
+  belongs_to :advance, optional: true
 
   attribute :price, PesosType.new
   attribute :material_cost, PesosType.new
@@ -32,6 +34,12 @@ class Job < ApplicationRecord
     charged - materials
   end
 
+  # What the advance has left leaving this job out, which the form takes the job from as the user types; none on
+  # its own or in an order.
+  def advance_balance
+    advance.balance + charged_in_database if advance
+  end
+
   private
     # The price and material cost the user doesn't give come from the service.
     def copy_from_service
@@ -41,9 +49,14 @@ class Job < ApplicationRecord
       self.material_cost ||= service.material_cost
     end
 
+    # What it charged when last saved, which its order's or advance's figures still include.
+    def charged_in_database
+      quantity_in_database.to_i * price_in_database.to_i
+    end
+
     # What the order's other jobs charge, which with this one's must cover what the customer has paid.
     def other_jobs_charged
-      order.total - quantity_in_database.to_i * price_in_database.to_i
+      order.total - charged_in_database
     end
 
     def keep_order_payments_covered

@@ -10,9 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_19_150002) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_20_150002) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "advances", force: :cascade do |t|
+    t.bigint "shop_id", null: false
+    t.string "customer_name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index "shop_id, lower((customer_name)::text)", name: "index_advances_on_shop_id_and_lower_customer_name", unique: true
+  end
 
   create_table "entries", force: :cascade do |t|
     t.bigint "shop_id", null: false
@@ -59,9 +67,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_19_150002) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "order_id"
+    t.bigint "advance_id"
+    t.index ["advance_id"], name: "index_jobs_on_advance_id"
     t.index ["order_id"], name: "index_jobs_on_order_id"
     t.index ["service_id"], name: "index_jobs_on_service_id"
     t.index ["shop_id", "done_on"], name: "index_jobs_on_shop_id_and_done_on"
+    t.check_constraint "order_id IS NULL OR advance_id IS NULL", name: "jobs_order_or_advance_check"
     t.check_constraint "quantity >= 1 AND price >= 0 AND material_cost >= 0", name: "jobs_amounts_check"
   end
 
@@ -117,6 +128,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_19_150002) do
     t.check_constraint "cardinality(work_days) > 0 AND work_days <@ ARRAY[0, 1, 2, 3, 4, 5, 6]", name: "shops_work_days_check"
   end
 
+  create_table "top_ups", force: :cascade do |t|
+    t.bigint "shop_id", null: false
+    t.bigint "advance_id", null: false
+    t.date "paid_on", null: false
+    t.integer "amount", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["advance_id"], name: "index_top_ups_on_advance_id"
+    t.index ["shop_id"], name: "index_top_ups_on_shop_id"
+    t.check_constraint "amount > 0", name: "top_ups_amount_check"
+  end
+
   create_table "users", force: :cascade do |t|
     t.bigint "shop_id", null: false
     t.string "name", null: false
@@ -128,10 +151,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_19_150002) do
     t.index ["shop_id"], name: "index_users_on_shop_id", unique: true
   end
 
+  add_foreign_key "advances", "shops"
   add_foreign_key "entries", "shops"
   add_foreign_key "fixed_cost_amounts", "fixed_costs"
   add_foreign_key "fixed_cost_amounts", "shops"
   add_foreign_key "fixed_costs", "shops"
+  add_foreign_key "jobs", "advances"
   add_foreign_key "jobs", "orders"
   add_foreign_key "jobs", "services"
   add_foreign_key "jobs", "shops"
@@ -140,5 +165,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_19_150002) do
   add_foreign_key "payments", "shops"
   add_foreign_key "services", "shops"
   add_foreign_key "sessions", "users"
+  add_foreign_key "top_ups", "advances"
+  add_foreign_key "top_ups", "shops"
   add_foreign_key "users", "shops"
 end

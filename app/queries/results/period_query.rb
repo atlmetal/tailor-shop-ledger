@@ -1,8 +1,8 @@
 module Results
-  # What a shop made in a period: what its jobs on their own charged and the payments that came in for orders, the
-  # materials and units of every job, an order's on the day it was left; its other income and expenses; and the
-  # fixed costs of its work days. Only days from the shop's start to today count, so a period in progress counts
-  # up to today, today included, and nothing before the shop started.
+  # What a shop made in a period: what its jobs on their own and in advances charged and the payments that came in
+  # for orders, never an advance's top-ups; the materials and units of every job, an order's on the day it was
+  # left; its other income and expenses; and the fixed costs of its work days. Only days from the shop's start to
+  # today count, so a period in progress counts up to today, today included, and nothing before the shop started.
   class PeriodQuery < ApplicationQuery
     Result = Data.define(:days, :charged, :materials, :incomes, :expenses, :fixed_costs, :work_days, :units) do
       # From 0 up a profit, below 0 a loss.

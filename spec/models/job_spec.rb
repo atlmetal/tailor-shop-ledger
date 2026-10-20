@@ -126,4 +126,40 @@ RSpec.describe Job, type: :model do
       it("can be deleted") { expect(described_class.exists?(job.id)).to be(false) }
     end
   end
+
+  describe "in an advance" do
+    let(:advance) { create(:advance, shop:).tap { create(:top_up, advance: it, amount: 50_000) } }
+    let(:attributes) { { advance:, done_on: "2026-10-13" } }
+
+    it("keeps its own day") { expect(job.done_on).to eq(Date.new(2026, 10, 13)) }
+    it("takes nothing off the balance before it's saved") { expect(job.advance_balance).to eq(50_000) }
+
+    context "once recorded" do
+      subject(:job) { create(:job, advance:, service:, quantity: 2).tap { it.quantity = 8 } }
+
+      it("leaves itself out of the balance while it's edited") { expect(job.advance_balance).to eq(50_000) }
+    end
+
+    context "past the balance" do
+      let(:attributes) { { advance:, quantity: 7 } }
+
+      it("can still be recorded, and the customer owes the difference") { is_expected.to be_valid }
+    end
+
+    context "with another shop's advance" do
+      let(:attributes) { { advance: create(:advance) } }
+
+      it { expect(job.errors).to be_added(:advance_id, :"acts_as_tenant.association_invalid") }
+    end
+
+    context "and an order at once" do
+      let(:attributes) { { advance:, order: create(:order, shop:) } }
+
+      it { expect { job.save }.to raise_error(ActiveRecord::CheckViolation) }
+    end
+  end
+
+  context "on its own" do
+    it { expect(job.advance_balance).to be_nil }
+  end
 end
