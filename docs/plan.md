@@ -229,7 +229,7 @@ Not in the approved screens: built in M9 with their tokens and patterns, and app
 
 ### Adelantos (Advances)
 
-Drawn for M10 on the approved screens' canvas, with their tokens and patterns, and approved by the owner on 2026-10-20. Editing an advance, a top-up or a job wasn't drawn: it follows Pedidos.
+Drawn for M10 on the approved screens' canvas, with their tokens and patterns, and approved by the owner on 2026-10-20. Editing an advance, a top-up or a job wasn't drawn: it follows Pedidos. The owner approved the built pages in screenshots at phone and desktop width the same day.
 
 - On Hoy, under "Te deben", "Adelantos", with "Nuevo adelanto" on the right: each advance with the customer's name, "Le quedan" or "Te debe" under it, and the amount, opening its page. With none, "Para los clientes que te dan plata antes y te van llevando trabajos." and "Nuevo adelanto", outlined. In the day's records, on Hoy and in the day's report, an advance's job reads as a job on its own, with "Adelanto de Hotel Almendros" over its materials, and opens its form.
 - A new advance: "Nuevo adelanto"; "¿De quién es el adelanto?", with the placeholder "Ej.: Hotel Almendros" and "Solo el nombre, para reconocerlo. Puede ser una persona o una empresa."; the note "Un adelanto es la plata que un cliente te da antes, para irla descontando de sus trabajos. No cuenta el día que te la da: va contando a medida que le haces los trabajos."; "Seguir", which goes on to its first top-up, and "Cancelar".
