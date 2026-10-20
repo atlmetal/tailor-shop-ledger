@@ -1,9 +1,10 @@
 import { Controller } from "@hotwired/stimulus"
 
 // The job form: fills in the price and materials of the service chosen, runs the − and + buttons, and keeps
-// what the job charges, costs in materials and leaves up to date while the user types.
+// what the job charges, costs in materials and leaves up to date while the user types; in an advance, also the
+// balance it leaves or, past it, what the customer would owe.
 export default class extends Controller {
-  static targets = [ "quantity", "price", "materialCost", "charged", "materials", "leaves" ]
+  static targets = [ "quantity", "price", "materialCost", "charged", "materials", "leaves", "balance", "jobCharged", "left", "leftAmount", "debt", "debtAmount" ]
   static values = { delimiter: String, unit: String }
 
   pickService({ target }) {
@@ -29,6 +30,17 @@ export default class extends Controller {
     this.chargedTarget.textContent = this.#format(charged)
     this.materialsTarget.textContent = this.#format(-materials)
     this.leavesTarget.textContent = this.#format(charged - materials)
+    if (this.hasBalanceTarget) this.#updateBalance(charged)
+  }
+
+  #updateBalance(charged) {
+    const left = Number(this.balanceTarget.dataset.balance) - charged
+
+    this.jobChargedTarget.textContent = this.#format(-charged)
+    this.leftAmountTarget.textContent = this.#format(left)
+    this.debtAmountTarget.textContent = this.#format(-left)
+    this.leftTarget.hidden = left < 0
+    this.debtTarget.hidden = left >= 0
   }
 
   // Its own input event lets the money field group the digits; it bubbles up to update the summary.

@@ -1,0 +1,5 @@
+<section class="mt-8 flex flex-col items-start gap-1" aria-labelledby="delete-advance">
+  <h2 id="delete-advance" class="sr-only"><%= t(".delete") %></h2>
+  <p class="text-meta text-graphite"><%= t(".note") %></p>
+  <%= button_to t(".delete"), advance_path(advance), method: :delete, form: { data: { turbo_confirm: t(".confirm") } }, class: "btn-link text-loss-ink" %>
+</section>

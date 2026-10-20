@@ -14,6 +14,11 @@ Rails.application.routes.draw do
     resources :jobs, only: %i[ new create edit update destroy ], module: :orders
     resources :payments, only: %i[ new create edit update destroy ], module: :orders
   end
+  # And an advance's jobs and top-ups, under it.
+  resources :advances, only: %i[ new create show edit update destroy ] do
+    resources :jobs, only: %i[ new create edit update destroy ], module: :advances
+    resources :top_ups, only: %i[ new create edit update destroy ], module: :advances
+  end
   # Expenses and other income are both entries: one controller, told apart by the kind each route gives.
   resources :expenses, controller: "entries", only: %i[ new create edit update destroy ], defaults: { kind: "expense" }
   resources :incomes, controller: "entries", only: %i[ new create edit update destroy ], defaults: { kind: "income" }

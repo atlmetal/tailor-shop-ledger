@@ -1,5 +1,5 @@
 <nav class="tab-bar" aria-label="<%= t(".label") %>">
-  <%= tab_to t(".today"), root_path do %>
+  <%= tab_to t(".today"), root_path, also: [ advances_path ] do %>
     <svg aria-hidden="true" class="size-6.5 lg:size-5.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 10.5 12 3.5l8.5 7" /><path d="M5.5 9v11h13V9" /><path d="M10 20v-5.5h4V20" /></svg>
   <% end %>
   <%= tab_to t(".record"), new_job_path, also: [ jobs_path, orders_path, expenses_path, incomes_path ] do %>

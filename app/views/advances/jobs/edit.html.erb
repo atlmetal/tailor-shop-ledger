@@ -1,0 +1,11 @@
+<h1 class="page-title"><%= t("jobs.edit.title") %></h1>
+<%= advance_link @advance %>
+
+<%= render layout: "jobs/form", locals: { job: @job, services: @services } do |form| %>
+  <div class="flex gap-2.5">
+    <%= form.submit t("jobs.form.save"), class: "btn-primary flex-1" %>
+    <%= link_to t("jobs.form.cancel"), advance_path(@advance), class: "btn-secondary w-auto" %>
+  </div>
+<% end %>
+
+<%= button_to t("jobs.edit.delete"), advance_job_path(@advance, @job), method: :delete, form: { data: { turbo_confirm: t("jobs.edit.confirm_delete") } }, class: "btn-link mt-3 text-loss-ink" %>

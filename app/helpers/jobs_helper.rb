@@ -4,14 +4,18 @@ module JobsHelper
     render("jobs/saved", job: flash[:saved]) if flash[:saved]
   end
 
-  # A job in an order is changed under the order.
+  # A job in an order or an advance is changed under it.
   def edit_job_path_for(job)
-    job.order ? edit_order_job_path(job.order, job) : edit_job_path(job)
+    if job.order then edit_order_job_path(job.order, job)
+    elsif job.advance then edit_advance_job_path(job.advance, job)
+    else edit_job_path(job)
+    end
   end
 
-  # A job in an order is saved under the order.
+  # A job in an order or an advance is saved under it.
   def job_form_model(job)
-    job.order ? [ job.order, job ] : job
+    parent = job.order || job.advance
+    parent ? [ parent, job ] : job
   end
 
   # The date of a job on its own; one in an order takes the order's day.
@@ -19,8 +23,20 @@ module JobsHelper
     render("jobs/date", form:, job:) unless job.order
   end
 
-  # The form's question and price hint, which for a job in an order speak of work still to do.
+  # The form's question and price hint, which for a job in an order speak of work still to do, and in an advance
+  # of work for the customer.
   def job_form_text(job, key)
-    t(job.order ? "jobs.form.order_#{key}" : "jobs.form.#{key}")
+    prefix = if job.order then "order_" elsif job.advance then "advance_" end
+    t("jobs.form.#{prefix}#{key}")
+  end
+
+  # In an advance, the balance the job leaves or, past it, what the customer would owe, which the form keeps up to
+  # date while the user types.
+  def job_balance(job)
+    return unless job.advance
+
+    balance = job.advance_balance
+    left = balance - job.charged
+    render("jobs/balance", job:, balance:, left:, owes: left.negative?)
   end
 end

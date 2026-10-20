@@ -1,0 +1,11 @@
+<h1 class="page-title"><%= t(".title") %></h1>
+<%= advance_link @advance %>
+
+<%= job_saved_notice %>
+
+<%= render layout: "jobs/form", locals: { job: @job, services: @services } do |form| %>
+  <div class="flex flex-col gap-2.5">
+    <%= form.submit t("jobs.form.save"), class: "btn-primary" %>
+    <%= form.button t(".save_and_another"), name: "another", value: "1", class: "btn-secondary" %>
+  </div>
+<% end %>

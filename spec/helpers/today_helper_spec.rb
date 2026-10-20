@@ -48,7 +48,7 @@ RSpec.describe TodayHelper, type: :helper do
     subject(:records) { helper.today_records(day) }
 
     let(:day) { instance_double(Today::DayFacade, jobs:, orders:, payments:) }
-    let(:jobs) { [ instance_double(Job, quantity: 2, service: instance_double(Service, name: "Basta de pantalón"), materials: 1_000, charged: 16_000, order: nil, to_param: "7") ] }
+    let(:jobs) { [ instance_double(Job, quantity: 2, service: instance_double(Service, name: "Basta de pantalón"), materials: 1_000, charged: 16_000, order: nil, advance: nil, to_param: "7") ] }
     let(:order) { instance_double(Order, customer_name: "Marta Rodríguez", received_on: Date.new(2026, 10, 15), to_param: "3", jobs: [ instance_double(Job, quantity: 2, materials: 5_600) ]) }
     let(:orders) { [ order ] }
     let(:payments) { [ instance_double(Payment, order:, amount: 10_000, to_param: "5") ] }

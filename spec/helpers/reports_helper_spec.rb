@@ -140,7 +140,7 @@ RSpec.describe ReportsHelper, type: :helper do
     subject(:rows) { helper.day_record_rows(report) }
 
     let(:report) { instance_double(Reports::PeriodFacade, jobs:, orders: [], payments: [], entries:) }
-    let(:jobs) { [ instance_double(Job, quantity: 2, service: instance_double(Service, name: "Basta de pantalón"), materials: 1_000, charged: 16_000, order: nil, to_param: "7") ] }
+    let(:jobs) { [ instance_double(Job, quantity: 2, service: instance_double(Service, name: "Basta de pantalón"), materials: 1_000, charged: 16_000, order: nil, advance: nil, to_param: "7") ] }
     let(:entries) { [ instance_double(Entry, concept: "Transporte", kind: "expense", amount: 12_000, to_param: "3") ] }
 
     it { is_expected.to have_link("2 × Basta de pantalón Materials $1,000 $16,000", href: "/jobs/7/edit", normalize_ws: true) }

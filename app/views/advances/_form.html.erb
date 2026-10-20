@@ -1,0 +1,12 @@
+<%= form_with model: advance, class: "mt-5 flex flex-col gap-5" do |form| %>
+  <%= field_error advance, :base %>
+
+  <div>
+    <%= form.label :customer_name, t("advances.form.customer_name"), class: "form-label" %>
+    <%= form.text_field :customer_name, required: true, maxlength: 60, autocomplete: "off", autocapitalize: "words", placeholder: t("advances.form.placeholder"), class: "form-input" %>
+    <p class="form-hint"><%= t("advances.form.customer_name_hint") %></p>
+    <%= field_error advance, :customer_name %>
+  </div>
+
+  <%= yield form %>
+<% end %>

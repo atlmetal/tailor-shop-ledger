@@ -1,0 +1,24 @@
+<%= form_with model: [ top_up.advance, top_up ], class: "mt-5 flex flex-col gap-5" do |form| %>
+  <div>
+    <%= form.label :paid_on, class: "form-label" %>
+    <%= record_date_field form, :paid_on %>
+    <%= field_error top_up, :paid_on %>
+  </div>
+
+  <div>
+    <%= form.label :amount, class: "form-label" %>
+    <%= money_field form, :amount, required: true, placeholder: "0" %>
+    <p class="form-hint"><%= top_up_balance_hint top_up %></p>
+    <%= field_error top_up, :amount %>
+  </div>
+
+  <p class="panel flex items-start gap-2.5 rounded-small px-3.5 py-3 text-note">
+    <svg aria-hidden="true" class="mt-0.5 size-5.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9" /><path d="M12 11v6" /><path d="M12 7.5v.5" /></svg>
+    <span><%= t("advances.top_ups.form.note") %></span>
+  </p>
+
+  <div class="flex gap-2.5">
+    <%= form.submit t("advances.top_ups.form.save"), class: "btn-primary flex-1" %>
+    <%= link_to t("advances.top_ups.form.cancel"), advance_path(top_up.advance), class: "btn-secondary w-auto" %>
+  </div>
+<% end %>

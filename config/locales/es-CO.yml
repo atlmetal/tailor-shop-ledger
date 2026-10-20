@@ -27,6 +27,7 @@ es-CO:
   activerecord:
     attributes:
       advance:
+        base: Adelanto
         customer_name: Nombre
         jobs: trabajos
       entry:
@@ -126,6 +127,58 @@ es-CO:
                 other: es demasiado corta (mínimo %{count} caracteres)
             password_challenge:
               invalid: no es correcta
+  advances:
+    advance: Adelanto de %{customer}
+    balance:
+      left: Le quedan
+      owes: Te debe
+    delete:
+      confirm: "¿Borrar este adelanto? No se puede deshacer."
+      delete: Borrar adelanto
+      note: Bórralo solo si lo creaste por error. Sus adelantos se borran con él.
+    edit:
+      title: Editar nombre
+    form:
+      cancel: Cancelar
+      customer_name: "¿De quién es el adelanto?"
+      customer_name_hint: Solo el nombre, para reconocerlo. Puede ser una persona o una empresa.
+      placeholder: "Ej.: Hotel Almendros"
+      save: Guardar
+    jobs:
+      new:
+        save_and_another: Guardar y agregar otro
+        title: Agregar trabajo
+    new:
+      continue: Seguir
+      note: "Un adelanto es la plata que un cliente te da antes, para irla descontando de sus trabajos. No cuenta el día que te la da: va contando a medida que le haces los trabajos."
+      title: Nuevo adelanto
+    show:
+      add_job: Agregar trabajo
+      edit: Editar
+      jobs: Trabajos
+      no_jobs: Todavía no le has hecho trabajos.
+      no_top_ups: Todavía no te ha dado plata.
+      record_top_up: Registrar adelanto
+      since: Adelanto desde el %{day}
+      summary: Saldo del adelanto
+      top_ups: Adelantos
+    summary:
+      given: Te dio %{given} y le has hecho %{charged} en trabajos.
+    top_ups:
+      edit:
+        confirm_delete: "¿Borrar este adelanto? No se puede deshacer."
+        delete: Borrar
+        title: Editar adelanto
+      form:
+        cancel: Cancelar
+        left: Le quedan %{amount}.
+        left_without: Sin este adelanto, le quedan %{amount}.
+        note: "Esta plata no cuenta hoy: va contando a medida que le haces los trabajos."
+        owes: Te debe %{amount}.
+        owes_without: Sin este adelanto, te debe %{amount}.
+        save: Guardar
+      new:
+        title: Registrar adelanto
   date:
     formats:
       day: "%A %-d de %B"
@@ -192,6 +245,11 @@ es-CO:
       title: Días que trabajas
       works_html: En %{month} trabajas %{days}. Cada día debe cubrir
   jobs:
+    balance:
+      balance: Saldo del adelanto
+      debt_html: El cliente quedaría debiendo %{amount}.
+      left: Le quedarían
+      this_job: Este trabajo
     create:
       saved: "%{quantity} × %{service}, %{charged}"
     edit:
@@ -199,6 +257,8 @@ es-CO:
       delete: Borrar
       title: Editar trabajo
     form:
+      advance_price_hint: Cámbialo si acordaste otro precio.
+      advance_service: "¿Qué servicio le hiciste?"
       cancel: Cancelar
       charged: Cobras
       leaves: Te deja

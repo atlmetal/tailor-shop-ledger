@@ -1,0 +1,10 @@
+<h1 class="page-title"><%= t(".title") %></h1>
+
+<%= render layout: "form", locals: { advance: @advance } do |form| %>
+  <div class="flex gap-2.5">
+    <%= form.submit t("advances.form.save"), class: "btn-primary flex-1" %>
+    <%= link_to t("advances.form.cancel"), advance_path(@advance), class: "btn-secondary w-auto" %>
+  </div>
+<% end %>
+
+<%= delete_advance @advance %>

@@ -27,6 +27,7 @@ en:
   activerecord:
     attributes:
       advance:
+        base: Advance
         customer_name: Name
         jobs: jobs
       entry:
@@ -126,6 +127,58 @@ en:
                 other: is too short (minimum is %{count} characters)
             password_challenge:
               invalid: is incorrect
+  advances:
+    advance: Advance from %{customer}
+    balance:
+      left: Still has
+      owes: Owes you
+    delete:
+      confirm: "Delete this advance? It can't be undone."
+      delete: Delete advance
+      note: Delete it only if you created it by mistake. Its top-ups go with it.
+    edit:
+      title: Edit name
+    form:
+      cancel: Cancel
+      customer_name: Whose advance is it?
+      customer_name_hint: Just their name, to tell it apart. It can be a person or a company.
+      placeholder: "E.g.: Hotel Almendros"
+      save: Save
+    jobs:
+      new:
+        save_and_another: Save and add another
+        title: Add a job
+    new:
+      continue: Continue
+      note: "An advance is money a customer gives you up front, to take off their jobs as you do them. It doesn't count the day they give it to you: it counts as you do their jobs."
+      title: New advance
+    show:
+      add_job: Add a job
+      edit: Edit
+      jobs: Jobs
+      no_jobs: No jobs for them yet.
+      no_top_ups: They haven't given you any money yet.
+      record_top_up: Record a top-up
+      since: Advance since %{day}
+      summary: Advance balance
+      top_ups: Top-ups
+    summary:
+      given: Gave you %{given}, and you've done %{charged} in jobs for them.
+    top_ups:
+      edit:
+        confirm_delete: "Delete this top-up? It can't be undone."
+        delete: Delete
+        title: Edit top-up
+      form:
+        cancel: Cancel
+        left: They have %{amount} left.
+        left_without: Without this top-up, they have %{amount} left.
+        note: "This money doesn't count today: it counts as you do their jobs."
+        owes: Owes you %{amount}.
+        owes_without: Without this top-up, owes you %{amount}.
+        save: Save
+      new:
+        title: Record a top-up
   date:
     formats:
       day: "%A, %B %-d"
@@ -192,6 +245,11 @@ en:
       title: Days you work
       works_html: In %{month} you work %{days}. Each day must cover
   jobs:
+    balance:
+      balance: Advance balance
+      debt_html: The customer would owe %{amount}.
+      left: Would still have
+      this_job: This job
     create:
       saved: "%{quantity} × %{service}, %{charged}"
     edit:
@@ -199,6 +257,8 @@ en:
       delete: Delete
       title: Edit job
     form:
+      advance_price_hint: Change it if you agreed on another price.
+      advance_service: Which service did you do for them?
       cancel: Cancel
       charged: You charge
       leaves: Leaves you

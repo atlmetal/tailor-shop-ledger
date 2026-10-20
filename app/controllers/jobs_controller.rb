@@ -1,4 +1,5 @@
-# Jobs on their own, paid when they're done. An order's jobs go through Orders::JobsController.
+# Jobs on their own, paid when they're done. An order's jobs go through Orders::JobsController, and an advance's
+# through Advances::JobsController.
 class JobsController < ApplicationController
   include JobForm
 
@@ -38,7 +39,7 @@ class JobsController < ApplicationController
 
   private
     def set_job
-      @job = Job.where(order: nil).find(params[:id])
+      @job = Job.where(order: nil, advance: nil).find(params[:id])
     end
 
     def job_params

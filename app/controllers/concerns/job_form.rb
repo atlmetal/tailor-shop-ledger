@@ -1,5 +1,5 @@
-# What the job form needs, for jobs on their own and in an order: the services to choose from, and the notice
-# after "Guardar y registrar otro".
+# What the job form needs, for jobs on their own, in an order and in an advance: the services to choose from, and
+# the notice after "Guardar y registrar otro".
 module JobForm
   extend ActiveSupport::Concern
 

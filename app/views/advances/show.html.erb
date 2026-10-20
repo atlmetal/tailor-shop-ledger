@@ -1,0 +1,28 @@
+<h1 class="page-title break-words"><%= @advance.customer_name %></h1>
+<div class="mt-0.5 flex items-center justify-between gap-3">
+  <p class="text-graphite"><%= advance_since @advance %></p>
+  <%= link_to t(".edit"), edit_advance_path(@advance), class: "btn-link shrink-0 text-note" %>
+</div>
+
+<%= advance_summary @advance %>
+
+<div class="mt-5 flex flex-col gap-2.5">
+  <%= link_to new_advance_job_path(@advance), class: "btn-primary gap-2.5" do %>
+    <svg aria-hidden="true" class="size-5.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14" /><path d="M5 12h14" /></svg>
+    <%= t(".add_job") %>
+  <% end %>
+  <%= link_to t(".record_top_up"), new_advance_top_up_path(@advance), class: "btn-secondary" %>
+</div>
+
+<section class="mt-8" aria-labelledby="advance-jobs">
+  <div class="flex items-baseline justify-between gap-3">
+    <h2 id="advance-jobs" class="text-xl font-extrabold"><%= t(".jobs") %></h2>
+    <span class="text-meta text-graphite"><%= advance_units @advance %></span>
+  </div>
+  <%= advance_jobs @advance %>
+</section>
+
+<section class="mt-8" aria-labelledby="advance-top-ups">
+  <h2 id="advance-top-ups" class="text-xl font-extrabold"><%= t(".top_ups") %></h2>
+  <%= advance_top_ups @advance %>
+</section>

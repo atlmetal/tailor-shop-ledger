@@ -1,0 +1,5 @@
+<section class="panel mt-4 flex flex-col gap-0.5 p-5" aria-label="<%= t("advances.show.summary") %>">
+  <span class="font-bold"><%= balance_word balance %></span>
+  <span class="font-mono text-[2.75rem] leading-[1.05] font-bold tracking-[-0.02em]"><%= pesos(balance.abs) %></span>
+  <span class="text-note text-graphite"><%= t(".given", given: pesos(advance.given), charged: pesos(advance.charged)) %></span>
+</section>
