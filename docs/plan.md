@@ -17,6 +17,7 @@ Small tailoring shops in Colombia that do alterations, sewing and dressmaking. W
 - One person runs each shop, alone and usually at home, working on demand as customers bring work, most often Monday to Saturday.
 - Each shop offers its own services, depending on its machines and skills. Prices are mostly fixed, though they can vary with the garment or the work, and some services use no materials.
 - Most customers pay when the work is done. For some work they leave a deposit, which usually covers the materials, and pay the rest when it's done, now and then with a payment in between; one deposit can cover several garments. When the work can't be done, the deposit goes back. The shop tells those orders apart by the customer's name, the dates and the garments (gathered from the first shop on 2026-10-19).
+- Some customers, personal or corporate, give the shop a sum up front and bring work until it runs out, and then another. It has run out first a few times: the shop kept working and wrote down what the customer owed, which the next sum covered. If one stopped coming, the shop would give back what's left (gathered from the first shop on 2026-10-20).
 - Supplies are bought for each order, with no stock, and their prices change about once a year.
 - Today they write their work down in a notebook. Costs are the hardest part: they don't know how to keep accounts.
 - Most would use the app from an Android phone, since many have no computer, but some do.
@@ -49,22 +50,25 @@ Decided by the owner on 2026-10-16 and 2026-10-17.
 
 ## Domain model
 
-Everything a shop owns carries `shop_id`: `services`, `jobs`, `fixed_costs`, `fixed_cost_amounts`, `entries`, `orders` and `payments`. `users` belong to a shop but aren't scoped by the tenant, since signing in looks them up by email. Money is integer pesos. Dates are `date` columns; use `Date.current`, never `Date.today`.
+Everything a shop owns carries `shop_id`: `services`, `jobs`, `fixed_costs`, `fixed_cost_amounts`, `entries`, `orders`, `payments`, `advances` and `top_ups`. `users` belong to a shop but aren't scoped by the tenant, since signing in looks them up by email. Money is integer pesos. Dates are `date` columns; use `Date.current`, never `Date.today`.
 
 | Table | Columns | Constraints |
 |---|---|---|
 | `shops` | name, started_on, work_days (integer array of weekdays, 0 for Sunday; default Monday to Saturday) | at least one work day, each from 0 to 6 |
 | `users` | shop, name, email_address, password_digest | Rails auth generator; unique email |
 | `services` | name, price, material_cost, active (default true) | price and material cost 0 or more; unique name among the shop's active services, ignoring case |
-| `jobs` | service, order (optional), done_on, quantity, price, material_cost | quantity 1 or more; price and material cost 0 or more; done_on from the shop's started_on to today, and the order's received_on in an order |
+| `jobs` | service, order (optional), advance (optional), done_on, quantity, price, material_cost | quantity 1 or more; price and material cost 0 or more; done_on from the shop's started_on to today, and the order's received_on in an order; never in an order and an advance at once |
 | `fixed_costs` | name, averaged (default false) | |
 | `fixed_cost_amounts` | fixed_cost, starts_on, amount | starts_on is the first day of a month; unique (fixed cost, starts_on); amount 0 or more |
 | `entries` | kind (`expense`, `income`), occurred_on, concept, amount | amount above 0; occurred_on from the shop's started_on to today |
 | `orders` | customer_name, received_on | customer name present, up to 60 characters; received_on from the shop's started_on to today, and no later than its payments |
 | `payments` | order, paid_on, amount | amount above 0; paid_on from the order's received_on to today; an order's payments add up to its total at most |
+| `advances` | customer_name | customer name present, up to 60 characters; unique among the shop's advances, ignoring case |
+| `top_ups` | advance, paid_on, amount | amount above 0; paid_on from the shop's started_on to today |
 
 - A job's `price` and `material_cost` are per unit, copied from its service when it's recorded, so changing a service never changes recorded jobs. A job charges quantity × price, uses quantity × material cost in materials, and leaves the difference.
 - An order's total is what its jobs charge, and what the customer owes is that total minus its payments.
+- An advance's balance is what its top-ups add up to minus what its jobs charge; below 0, the customer owes the difference.
 - `Job` is a piece of work for a customer. Background jobs keep the `Job` suffix in `app/jobs`, like `BackupJob`.
 - `started_on` is the day the shop starts keeping its accounts here. The operator sets it when creating the shop; nothing before it counts.
 
@@ -80,8 +84,8 @@ Everything a shop owns carries `shop_id`: `services`, `jobs`, `fixed_costs`, `fi
 ### Jobs
 
 - One record per service done: its date, service, quantity, and the price and material cost of each unit. Several garments under the same service make one record with a quantity; different services make one record each.
-- A job on its own is recorded the day the customer pays, which is when the work is done. Work the customer pays for later, usually in parts, goes in an order instead (see Orders).
-- The date defaults to today and can be any day from the shop's `started_on` to today, so days written on paper can be entered later. A job in an order takes the order's day.
+- A job on its own is recorded the day the customer pays, which is when the work is done. Work the customer pays for later, usually in parts, goes in an order instead (see Orders), and work for a customer who paid in advance goes in their advance (see Advances).
+- The date defaults to today and can be any day from the shop's `started_on` to today, so days written on paper can be entered later. A job in an order takes the order's day; one in an advance keeps its own, the day it's done.
 - Choosing a service fills in its price and material cost, and both can be changed in each record: a quoted price, or 0 in materials when the customer brought them.
 - Supply purchases are never recorded as expenses: they are already in each job's material cost. Counting them twice is the first accounting trap. The one exception is a cancelled order's (see Orders).
 - Jobs can be edited and deleted. The service list in the form shows the active services, plus the job's own when editing.
@@ -99,6 +103,19 @@ Decided by the owner on 2026-10-19, for the first shop.
 - An order is pending while it has no jobs yet or its payments don't cover them. A finished order nobody picks up stays pending: its deposit and materials already counted, and the rest never came.
 - Cancelling an order deletes it with its jobs and payments, since the deposit goes back to the customer: it leaves the accounts as if it never existed. The page says to delete it only when the deposit went back, and that materials already bought for it that can't be used go in as an expense: the only materials that do, since no job carries them.
 - The order, its jobs and its payments are edited and deleted from the order's page.
+
+### Advances
+
+Decided by the owner on 2026-10-20, for the first shop.
+
+- A customer who pays a sum up front and brings work until it runs out, and then another sum, has an advance, which holds the customer's name, the jobs done for them and the top-ups: each sum the customer gives, with its date. The name is all it keeps, as on an order (see Privacy), and each customer has one: no two of the shop's advances share a name, ignoring case.
+- Top-ups never count: what the customer gives is still theirs, for work not done yet. Each job in an advance counts as a job on its own does: its price, materials and units the day it's done, also in the services that left the most. The owner chose this over counting each top-up the day it arrives, as an order's payments do: an advance pays for no work yet and can last months, so counting it on arrival would show that day and month an inflated profit, and every job after it only its materials.
+- The balance is what the top-ups add up to minus what the jobs charge. It can drop below 0: when it runs out, the shop keeps working, and the customer owes the difference until the next top-up covers it. Those jobs count their price before it comes in, unlike an order's: the owner accepted that, since it seldom happens and the customer keeps topping up.
+- An advance's jobs are recorded from its page with the job form and its rules, date included. While the user types, the form shows the balance the job leaves or, past it, warns how much the customer will owe. Editing, the balance leaves out the job being edited. There's no threshold for a balance running low: what's left is always in view.
+- A top-up's date defaults to today and goes from the shop's `started_on` to today, and its form says it counts only as the jobs are done.
+- A customer who stops coming gets back what's left, which hasn't happened yet: the shop then lowers the top-ups by what it gave back, which changes no result. A record of what goes back waits until it happens.
+- An advance is deleted only while it has no jobs, and its top-ups go with it, since they never counted.
+- The advance, its jobs and its top-ups are edited and deleted from the advance's page.
 
 ### Fixed costs
 
@@ -128,16 +145,17 @@ Decided by the owner on 2026-10-19, for the first shop.
 ### Results
 
 - Result = charged for jobs − materials + other income − other expenses − the fixed costs of the period. From 0 up it's a profit ("Ganancia"); below 0, a loss ("Pérdida").
-- Charged for jobs is what the jobs on their own charged, plus the payments that came in for orders.
+- Charged for jobs is what the jobs on their own and in advances charged, plus the payments that came in for orders. Top-ups never count.
 - The jobs of a period count their units: a record with quantity 2 counts 2.
 
 ### Today
 
 - The day's goal is today's share of the fixed costs, when today is a work day. What the shop has made towards it ("Llevas") is today's charged amount minus today's materials. The bar fills with it, up to the goal, and the note under it says how much is left, or that the day's fixed costs are covered and by how much more.
 - On a day the shop doesn't work there's no goal: the panel says so and shows what the shop made.
-- The day's records include the payments that came in, and an order's jobs under its customer's name.
+- The day's records include the payments that came in, an order's jobs under its customer's name, and an advance's jobs under theirs; never top-ups, which don't count.
 - "Te deben": the pending orders, the oldest first, each with its customer, its day and what's owed, opening its order; and the total owed.
-- After saving or deleting a job or an entry, the app goes to Today when its date is today, and to that day's report otherwise. Saving or deleting anything inside an order goes back to the order's page, and deleting the order goes to Today.
+- "Adelantos", under "Te deben": each advance with its customer and what's left, or what the customer owes, opening its page; and a button for a new one. An advance that owes shows it there, not in "Te deben", which stays the orders'.
+- After saving or deleting a job or an entry, the app goes to Today when its date is today, and to that day's report otherwise. Saving or deleting anything inside an order or an advance goes back to its page, and deleting the order or the advance goes to Today.
 
 ### Reports
 
@@ -149,7 +167,7 @@ Decided by the owner on 2026-10-19, for the first shop.
 
 ### Privacy
 
-- The only customer data the app stores is the customer's name on an order, which the shop needs to tell its orders apart: no phone, address or ID. The name stays out of the logs, and Sentry's defaults already leave request bodies out (decided on 2026-10-19).
+- The only customer data the app stores is the customer's name on an order or an advance, which the shop needs to tell them apart: no phone, address or ID. The name stays out of the logs, and Sentry's defaults already leave request bodies out (decided on 2026-10-19).
 - Before a second shop joins, a privacy notice and written terms of use (see Before a second shop).
 
 ## Screens
@@ -324,9 +342,23 @@ Done when model specs cover a payment over the order's total, a payment before i
 
 Done when the first shop has its services, fixed costs and work days, and records its days in the app.
 
+### The first shop's requests
+
+#### M10. Advances (8 h)
+
+A customer of the first shop pays a sum up front and brings work until it runs out (gathered on 2026-10-20).
+
+- [ ] `advances` and `top_ups`, and jobs in an advance, with their validations.
+- [ ] The advance's page: create and edit an advance, and delete one without jobs; add, edit and delete its jobs through the job form, with the balance each one leaves and the warning past it; record, edit and delete its top-ups.
+- [ ] On Hoy, "Adelantos"; and an advance's jobs in the day's records, on Hoy and in a day's report.
+- [ ] Demo seeds: La Puntada gets an advance with top-ups and jobs across several months, running past its balance once before the next top-up.
+- [ ] README: the rules for advances, and the screenshots they change.
+
+Done when model specs cover a job in an order and an advance at once, two advances for one customer, a balance below 0 and a top-up's dates; query specs show an advance's jobs counting as jobs on their own do and its top-ups never counting; request specs cover isolation; a system spec takes an advance with a top-up and two jobs, the second past the balance with its warning, then a top-up, checking Today after each; and the owner approves the new pages in screenshots at phone and desktop width.
+
 ### Before a second shop
 
-- [ ] A privacy notice under Colombian Law 1581, linked from the sign-in page, and written terms of use, including the customers' names a shop keeps on its orders and what happens to a shop's data when it leaves.
+- [ ] A privacy notice under Colombian Law 1581, linked from the sign-in page, and written terms of use, including the customers' names a shop keeps on its orders and advances, and what happens to a shop's data when it leaves.
 - [ ] Export a shop's records, so it can take them when it leaves, and a rake task that deletes a shop with everything it owns, listing it first.
 
 ### Only when shops ask for it

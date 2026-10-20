@@ -23,13 +23,13 @@ It is the owner's public portfolio project, licensed AGPL-3.0, and real shops us
 
 ## Scope
 
-v0.1, what one shop needs to know whether its work pays, deployed and backed up, was tagged `v0.1.0` on 2026-10-19, and the first shop started using it that day. What comes next, and in what order, is in `docs/plan.md`: before a second shop joins, a privacy notice, terms of use, and a way for a shop to take its records and leave.
+v0.1, what one shop needs to know whether its work pays, deployed and backed up, was tagged `v0.1.0` on 2026-10-19, and the first shop started using it that day. What comes next, and in what order, is in `docs/plan.md`: advances, which the first shop asked for on 2026-10-20, and before a second shop joins, a privacy notice, terms of use, and a way for a shop to take its records and leave.
 
-Out, until shops ask for it: due dates and work status on orders, customer data beyond the name on an order, receipts, invoicing, inventory, supplies per recipe, payment methods, Excel export, charts, offline mode, several users per shop.
+Out, until shops ask for it: due dates and work status on orders, customer data beyond the name on an order or an advance, receipts, invoicing, inventory, supplies per recipe, payment methods, Excel export, charts, offline mode, several users per shop.
 
 ## The accounting rules are the product
 
-Costs are what these shops struggle with, so the rules under Business rules in `docs/plan.md` are what makes the app useful. Materials count once, inside each job: supply purchases are never recorded as expenses, except a cancelled order's that can't be used. An order's payments count the day each one arrives, and its materials the day the customer leaves the work. Fixed costs spread over the days the shop works, so the day the rent is paid doesn't show a loss and every other day an inflated profit. When the shop is in the home, the help texts warn that charging the whole home's bills to the shop, or counting income that isn't the shop's, distorts its result. Don't change these rules without the owner.
+Costs are what these shops struggle with, so the rules under Business rules in `docs/plan.md` are what makes the app useful. Materials count once, inside each job: supply purchases are never recorded as expenses, except a cancelled order's that can't be used. An order's payments count the day each one arrives, and its materials the day the customer leaves the work. What a customer pays in advance never counts: each job drawn on it counts the day it's done, like a job on its own, even past the balance. Fixed costs spread over the days the shop works, so the day the rent is paid doesn't show a loss and every other day an inflated profit. When the shop is in the home, the help texts warn that charging the whole home's bills to the shop, or counting income that isn't the shop's, distorts its result. Don't change these rules without the owner.
 
 ## Stack
 
