@@ -5,6 +5,6 @@
 # See the ActiveSupport::ParameterFilter documentation for supported notations and behaviors.
 Rails.application.config.filter_parameters += [
   :passw, :email, :secret, :token, :_key, :crypt, :salt, :certificate, :otp, :ssn, :cvv, :cvc,
-  # The name on an order is the only customer data the app keeps, and it stays out of the logs.
+  # The name on an order or an advance is the only customer data the app keeps, and it stays out of the logs.
   :customer
 ]

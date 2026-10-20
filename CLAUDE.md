@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-Tailor Shop Ledger: a Ruby on Rails app that shows small tailoring and alteration shops whether their work pays. A shop records the services it offers, with their price and material cost; the jobs it charges for, and the orders customers pay for in parts; its fixed costs, occasional expenses and other income. The app turns that into a goal for the day and results by day, week, month, semester and year. Several shops share one installation, each with one user who usually works alone, from a phone, and has never kept accounts.
+Tailor Shop Ledger: a Ruby on Rails app that shows small tailoring and alteration shops whether their work pays. A shop records the services it offers, with their price and material cost; the jobs it charges for, the orders customers pay for in parts, and the advances some customers pay up front; its fixed costs, occasional expenses and other income. The app turns that into a goal for the day and results by day, week, month, semester and year. Several shops share one installation, each with one user who usually works alone, from a phone, and has never kept accounts.
 
 It is the owner's public portfolio project, licensed AGPL-3.0, and real shops use it at `taller.yunquelabs.com`. Code quality and a clear README matter as much as features. Built by a single developer in limited time: keep it small, finished and well tested rather than broad and half-built.
 
