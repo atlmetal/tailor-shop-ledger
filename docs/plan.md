@@ -364,7 +364,7 @@ A customer of the first shop pays a sum up front and brings work until it runs o
 - [x] The advance's page: create and edit an advance, and delete one without jobs; add, edit and delete its jobs through the job form, with the balance each one leaves and the warning past it; record, edit and delete its top-ups.
 - [x] On Hoy, "Adelantos"; and an advance's jobs in the day's records, on Hoy and in a day's report.
 - [x] Demo seeds: La Puntada gets an advance with top-ups and jobs across several months, running past its balance once before the next top-up.
-- [ ] README: the rules for advances, and the screenshots they change.
+- [x] README: the rules for advances, and the screenshots they change.
 
 Done when model specs cover a job in an order and an advance at once, two advances for one customer, a balance below 0 and a top-up's dates; query specs show an advance's jobs counting as jobs on their own do and its top-ups never counting; request specs cover isolation; a system spec takes an advance with a top-up and two jobs, the second past the balance with its warning, then a top-up, checking Today after each; and the owner approves the new pages in screenshots at phone and desktop width.
 
