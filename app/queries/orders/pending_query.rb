@@ -12,11 +12,5 @@ module Orders
       Order.where(paid.lt(total).or(no_jobs)).select(Order[Arel.star], (total - paid).as("owed")).order(:received_on, :id)
         .map { Row.new(order: it, owed: it[:owed]) }
     end
-
-    private
-      # What a correlated subquery sums for each order, 0 when it has nothing to sum.
-      def coalesce(relation)
-        Arel::Nodes::NamedFunction.new("COALESCE", [ relation.arel, Arel::Nodes.build_quoted(0) ])
-      end
   end
 end

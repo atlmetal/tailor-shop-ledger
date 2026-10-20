@@ -438,6 +438,9 @@ en:
       services: Services
       title: Shop
   today:
+    advances:
+      new: New advance
+      title: Advances
     day_off:
       made: So far
       no_goal: Today isn't one of your work days, so there's no goal.
@@ -453,6 +456,8 @@ en:
     job:
       job: "%{quantity} × %{service}"
       materials: Materials %{amount}
+    no_advances:
+      note: For customers who pay you up front and bring you work as they go.
     order:
       detail: "%{units} · Materials %{materials}"
     owed:

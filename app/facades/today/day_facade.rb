@@ -1,6 +1,6 @@
 module Today
   # The Today page: the day's goal, which is its share of the fixed costs on a work day, what the shop has made
-  # towards it, the day's records, the orders still owed for, and the month so far.
+  # towards it, the day's records, the orders still owed for, the advances, and the month so far.
   class DayFacade
     attr_reader :date
 
@@ -38,9 +38,9 @@ module Today
       goal.zero? ? 0 : (made.to_r / goal).clamp(0, 1)
     end
 
-    # The day's jobs on their own; an order's show under the order.
+    # The day's jobs on their own and in advances; an order's show under the order.
     def jobs
-      Job.includes(:service).where(done_on: date, order: nil).order(:id)
+      Job.includes(:service, :advance).where(done_on: date, order: nil).order(:id)
     end
 
     # The orders left that day, with their jobs.
@@ -61,6 +61,11 @@ module Today
     # What they come to.
     def owed
       pending_orders.sum(&:owed)
+    end
+
+    # The advances, each with what's left or what the customer owes.
+    def advances
+      @advances ||= Advances::BalancesQuery.call
     end
 
     def month

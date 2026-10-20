@@ -1,6 +1,7 @@
 <%= link_to edit_job_path_for(job), class: "flex min-h-17 items-center justify-between gap-3 py-3 pr-3 pl-4 hover:bg-paper" do %>
   <span class="flex min-w-0 flex-col gap-0.5">
     <span class="font-bold"><%= t(".job", quantity: job.quantity, service: job.service.name) %></span>
+    <%= job_advance job %>
     <span class="text-meta text-graphite"><%= t(".materials", amount: pesos(job.materials)) %></span>
   </span>
   <span class="flex shrink-0 items-center gap-1.5">

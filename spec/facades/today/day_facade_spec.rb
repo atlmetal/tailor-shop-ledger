@@ -29,6 +29,14 @@ RSpec.describe Today::DayFacade do
     it("adds up what each order owes") { expect(day.owed).to eq(55_000) }
   end
 
+  describe "the advances" do
+    let(:rows) { [ Advances::BalancesQuery::Row.new(advance: instance_double(Advance), balance: 109_000) ] }
+
+    before { allow(Advances::BalancesQuery).to receive(:call).and_return(rows) }
+
+    it { expect(day.advances).to eq(rows) }
+  end
+
   context "when what the shop made covers the day's fixed costs" do
     let(:charged) { 60_000 }
 

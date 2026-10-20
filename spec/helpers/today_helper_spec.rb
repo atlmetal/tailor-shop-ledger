@@ -57,6 +57,15 @@ RSpec.describe TodayHelper, type: :helper do
     it("opens each order left") { is_expected.to have_link("Order for Marta Rodríguez 2 jobs · Materials $5,600", href: "/orders/3", normalize_ws: true) }
     it("opens each payment's form") { is_expected.to have_link("Payment from Marta Rodríguez Order of October 15 $10,000", href: "/orders/3/payments/5/edit", normalize_ws: true) }
 
+    context "with a job in an advance" do
+      let(:advance) { instance_double(Advance, customer_name: "Hotel Almendros", to_param: "4") }
+      let(:jobs) { [ instance_double(Job, quantity: 1, service: instance_double(Service, name: "Cambio de cremallera"), materials: 2_800, charged: 15_000, order: nil, advance:, to_param: "8") ] }
+
+      it("names the advance and opens the job under it") do
+        is_expected.to have_link("1 × Cambio de cremallera Advance from Hotel Almendros Materials $2,800 $15,000", href: "/advances/4/jobs/8/edit", normalize_ws: true)
+      end
+    end
+
     context "with nothing recorded yet" do
       let(:jobs) { [] }
       let(:orders) { [] }
@@ -83,6 +92,27 @@ RSpec.describe TodayHelper, type: :helper do
       let(:rows) { [] }
 
       it { is_expected.to be_nil }
+    end
+  end
+
+  describe "#day_advances" do
+    subject(:section) { helper.day_advances(day) }
+
+    let(:day) { instance_double(Today::DayFacade, advances: rows) }
+    let(:rows) do
+      [ Advances::BalancesQuery::Row.new(advance: instance_double(Advance, customer_name: "Hotel Almendros", to_param: "4"), balance: 109_000),
+        Advances::BalancesQuery::Row.new(advance: instance_double(Advance, customer_name: "Lucía Restrepo", to_param: "6"), balance: -4_000) ]
+    end
+
+    it { is_expected.to have_link("New advance", href: "/advances/new") }
+    it { is_expected.to have_link("Hotel Almendros Still has $109,000", href: "/advances/4", normalize_ws: true) }
+    it("says what the customer owes, without a sign") { is_expected.to have_link("Lucía Restrepo Owes you $4,000", href: "/advances/6", normalize_ws: true) }
+
+    context "without advances yet" do
+      let(:rows) { [] }
+
+      it { is_expected.to have_text("For customers who pay you up front and bring you work as they go.") }
+      it { is_expected.to have_link("New advance", href: "/advances/new") }
     end
   end
 

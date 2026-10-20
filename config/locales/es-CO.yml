@@ -438,6 +438,9 @@ es-CO:
       services: Servicios
       title: Taller
   today:
+    advances:
+      new: Nuevo adelanto
+      title: Adelantos
     day_off:
       made: Llevas
       no_goal: Hoy no es uno de tus días de trabajo, así que no hay meta.
@@ -453,6 +456,8 @@ es-CO:
     job:
       job: "%{quantity} × %{service}"
       materials: Materiales %{amount}
+    no_advances:
+      note: Para los clientes que te dan plata antes y te van llevando trabajos.
     order:
       detail: "%{units} · Materiales %{materials}"
     owed:

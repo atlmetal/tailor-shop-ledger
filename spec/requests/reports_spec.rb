@@ -105,6 +105,19 @@ RSpec.describe "Reports", type: :request do
     it("opens the payment's form") { expect(response.parsed_body.at("[aria-labelledby='day-records'] a")["href"]).to eq(edit_order_payment_path(order, Payment.sole)) }
   end
 
+  describe "GET /reports/day/:date with an advance's job" do
+    let(:advance) { create(:advance, shop:, customer_name: "Hotel Almendros").tap { create(:top_up, advance: it, paid_on: Date.new(2026, 10, 1), amount: 100_000) } }
+
+    before do
+      create(:job, advance:, service: create(:service, shop:, name: "Cambio de cremallera", price: 15_000, material_cost: 2_800), done_on: Date.new(2026, 10, 14))
+      get report_path("day", "2026-10-14")
+    end
+
+    it("counts its price, as a job on its own's") { expect(page_text).to include("Charged for jobs $15,000 Materials −$2,800") }
+    it { expect(page_text).to include("What you recorded 1 × Cambio de cremallera Advance from Hotel Almendros Materials $2,800 $15,000") }
+    it("opens its form under the advance") { expect(response.parsed_body.at("[aria-labelledby='day-records'] a")["href"]).to eq(edit_advance_job_path(advance, advance.jobs.sole)) }
+  end
+
   describe "GET a period before the shop started" do
     before { get report_path("month", "2026-07-01") }
 

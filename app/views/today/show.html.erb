@@ -24,6 +24,8 @@
 
 <%= owed_orders @day %>
 
+<%= day_advances @day %>
+
 <section class="panel mt-5 flex flex-col gap-2 px-5 pt-4 pb-5" aria-labelledby="month">
   <div class="flex items-center justify-between gap-3">
     <h2 id="month" class="text-xl font-extrabold"><%= t(".month", month: month_name(@day.date).upcase_first) %></h2>

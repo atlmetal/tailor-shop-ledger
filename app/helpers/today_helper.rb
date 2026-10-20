@@ -56,6 +56,11 @@ module TodayHelper
     render("today/owed", rows: day.pending_orders, total: day.owed) if day.pending_orders.any?
   end
 
+  # The advances, each opening its page; with none yet, what they're for and the way to the first.
+  def day_advances(day)
+    render(day.advances.any? ? "today/advances" : "today/no_advances", rows: day.advances)
+  end
+
   # What an order still owes. Only an order without jobs yet owes nothing and is still pending, so it says so.
   def owed_amount(row)
     return tag.span(t("today.owed.no_jobs"), class: "text-meta text-graphite") if row.owed.zero?

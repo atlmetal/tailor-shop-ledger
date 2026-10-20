@@ -20,6 +20,11 @@ RSpec.describe JobsHelper, type: :helper do
     it("opens a job in an advance under it") { expect(helper.edit_job_path_for(instance_double(Job, order: nil, advance: instance_double(Advance, to_param: "4"), to_param: "7"))).to eq("/advances/4/jobs/7/edit") }
   end
 
+  describe "#job_advance" do
+    it { expect(helper.job_advance(instance_double(Job, advance: instance_double(Advance, customer_name: "Hotel Almendros")))).to have_text("Advance from Hotel Almendros") }
+    it { expect(helper.job_advance(instance_double(Job, advance: nil))).to be_nil }
+  end
+
   describe "#job_form_text" do
     it { expect(helper.job_form_text(instance_double(Job, order: nil, advance: nil), :service)).to eq("Which service did you do?") }
     it("speaks of work still to do in an order") { expect(helper.job_form_text(instance_double(Job, order: instance_double(Order)), :price_hint)).to eq("Change it if you agreed on another price.") }

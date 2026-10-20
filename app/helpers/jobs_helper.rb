@@ -12,6 +12,11 @@ module JobsHelper
     end
   end
 
+  # "Adelanto de Hotel Almendros", under a job in an advance among the day's records.
+  def job_advance(job)
+    tag.span(t("advances.advance", customer: job.advance.customer_name), class: "text-meta text-graphite") if job.advance
+  end
+
   # A job in an order or an advance is saved under it.
   def job_form_model(job)
     parent = job.order || job.advance
