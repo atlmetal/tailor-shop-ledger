@@ -4,7 +4,7 @@ A Ruby on Rails app that shows small tailoring and alteration shops whether thei
 
 <p align="center">
   <img src="docs/screenshots/today.png" width="24%" alt="Today: the day's goal on a strip of tape measure, $32,400 made of the $44,074 the fixed costs need today, and what's left to go">
-  <img src="docs/screenshots/record.png" width="24%" alt="Record: a job, an order, an expense or other income; here a job's date and its service, picked from the shop's list with its price">
+  <img src="docs/screenshots/record.png" width="24%" alt="Record: an order, a job, an expense or other income; here a job, with the note that it counts as paid, its date and its service, picked from the shop's list with its price">
   <img src="docs/screenshots/reports.png" width="24%" alt="Reports: October so far, a profit of $827,441, and how it's calculated line by line">
   <img src="docs/screenshots/shop.png" width="24%" alt="Shop: each service with its price, its materials and what it leaves">
 </p>
@@ -27,7 +27,7 @@ The rules are the product. Three of them keep a shop from fooling itself:
 
 A period's result is what its jobs charged, less their materials, plus other income, less other expenses and the fixed costs of its work days: a profit from 0 up, a loss below.
 
-Work a customer pays for later goes in an order: usually a deposit when they leave it, which covers its materials, and the rest when it's done. Each payment counts the day it comes in, and the order's materials and jobs the day it was left, so a day's figures follow the money that actually came in. Today also lists what customers still owe. An order that's cancelled is deleted, since the deposit goes back.
+Work a customer pays for later goes in an order: usually a deposit when they leave it, which covers its materials, and the rest when it's done. Each payment counts the day it comes in, and the order's materials and jobs the day it was left, so a day's figures follow the money that actually came in. Recording work opens an order, since shops write work down when it comes in, before it's paid; a job paid on the spot is one tap away, and its form says it counts as paid. Today also lists what customers still owe. An order that's cancelled is deleted, since the deposit goes back.
 
 Some customers, a person or a company, pay a sum up front and bring work until it runs out. That sum never counts, since it's still theirs for work not done yet: each job drawn on it counts the day it's done, like a job on its own, even past the balance, when the customer owes the difference until the next sum covers it. While a job is recorded, the form shows what the balance would be left with, or how much the customer would owe. Today lists each advance with what's left or what's owed.
 
