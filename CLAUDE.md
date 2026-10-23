@@ -103,4 +103,4 @@ Most users run the app from an Android phone and some from a computer, so every 
 - Test: `bin/rails spec` builds the Tailwind CSS and then runs RSpec; system specs (headless Chrome) need a fresh build to see the layout. `bundle exec rspec` is enough while `bin/dev` keeps the CSS built, and `bundle exec rspec spec/types/pesos_type_spec.rb:9` runs one example.
 - Lint and security: `bin/rubocop`, `bin/brakeman`, `bin/bundler-audit`, `bin/importmap audit`.
 - Everything CI runs, locally: `bin/ci`.
-- Deploy: `bin/kamal deploy`, from a clean commit, since Kamal builds from a clone of it. Setting up, shops in production, backups, restoring and monitoring are in `docs/deploy.md`.
+- Deploy: `bin/kamal deploy`, from a clean commit, since Kamal builds from a clone of it. It runs from the Claude Code session when the owner asks for it, with its whole output kept, so a slow or failed deploy can be explained. Setting up, shops in production, backups, restoring and monitoring are in `docs/deploy.md`.
