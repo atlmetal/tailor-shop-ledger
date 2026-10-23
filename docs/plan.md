@@ -19,7 +19,7 @@ Small tailoring shops in Colombia that do alterations, sewing and dressmaking. W
 - Most customers pay when the work is done. For some work they leave a deposit, which usually covers the materials, and pay the rest when it's done, now and then with a payment in between; one deposit can cover several garments. When the work can't be done, the deposit goes back. The shop tells those orders apart by the customer's name, the dates and the garments (gathered from the first shop on 2026-10-19).
 - Some customers, personal or corporate, give the shop a sum up front and bring work until it runs out, and then another. It has run out first a few times: the shop kept working and wrote down what the customer owed, which the next sum covered. If one stopped coming, the shop would give back what's left (gathered from the first shop on 2026-10-20).
 - Supplies are bought for each order, with no stock, and their prices change about once a year.
-- Today they write their work down in a notebook. Costs are the hardest part: they don't know how to keep accounts.
+- Today they write their work down in a notebook, each piece the day it comes in, not the day it's paid: the first shop recorded a day's work as jobs, which count as paid, when nobody had paid yet (gathered on 2026-10-23). Costs are the hardest part: they don't know how to keep accounts.
 - Most would use the app from an Android phone, since many have no computer, but some do.
 - Some have income that isn't from the shop, like rent from a room.
 
@@ -84,7 +84,7 @@ Everything a shop owns carries `shop_id`: `services`, `jobs`, `fixed_costs`, `fi
 ### Jobs
 
 - One record per service done: its date, service, quantity, and the price and material cost of each unit. Several garments under the same service make one record with a quantity; different services make one record each.
-- A job on its own is recorded the day the customer pays, which is when the work is done. Work the customer pays for later, usually in parts, goes in an order instead (see Orders), and work for a customer who paid in advance goes in their advance (see Advances).
+- A job on its own is recorded the day the customer pays, which is when the work is done. Work the customer pays for later, usually in parts, goes in an order instead (see Orders), and work for a customer who paid in advance goes in their advance (see Advances). Since shops write work down when it comes in, recording work opens an order by default, from Hoy and from the Registrar tab, with the job on its own one tap away in the switch; its form says that a job counts as paid, and that work left to be paid for later is an order (decided on 2026-10-23, after the first shop recorded work it hadn't been paid for as jobs).
 - The date defaults to today and can be any day from the shop's `started_on` to today, so days written on paper can be entered later. A job in an order takes the order's day; one in an advance keeps its own, the day it's done.
 - Choosing a service fills in its price and material cost, and both can be changed in each record: a quoted price, or 0 in materials when the customer brought them.
 - Supply purchases are never recorded as expenses: they are already in each job's material cost. Counting them twice is the first accounting trap. The one exception is a cancelled order's (see Orders).
@@ -184,16 +184,16 @@ The approved design is five phone screens at 390px, in Spanish, with sample data
 
 - Title "Hoy" and the date: "Martes 20 de octubre".
 - The panel "Meta de hoy": "Llevas", the amount in large mono type ($32.400), "de $44.074 que necesitas hoy para cubrir los gastos fijos."; the tape bar, with "$0" and "Meta $44.074" under it; and a note with a clock icon: "**Te faltan $11.674.** Cobraste $38.000 y los materiales costaron $5.600."
-- "Registrar trabajo", the primary button, and "Registrar gasto u otro ingreso", outlined.
+- "Registrar pedido", the primary button, which opens a new order, and "Registrar gasto u otro ingreso", outlined. The approved screen's "Registrar trabajo" opened the job form, where the first shop recorded work it hadn't been paid for (changed on 2026-10-23, see Jobs).
 - "Lo que registraste hoy", with the units on the right ("4 trabajos"): one row per job, "2 × Basta de pantalón", "Materiales $1.000" and "$16.000" with a chevron, opening the job.
 - The panel "Octubre, hasta hoy", with the link "Ver reportes": the result's icon and word ("Ganancia"), the amount ($384.341) and "Ya descontados los materiales, los otros gastos y la parte de los fijos de 17 días de trabajo."
 
 ### Registrar (Record)
 
 - Above the title, the top row every page has: the shop's name and the account button. The approved screen's "‹ Hoy" link repeated the Hoy tab, and pointed the wrong way when Registrar was opened from another tab or from a day's report (decided after the approved screens).
-- A three-way switch: Trabajo, Gasto, Otro ingreso. Each opens its own form, so the switch needs no JavaScript. Orders added "Pedido" after Trabajo (see Pedidos).
+- A three-way switch: Trabajo, Gasto, Otro ingreso. Each opens its own form, so the switch needs no JavaScript. Orders added "Pedido" after Trabajo (see Pedidos); since 2026-10-23 it goes first, and it's what the Registrar tab opens (see Jobs).
 - "Fecha", a date input, today by default.
-- A job: "¿Qué servicio hiciste?", the services as radio rows with name and price, the chosen one tinted yellow; "Cantidad", with − and + buttons around the number, 1 at least; "Precio de cada uno", with "Cámbialo si cobraste otro precio."; "Materiales de cada uno", with "Pon 0 si el cliente trajo los materiales."; a summary with "Cobras", "Materiales" and "Te deja", updated while typing; "Guardar"; and "Guardar y registrar otro", which keeps the date and the service, sets the quantity back to 1 and confirms "**Guardado:** 2 × Basta de pantalón, $16.000. Sigue con el próximo."
+- A job: under the switch, the note "Un trabajo es lo que ya te pagaron, y cuenta como cobrado ese día. Si te lo dejaron para pagarte después, regístralo como pedido." (added on 2026-10-23); "¿Qué servicio hiciste?", the services as radio rows with name and price, the chosen one tinted yellow; "Cantidad", with − and + buttons around the number, 1 at least; "Precio de cada uno", with "Cámbialo si cobraste otro precio."; "Materiales de cada uno", with "Pon 0 si el cliente trajo los materiales."; a summary with "Cobras", "Materiales" and "Te deja", updated while typing; "Guardar"; and "Guardar y registrar otro", which keeps the date and the service, sets the quantity back to 1 and confirms "**Guardado:** 2 × Basta de pantalón, $16.000. Sigue con el próximo."
 - One Stimulus controller fills in the price and materials of the chosen service, runs the − and + buttons and keeps the summary up to date. Apart from the one that formats money fields, no other JavaScript.
 - An expense: "¿En qué gastaste?", with the placeholder "Ej.: repuesto de la máquina"; "Valor"; the note "Las compras de telas, hilos y cremalleras no van aquí: ya están en los materiales de cada servicio."; "Guardar"; and "Últimos gastos", the last ten, with concept, date and amount.
 - Other income: "¿De dónde salió?", with the placeholder "Ej.: venta de retazos"; "Valor"; the note about income that isn't the shop's (decided after the approved screens); "Guardar"; and "Últimos otros ingresos".
@@ -219,7 +219,7 @@ The approved design is five phone screens at 390px, in Spanish, with sample data
 
 Not in the approved screens: built in M9 with their tokens and patterns, and approved by the owner in screenshots on 2026-10-19.
 
-- Registrar's switch has four options, Trabajo, Pedido, Gasto and Otro ingreso, each as wide as its word, so "Otro ingreso" fits at 360px.
+- Registrar's switch has four options, Pedido, Trabajo, Gasto and Otro ingreso (Pedido first since 2026-10-23, see Jobs), each as wide as its word, so "Otro ingreso" fits at 360px.
 - A new order: "¿De quién es el pedido?", with the placeholder "Ej.: Marta Rodríguez" and "Solo el nombre, para reconocerlo."; "¿Cuándo te lo dejó?", today by default; the note "Un pedido es lo que te dejan para pagarte después, casi siempre con un abono. Cada pago cuenta el día que te lo dan."; and "Seguir", which goes on to its first job.
 - The order's page: the customer's name as its title, and "Lo dejó el jueves 15 de octubre" with "Editar". Once it has jobs, a panel with "Te debe", the amount in large mono type and "Ya te pagó $20.000 de $39.000."; or, paid off, "Pagado" with a check icon, the total and "Te pagó todo el pedido.". "Registrar pago", the primary button, while something is owed. "Trabajos", with the units on the right and its jobs as in Hoy, and "Agregar trabajo": the primary button while it has none, under "Agrega lo que te dejó: un trabajo por cada servicio.", and outlined after. "Pagos", each with its day and amount, or "Todavía no te ha pagado nada."
 - An order's job: "Agregar trabajo" or "Editar trabajo", with "Pedido de Marta Rodríguez" under it, back to the order; the job form without its date, asking "¿Qué servicio te pidieron?", with "Cámbialo si acordaste otro precio."; "Guardar" and "Guardar y agregar otro", or, editing, "Guardar", "Cancelar" and "Borrar".
