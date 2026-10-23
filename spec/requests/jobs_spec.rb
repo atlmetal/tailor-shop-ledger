@@ -19,6 +19,8 @@ RSpec.describe "Jobs", type: :request do
     it { expect(response.parsed_body.css(".service-option").map { it.text.squish }).to eq([ "Basta de pantalón $8,000" ]) }
     it { expect(response.parsed_body.at("input[name='job[done_on]']")["value"]).to eq("2026-10-20") }
     it { expect(response.parsed_body.at("input[name='job[service_id]'][checked]")).to be_nil }
+    it("puts Order first in Record's switch, and marks Job") { expect(response.parsed_body.css(".switch a").map { [ it.text, it["aria-current"] ] }).to eq([ [ "Order", nil ], [ "Job", "page" ], [ "Expense", nil ], [ "Other income", nil ] ]) }
+    it("says a job counts as paid") { expect(response.parsed_body.text.squish).to include("A job is work you've already been paid for, and it counts as charged that day. If they left it with you to pay later, record it as an order.") }
   end
 
   describe "GET /jobs/new after saving another" do

@@ -1,6 +1,6 @@
 <nav class="switch switch-record mt-5" aria-label="<%= t(".label") %>">
-  <%= link_to t(".job"), new_job_path, aria: { current: aria_current(jobs_path) } %>
   <%= link_to t(".order"), new_order_path, aria: { current: aria_current(orders_path) } %>
+  <%= link_to t(".job"), new_job_path, aria: { current: aria_current(jobs_path) } %>
   <%= link_to t(".expense"), new_expense_path, aria: { current: aria_current(expenses_path) } %>
   <%= link_to t(".income"), new_income_path, aria: { current: aria_current(incomes_path) } %>
 </nav>

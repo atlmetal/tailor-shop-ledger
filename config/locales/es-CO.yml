@@ -273,6 +273,7 @@ es-CO:
       save_and_another: Guardar y registrar otro
       service: "¿Qué servicio hiciste?"
     new:
+      note: Un trabajo es lo que ya te pagaron, y cuenta como cobrado ese día. Si te lo dejaron para pagarte después, regístralo como pedido.
       title: Registrar
     saved:
       text_html: "<strong>Guardado:</strong> %{job}. Sigue con el próximo."
@@ -476,7 +477,7 @@ es-CO:
         other: Ya descontados los materiales, los otros gastos y la parte de los fijos de %{count} días de trabajo.
       no_jobs: Todavía no registras trabajos hoy.
       record_entry: Registrar gasto u otro ingreso
-      record_job: Registrar trabajo
+      record_order: Registrar pedido
       see_reports: Ver reportes
       title: Hoy
       units:

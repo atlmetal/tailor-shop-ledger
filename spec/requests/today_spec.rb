@@ -28,6 +28,8 @@ RSpec.describe "Today", type: :request do
     it { expect(page_text).to include("What you recorded today 2 jobs 2 × Basta de pantalón Materials $1,000 $16,000") }
     it { expect(page_text).to include("October, so far See reports Loss −$734,259 Materials, other expenses and the fixed costs of 17 work days already taken off.") }
     it { expect(response.parsed_body.at_css("a:contains('See reports')")["href"]).to eq("/reports") }
+    it("records work as an order by default") { expect(response.parsed_body.at_css("a:contains('Record an order')")["href"]).to eq("/orders/new") }
+    it("opens an order from the Record tab too") { expect(response.parsed_body.at_css("a.tab:contains('Record')")["href"]).to eq("/orders/new") }
   end
 
   describe "GET / with orders" do

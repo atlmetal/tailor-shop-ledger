@@ -15,7 +15,8 @@ RSpec.describe "Today", type: :system do
   it "fills the day's goal with a job just recorded" do
     expect(page).to have_text("So far $0 of the $44,074 you need today", normalize_ws: true)
 
-    click_on "Record a job"
+    click_on "Record an order"
+    click_on "Job"
     choose "Basta de pantalón"
     click_on "One more"
     click_on "Save"

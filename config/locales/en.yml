@@ -273,6 +273,7 @@ en:
       save_and_another: Save and record another
       service: Which service did you do?
     new:
+      note: A job is work you've already been paid for, and it counts as charged that day. If they left it with you to pay later, record it as an order.
       title: Record
     saved:
       text_html: "<strong>Saved:</strong> %{job}. Go on with the next one."
@@ -476,7 +477,7 @@ en:
         other: Materials, other expenses and the fixed costs of %{count} work days already taken off.
       no_jobs: No jobs recorded today yet.
       record_entry: Record an expense or other income
-      record_job: Record a job
+      record_order: Record an order
       see_reports: See reports
       title: Today
       units:
