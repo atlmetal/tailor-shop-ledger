@@ -88,6 +88,8 @@ bin/kamal deploy   # every time after
 
 Kamal builds from a clone of the last commit, so commit a change before deploying it, `config/credentials.yml.enc` included. The app's entrypoint runs `bin/rails db:prepare`, which creates the four databases (primary, cache, queue and cable) on the first boot and migrates them on every deploy. `bin/kamal console`, `bin/kamal logs` and `bin/kamal dbc` reach production.
 
+A deploy takes a few minutes, most of them the build. The gem layer is reused while `Gemfile.lock` and the base image stay the same; when either changes, `bundle install` runs again, about 100 seconds, and the server pulls the bigger layers through the SSH connection, about 40 more: 208 seconds on 2026-10-23 after a gem bump, and 319 the same day when Docker Hub had refreshed `ruby:4.0.7-slim`, which rebuilt every layer. Booting until the health check passes takes about 20 seconds. Run the deploy from the Claude Code session, which keeps the whole output: each of Kamal's `INFO` lines ends with how long its step took, so a slow or failed deploy can be explained afterwards. `bin/kamal app version` prints the commit that runs, and `bin/kamal app containers` lists the app's containers with their ages.
+
 Both apps use the same kamal-proxy, at the same Kamal version, so they move to a new Kamal together. Deploys leave the running proxy alone; `bin/kamal proxy reboot` restarts it under both apps, taking them offline for a moment.
 
 `.kamal/secrets` reads the secrets from the encrypted credentials with `bin/rails credentials:fetch`. Only `config/master.key` opens them, and it is in no repository: keep a copy in a password manager, or nobody can deploy again.
