@@ -377,7 +377,7 @@ The first shop wants to see what each day's work is worth, by service, paid or n
 
 - [x] `Results::JobsByServiceQuery`: a period's jobs by service, with their units and what they're worth at their price, the most done first.
 - [x] "Trabajos del día" in Reports' day view, with its total and its note.
-- [ ] README: the day's jobs by service.
+- [x] README: the day's jobs by service.
 
 Done when query specs cover a quoted price, an order's jobs on the day it was left, an advance's jobs, the order and its ties, and a deactivated service; a system spec opens a day with an order and a job on its own and checks the table, its total and what was charged; and the owner approves the page in screenshots at phone and desktop width.
 

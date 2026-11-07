@@ -31,6 +31,8 @@ Work a customer pays for later goes in an order: usually a deposit when they lea
 
 Some customers, a person or a company, pay a sum up front and bring work until it runs out. That sum never counts, since it's still theirs for work not done yet: each job drawn on it counts the day it's done, like a job on its own, even past the balance, when the customer owes the difference until the next sum covers it. While a job is recorded, the form shows what the balance would be left with, or how much the customer would owe. Today lists each advance with what's left or what's owed.
 
+A day's report also lists its jobs by service, the most done first, with what they're worth at their price, paid or not. That's what the day's work is worth, not what came in, so the report never calls it income and points to what was charged.
+
 Changing a service's price never changes the jobs already recorded, and a new amount for a fixed cost applies from a month on, never to the months before it. The full rules are in [docs/plan.md](docs/plan.md).
 
 ## Stack
