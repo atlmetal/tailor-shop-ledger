@@ -22,6 +22,7 @@ Small tailoring shops in Colombia that do alterations, sewing and dressmaking. W
 - Today they write their work down in a notebook, each piece the day it comes in, not the day it's paid: the first shop recorded a day's work as jobs, which count as paid, when nobody had paid yet (gathered on 2026-10-23). Costs are the hardest part: they don't know how to keep accounts.
 - Most would use the app from an Android phone, since many have no computer, but some do.
 - Some have income that isn't from the shop, like rent from a room.
+- The first shop wants to see each day's work by service, the most done first, and what it's worth at its price, paid yet or not (gathered on 2026-11-07).
 
 ## Decisions
 
@@ -161,9 +162,10 @@ Decided by the owner on 2026-10-20, for the first shop.
 
 - Periods: day, week (Monday to Sunday), month, semester (January to June, July to December) and year. The current month opens by default. Arrows move to the previous or the next period, never past the current one and never before the one where the shop started. The switch keeps the date being viewed: each kind opens its period that holds the last day counted, so from September, Día opens September 30 and Año the whole year, and from a period in progress, the current one (decided after the approved screens).
 - Each period shows its title and the range counted, from its start, or the shop's if later, to its end, or today while it's in progress; its result; the work days counted and the jobs done; the calculation, line by line; and the fixed costs per work day of the month of its last day counted: the current month while the period is in progress, its last month once it's over (decided after the approved screens).
-- The services that left the most in the period: the top five by what they left, each with the units done. The day view leaves them out, since they would repeat its records (decided after the approved screens).
+- The services that left the most in the period: the top five by what they left, each with the units done. The day view leaves them out: it shows all the day's jobs by service instead (decided on 2026-11-07).
 - Month by month, under every period: the result of each of the last six months, up to the current one, marked "hasta hoy" so it isn't compared as if it were complete. Months before the shop started don't show. The most recent comes first, and each opens its month's report (decided after the approved screens).
 - The day view also lists that day's jobs, the payments that came in and its entries, each opening its form: that is how a past record is corrected.
+- The day's jobs by service, in the day view (decided on 2026-11-07, for the first shop): every job of the day, on its own, in an advance or in an order left that day, as its units count them; each service with its units and what its jobs are worth at their price, before materials and paid or not, the most done first, a tie going to the one worth more and then to the service added first; and their total. That's what the day's work is worth, not what came in: an order's price still counts only as its payments arrive, so the table never calls it income, and its note points to what was charged.
 
 ### Privacy
 
@@ -206,6 +208,7 @@ The approved design is five phone screens at 390px, in Spanish, with sample data
 - "Cómo se calcula": Cobrado por trabajos; Materiales (−); Otros ingresos (+); Otros gastos (−); Gastos fijos de 17 días (−); a dashed rule; and Ganancia or Pérdida with the amount. Each line keeps its sign even on 0: "−$0", "+$0".
 - The note "Los gastos fijos se reparten entre los días que trabajas: en octubre, cada día carga $44.074.", with the link "Ver gastos fijos".
 - Decided after the approved screens, in the same style: in the day view, "Lo que registraste", with the day's jobs as in Hoy and its entries with "Gasto" or "Otro ingreso", or "No registraste nada este día."; in the other views, "Los servicios que más te dejaron", each with its units ("47 trabajos") and what it left; and under every view, "Mes a mes", each month with its result's word, icon and amount, the current one as "Octubre, hasta hoy".
+- The day's jobs by service, drawn on the approved screens' canvas and approved by the owner on 2026-11-07: in the day view, between the note about fixed costs and "Lo que registraste", "Trabajos del día", a table with "Cant.", "Servicio" and "Valor": one row per service, "4", "Basta de pantalón" and "$32.000", and under a dashed rule, "Total" with the day's units and what they're worth, "12" and "$140.000". Under it, "A su precio, te los hayan pagado o no, y sin descontar los materiales. Lo que cobraste este día está arriba, en Cobrado por trabajos: $88.000." A day without jobs doesn't show it.
 
 ### Taller (Shop): services and fixed costs
 
@@ -367,6 +370,16 @@ A customer of the first shop pays a sum up front and brings work until it runs o
 - [x] README: the rules for advances, and the screenshots they change.
 
 Done when model specs cover a job in an order and an advance at once, two advances for one customer, a balance below 0 and a top-up's dates; query specs show an advance's jobs counting as jobs on their own do and its top-ups never counting; request specs cover isolation; a system spec takes an advance with a top-up and two jobs, the second past the balance with its warning, then a top-up, checking Today after each; and the owner approves the new pages in screenshots at phone and desktop width.
+
+#### M11. The day's jobs by service (3 h)
+
+The first shop wants to see what each day's work is worth, by service, paid or not (gathered on 2026-11-07). It adds no records, so the demo seeds already show it.
+
+- [ ] `Results::JobsByServiceQuery`: a period's jobs by service, with their units and what they're worth at their price, the most done first.
+- [ ] "Trabajos del día" in Reports' day view, with its total and its note.
+- [ ] README: the day's jobs by service.
+
+Done when query specs cover a quoted price, an order's jobs on the day it was left, an advance's jobs, the order and its ties, and a deactivated service; a system spec opens a day with an order and a job on its own and checks the table, its total and what was charged; and the owner approves the page in screenshots at phone and desktop width.
 
 ### Before a second shop
 
