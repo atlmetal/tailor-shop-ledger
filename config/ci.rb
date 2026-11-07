@@ -5,7 +5,8 @@ CI.run do
 
   step "Style: Ruby", "bin/rubocop"
 
-  step "Security: Gem audit", "bin/bundler-audit"
+  # GitHub downloads the advisory database on every run; here it's kept between runs, so refresh it first.
+  step "Security: Gem audit", "bin/bundler-audit check --update"
   step "Security: Importmap vulnerability audit", "bin/importmap audit"
   step "Security: Brakeman code analysis", "bin/brakeman --quiet --no-pager --exit-on-warn --exit-on-error"
 
