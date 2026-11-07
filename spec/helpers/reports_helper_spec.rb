@@ -132,6 +132,32 @@ RSpec.describe ReportsHelper, type: :helper do
     it { expect(helper.result_summary(instance_double(Results::PeriodQuery::Result, work_days: 1, units: 1))).to eq("1 work day · 1 job") }
   end
 
+  describe "#jobs_by_service" do
+    subject(:section) { helper.jobs_by_service(report) }
+
+    let(:report) { instance_double(Reports::PeriodFacade, day?: true, jobs_by_service: rows, result: instance_double(Results::PeriodQuery::Result, charged: 88_000)) }
+    let(:rows) do
+      [ Results::JobsByServiceQuery::Row.new(service: instance_double(Service, name: "Basta de pantalón"), units: 4, worth: 32_000),
+        Results::JobsByServiceQuery::Row.new(service: instance_double(Service, name: "Entalle de camisa"), units: 3, worth: 48_000) ]
+    end
+
+    it { is_expected.to have_css("tbody tr:first-child", text: "4 Basta de pantalón $32,000", normalize_ws: true) }
+    it("adds them up") { is_expected.to have_css("tfoot", text: "7 Total $80,000", normalize_ws: true) }
+    it("says it isn't what was charged") { is_expected.to have_text("What you charged on this day is above, under Charged for jobs: $88,000.") }
+
+    context "with a day without jobs" do
+      let(:rows) { [] }
+
+      it { is_expected.to be_nil }
+    end
+
+    context "outside a day's report" do
+      let(:report) { instance_double(Reports::PeriodFacade, day?: false) }
+
+      it { is_expected.to be_nil }
+    end
+  end
+
   describe "#day_records" do
     it("shows nothing outside a day's report") { expect(helper.day_records(instance_double(Reports::PeriodFacade, day?: false))).to be_nil }
   end
@@ -171,7 +197,7 @@ RSpec.describe ReportsHelper, type: :helper do
     context "with a day's report" do
       let(:report) { instance_double(Reports::PeriodFacade, day?: true) }
 
-      it("leaves them out, since they'd repeat the day's records") { is_expected.to be_nil }
+      it("leaves them out, since it shows all its jobs by service") { is_expected.to be_nil }
     end
   end
 

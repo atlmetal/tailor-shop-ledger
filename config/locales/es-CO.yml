@@ -342,6 +342,15 @@ es-CO:
     entry:
       expense: Gasto
       income: Otro ingreso
+    jobs_by_service:
+      note: 'A su precio, te los hayan pagado o no, y sin descontar los materiales. Lo que cobraste este día está
+        arriba, en Cobrado por trabajos: %{charged}.'
+      quantity: Cant.
+      quantity_label: Cantidad
+      service: Servicio
+      title: Trabajos del día
+      total: Total
+      worth: Valor
     months:
       so_far: "%{month}, hasta hoy"
       title: Mes a mes

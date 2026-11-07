@@ -49,6 +49,14 @@ RSpec.describe Reports::PeriodFacade do
     it("ranks the services of the days counted") { expect(report.top_services).to eq(rows) }
   end
 
+  describe "#jobs_by_service" do
+    let(:rows) { [ instance_double(Results::JobsByServiceQuery::Row) ] }
+
+    before { allow(Results::JobsByServiceQuery).to receive(:call).with(period: result.days).and_return(rows) }
+
+    it("groups the jobs of the days counted") { expect(report.jobs_by_service).to eq(rows) }
+  end
+
   describe "#months" do
     let(:month_result) { instance_double(Results::PeriodQuery::Result) }
 

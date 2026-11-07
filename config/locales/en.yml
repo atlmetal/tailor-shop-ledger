@@ -342,6 +342,15 @@ en:
     entry:
       expense: Expense
       income: Other income
+    jobs_by_service:
+      note: 'At their price, paid or not, and without taking off the materials. What you charged on this day is
+        above, under Charged for jobs: %{charged}.'
+      quantity: Qty
+      quantity_label: Quantity
+      service: Service
+      title: The day's jobs
+      total: Total
+      worth: Value
     months:
       so_far: "%{month}, so far"
       title: Month by month

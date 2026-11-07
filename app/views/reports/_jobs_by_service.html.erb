@@ -1,0 +1,33 @@
+<section class="mt-8" aria-labelledby="jobs-by-service">
+  <h2 id="jobs-by-service" class="text-xl font-extrabold"><%= t(".title") %></h2>
+
+  <div class="panel mt-2.5">
+    <table class="w-full" aria-labelledby="jobs-by-service">
+      <thead>
+        <tr class="text-sm text-graphite">
+          <th scope="col" class="w-15 pt-3 pr-2 pb-2 pl-4 text-right font-bold" aria-label="<%= t(".quantity_label") %>"><%= t(".quantity") %></th>
+          <th scope="col" class="pt-3 pr-1 pb-2 pl-2 text-left font-bold"><%= t(".service") %></th>
+          <th scope="col" class="pt-3 pr-4 pb-2 pl-1 text-right font-bold"><%= t(".worth") %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% rows.each do |row| %>
+          <tr class="border-t border-divider align-baseline">
+            <td class="py-2.75 pr-2 pl-4 text-right font-mono text-lg font-bold"><%= row.units %></td>
+            <td class="py-2.75 pr-1 pl-2"><%= row.service.name %></td>
+            <td class="py-2.75 pr-4 pl-1 text-right font-mono font-bold whitespace-nowrap"><%= pesos(row.worth) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+      <tfoot>
+        <tr class="border-t-2 border-dashed border-tick align-baseline">
+          <td class="pt-3 pr-2 pb-3.5 pl-4 text-right font-mono text-lg font-bold"><%= units %></td>
+          <th scope="row" class="pt-3 pr-1 pb-3.5 pl-2 text-left font-extrabold"><%= t(".total") %></th>
+          <td class="pt-3 pr-4 pb-3.5 pl-1 text-right font-mono text-lg font-bold whitespace-nowrap"><%= pesos(worth) %></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <p class="mt-2.5 text-meta text-graphite"><%= t(".note", charged: pesos(charged)) %></p>
+</section>

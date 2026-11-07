@@ -1,6 +1,7 @@
 module Reports
   # The Reports page: a period's result and how it's calculated, the way to the periods around it and to the other
-  # kinds of period, the services that left the most in it, the last six months, and on a day, its records.
+  # kinds of period, the services that left the most in it, the last six months, and on a day, its jobs by service
+  # and its records.
   class PeriodFacade
     attr_reader :period
 
@@ -42,6 +43,11 @@ module Reports
 
     def top_services
       @top_services ||= Results::TopServicesQuery.call(period: days)
+    end
+
+    # Every service of the days' jobs, the most done first, with what its jobs are worth at their price, paid or not.
+    def jobs_by_service
+      @jobs_by_service ||= Results::JobsByServiceQuery.call(period: days)
     end
 
     # Each of the last six months up to the current one with its result, the most recent first, and none from

@@ -60,6 +60,15 @@ module ReportsHelper
     tag.div(safe_join([ tag.span(label), tag.span(amount, class: "font-mono font-medium") ], " "), class: "flex min-h-11 items-center justify-between gap-3")
   end
 
+  # A day's jobs by service and their total, with what the day charged, which isn't that; only on a day's report,
+  # and only when it has jobs.
+  def jobs_by_service(report)
+    return unless report.day?
+
+    rows = report.jobs_by_service
+    render("reports/jobs_by_service", rows:, units: rows.sum(&:units), worth: rows.sum(&:worth), charged: report.result.charged) if rows.any?
+  end
+
   # A day's records, only on a day's report.
   def day_records(report)
     render("reports/day_records", report:) if report.day?
@@ -73,8 +82,8 @@ module ReportsHelper
     tag.div(safe_join(rows), class: "panel mt-2.5 divide-y divide-divider")
   end
 
-  # The services that left the most in the period; nothing while it has no jobs, or on a day's report, where they
-  # would repeat its records.
+  # The services that left the most in the period; nothing while it has no jobs, or on a day's report, which shows
+  # all its jobs by service instead.
   def top_services(report)
     return if report.day?
 
